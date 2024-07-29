@@ -1,0 +1,114 @@
+.carousel-item img {
+    height: 500px; /* Giới hạn chiều cao để nhỏ lại */
+    max-height: 900px; /* Giới hạn chiều cao tối đa */
+    filter: blur(2px); /* Hiệu ứng mờ */
+    opacity: 0.8; /* Làm mờ nhẹ */
+    object-fit: cover; /* Giữ tỷ lệ hình ảnh */
+    width: 100%; /* Đảm bảo chiều rộng của ảnh */
+  }
+  
+  .carousel-caption h3, .carousel-caption p {
+    font-size: 1.5rem;
+    color: #fff; /* Màu chữ trắng */
+  }
+
+/* Kích thước và khoảng cách cho các thẻ ProductCard */
+.product-card {
+    margin-bottom: 2rem; /* Khoảng cách dưới mỗi ProductCard */
+    border: 1px solid #ddd; /* Đường viền nhẹ cho các thẻ */
+    border-radius: 8px; /* Bo góc nhẹ cho các thẻ */
+    overflow: hidden; /* Đảm bảo ảnh không tràn ra ngoài viền */
+    transition: box-shadow 0.3s ease-in-out; /* Hiệu ứng chuyển tiếp cho đổ bóng */
+  }
+  
+  /* Hiệu ứng khi hover lên ProductCard */
+  .product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng khi hover */
+  }
+  
+  /* Đảm bảo hình ảnh trong ProductCard tràn hết chiều rộng */
+  .product-card img {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Điều chỉnh kích thước các thẻ Col */
+  .col-product {
+    padding: 0.5rem; /* Khoảng cách giữa các thẻ Col */
+  }
+
+/* Kích thước và kiểu cho hình ảnh trong cột */
+.special-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Bo góc nhẹ */
+  }
+  
+  /* Kích thước và kiểu cho phần văn bản trong cột */
+  .special-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem; /* Padding cho phần văn bản */
+  }
+  
+  /* Kích thước tiêu đề và đoạn văn bản */
+  .special-text h2 {
+    font-size: 2rem; /* Kích thước tiêu đề lớn hơn */
+    margin-bottom: 1rem; /* Khoảng cách dưới tiêu đề */
+  }
+  
+  .special-text p {
+    font-size: 1.2rem; /* Kích thước văn bản lớn hơn */
+  }
+  .my-4 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  button {
+    font-size: 1.2rem;
+    padding: 0.5rem 1.5rem;
+  }
+  
+  .carousel-item img {
+    height: auto; /* Đảm bảo ảnh không bị kéo dài */
+  }
+  
+  .promotion-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .promotion-container .promotion-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .promotion-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .promotion-container p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .promotion-container button {
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .promotion-container img {
+    max-width: 100%;
+    height: auto;
+  }

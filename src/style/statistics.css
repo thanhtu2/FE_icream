@@ -1,0 +1,32 @@
+/* src/style/statistics.css */
+
+.chart-title {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .chart-row {
+    margin-bottom: 50px; /* Khoảng cách giữa các hàng biểu đồ */
+  }
+  
+  .chart-container {
+    padding: 15px; /* Khoảng cách quanh biểu đồ */
+  }
+  
+  /* Đảm bảo các biểu đồ không kéo dài quá nhiều */
+  .chart-container canvas {
+    max-width: 100%;
+    height: auto !important; /* Đảm bảo chiều cao tự động để duy trì tỷ lệ */
+  }
+  
+  /* Responsive design cho các kích thước màn hình nhỏ hơn */
+  @media (max-width: 768px) {
+    .chart-container {
+      padding: 10px; /* Giảm padding cho màn hình nhỏ */
+    }
+  
+    .chart-row {
+      margin-bottom: 20px; /* Giảm khoảng cách giữa các hàng cho màn hình nhỏ */
+    }
+  }
+  

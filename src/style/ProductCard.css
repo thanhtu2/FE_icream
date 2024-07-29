@@ -1,0 +1,71 @@
+/* ProductCard.css */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    box-sizing: border-box;
+  }
+  
+  .product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  .product-card .card-title {
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .product-card .card-text {
+    margin-bottom: 15px;
+  }
+  
+  .product-card .btn {
+    margin-top: 20px;
+  }
+  
+  .modal-img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  /* Cập nhật layout cho ProductCard */
+.product-container {
+  display: flex; /* Sử dụng flexbox để chia layout */
+  justify-content: space-between; /* Để tạo khoảng cách giữa các phần tử */
+}
+
+/* Thay đổi chiều rộng cho phần danh mục và sản phẩm */
+.category-filter {
+  flex: 1; /* Danh mục chiếm không gian ít hơn */
+  max-width: 200px; /* Chiều rộng tối đa của phần danh mục */
+}
+
+.product-card {
+  flex: 3; /* Sản phẩm chiếm nhiều không gian hơn */
+  margin-left: 20px; /* Khoảng cách giữa danh mục và sản phẩm */
+}
+
+.card-img-top {
+  object-fit: cover;
+  width: 100%;
+  height: 200px;
+}
+
+.modal-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}

@@ -1,0 +1,41 @@
+/* src/style/promotion.css */
+.promotion_total {
+    font-family: Arial, sans-serif;
+}
+
+.banner_promotion {
+    width: 100%;
+    height: auto;
+}
+
+.promotion_total-box1, .promotion_total-box2, .promotion_total-box3, .promotion_total-box4 {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+.box1_img img, .box2_img1 img, .box2_img2 img, .box3_img img, .box4_img img {
+    width: 100%;
+    height: auto;
+}
+
+.box1_text, .box2_text, .box3_text, .box4_text {
+    margin-left: 20px;
+}
+
+.box2_text_button, button {
+    background-color: #f0a500;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.box2_text_button:hover, button:hover {
+    background-color: #e09b00;
+}

@@ -1,0 +1,42 @@
+/* footer.css */
+
+footer {
+    background-color: #f8f9fa; /* Màu nền nhẹ */
+    color: #000; /* Màu chữ đậm */
+  }
+  
+  footer h5 {
+    font-weight: bold;
+    font-size: 1.5rem; /* Tăng kích thước chữ */
+    margin-bottom: 1rem;
+  }
+  
+  footer p, footer span {
+    font-size: 1.2rem; /* Tăng kích thước chữ */
+    color: #333; /* Màu chữ đậm */
+  }
+  
+  footer a {
+    color: #000; /* Màu chữ đậm */
+    font-size: 1.2rem; /* Tăng kích thước chữ */
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  footer a:hover {
+    color: #777; /* Màu chữ nhạt khi hover */
+  }
+  
+  footer ul {
+    padding-left: 0;
+    list-style: none;
+  }
+  
+  footer .bg-dark {
+    background-color: #343a40 !important; /* Màu nền đậm */
+  }
+  
+  footer .text-white {
+    color: #fff !important; /* Màu chữ trắng */
+  }
+  

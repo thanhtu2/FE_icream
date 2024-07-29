@@ -1,0 +1,7 @@
+/* UserManagement.css */
+.hidden-user {
+    font-weight: bold;
+    color: rgba(128, 128, 128, 0.884); /* Màu chữ xám để dễ phân biệt */
+    background-color: #d7f8dc00; /* Màu nền để nổi bật */
+  }
+  

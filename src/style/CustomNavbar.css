@@ -1,0 +1,82 @@
+.custom-navbar {
+    font-size: 1.5rem; /* Tăng kích thước chữ */
+    font-weight: bold; /* Chữ in đậm */
+  }
+  
+  .custom-navbar .navbar-brand {
+    font-size: 2rem; /* Tăng kích thước chữ cho tên thương hiệu */
+    font-weight: bold; /* Chữ in đậm cho tên thương hiệu */
+    margin-right: auto; /* Đẩy tên thương hiệu sang trái */
+    letter-spacing: 0.1rem; /* Khoảng cách giữa các chữ */
+    color: #333; /* Màu chữ */
+  }
+  
+  .custom-navbar .nav-link {
+    font-size: 1.5rem; /* Tăng kích thước chữ cho các liên kết */
+    font-weight: bold; /* Chữ in đậm cho các liên kết */
+    transition: color 0.3s ease; /* Thêm hiệu ứng chuyển màu khi hover */
+    letter-spacing: 0.1rem; /* Khoảng cách giữa các chữ */
+  }
+  
+  .custom-navbar .nav-link:hover {
+    color: #ff00d428; /* Thay đổi màu khi hover, bạn có thể điều chỉnh theo ý muốn */
+  }
+  
+  .custom-navbar .cart-icon {
+    font-size: 2rem; /* Tăng kích thước cho icon giỏ hàng */
+  }
+  
+  .custom-navbar .badge {
+    font-size: 1.25rem; /* Tăng kích thước chữ cho badge */
+    background-color: #cc00ff67; /* Màu nền của badge */
+    color: white; /* Màu chữ của badge */
+  }
+  /* Thay đổi kích thước và các thuộc tính khác của Navbar */
+.custom-navbar {
+  height: 80px; /* Tăng chiều cao của Navbar */
+  font-size: 18px; /* Tăng kích thước font của Navbar */
+}
+
+/* Thay đổi kích thước của Brand (tên thương hiệu) */
+.custom-navbar .navbar-brand {
+  font-size: 24px; /* Tăng kích thước font của Brand */
+}
+
+/* Tăng kích thước và khoảng cách của các liên kết trong Navbar */
+.custom-navbar .nav-link {
+  font-size: 18px; /* Tăng kích thước font của liên kết */
+  padding: 10px 15px; /* Tăng khoảng cách bên trong của liên kết */
+}
+
+/* Thay đổi kích thước của các biểu tượng */
+.custom-navbar .nav-link .fa {
+  font-size: 24px; /* Tăng kích thước biểu tượng */
+}
+
+/* Tăng kích thước của Dropdown */
+.custom-navbar .dropdown-menu {
+  font-size: 18px; /* Tăng kích thước font của Dropdown */
+}
+
+/* Thay đổi kích thước của nút Logout */
+.custom-navbar .dropdown-item button {
+  font-size: 18px; /* Tăng kích thước font của nút Logout */
+}
+.custom-dropdown {
+  background-color: white;
+}
+
+/* Tắt màu nền khi ở trang sản phẩm */
+.custom-dropdown.no-bg {
+  background-color: transparent !important;
+}
+.custom-dropdown .dropdown-item.active,
+.custom-dropdown .dropdown-item:active {
+  background-color: transparent !important; /* Đặt màu nền thành transparent */
+  color: inherit; /* Giữ màu chữ của liên kết */
+}
+
+/* Xóa màu nền cho các mục dropdown mặc định */
+.custom-dropdown .dropdown-item {
+  background-color: transparent; /* Đặt màu nền thành transparent */
+}

@@ -1,0 +1,18 @@
+.category-filter {
+    width: 250px; /* Điều chỉnh kích thước của phần danh mục */
+    padding: 10px;
+    background-color: #f8f9fa; /* Màu nền cho danh mục */
+    border-right: 1px solid #ddd; /* Đường viền bên phải để phân cách với nội dung bên phải */
+    height: 100vh; /* Chiều cao của danh mục để nó phủ toàn bộ chiều cao của viewport */
+    position: fixed; /* Giữ cho phần danh mục cố định ở bên trái */
+    top: 0;
+    left: 0;
+  }
+  
+  .category-filter h4 {
+    margin-bottom: 10px;
+  }
+  
+  .category-filter select {
+    width: 100%;
+  }
