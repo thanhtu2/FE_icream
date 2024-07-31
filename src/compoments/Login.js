@@ -7,14 +7,17 @@ import { useDispatch } from 'react-redux';
 import { login } from '../redux/slices/authSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import ReactFacebookLogin from 'react-facebook-login';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const responseFacebook = (response) => {
+    console.log(response);
+    // Xử lý phản hồi từ Facebook ở đây
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -118,7 +121,15 @@ const Login = () => {
         </Form>
 
         <p className="mt-3">Chưa có tài khoản? <Link to="/sigup">Đăng ký ngay</Link></p>
-
+        <hr/>
+        <ReactFacebookLogin
+        autoLoad={false}
+        fields="name,email,picture"
+        callback={responseFacebook} 
+        callblack={(responseFaceBook)=>{
+          console.log(responseFaceBook);
+        }}
+        />
         <ToastContainer />
       </Container>
     </div>
