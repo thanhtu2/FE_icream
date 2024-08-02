@@ -1,0 +1,11 @@
+.card-custom {
+    background-color: #f8f9fa; /* Màu nền nhạt */
+  }
+  
+  .card-custom .card-title {
+    font-size: 1.5rem; /* Kích thước chữ lớn hơn */
+  }
+  
+  .card-custom .card-text {
+    font-size: 1.25rem; /* Kích thước chữ lớn hơn */
+  }

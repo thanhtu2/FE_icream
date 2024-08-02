@@ -102,7 +102,6 @@ const ProductManagement = () => {
             <th>Giá</th>
             <th>Danh Mục</th>
             <th>Kho</th>
-
             <th>Hành động</th>
           </tr>
         </thead>

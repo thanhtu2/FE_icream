@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -8,52 +7,96 @@ import { login } from '../redux/slices/authSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactFacebookLogin from 'react-facebook-login';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const responseFacebook = (response) => {
-    console.log(response);
-    // Xử lý phản hồi từ Facebook ở đây
+
+  // Xử lý phản hồi từ Facebook
+  const responseFacebook = async (response) => {
+    const { accessToken, userID, email, name, picture } = response;
+
+    try {
+      // Gửi yêu cầu đăng nhập Facebook lên backend
+      const result = await axios.post('http://localhost:4000/facebook-login', {
+        accessToken,
+        userID,
+        email,
+        name,
+        picture
+      });
+
+      const { token } = result.data;
+
+      // Lưu token vào localStorage
+      localStorage.setItem('token', token);
+
+      // Gọi API để lấy thông tin người dùng
+      const userResponse = await axios.get('http://localhost:4000/profile', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // Cập nhật Redux state với thông tin người dùng và token
+      dispatch(login({ user: userResponse.data, token }));
+
+      // Hiển thị thông báo thành công
+      toast.success('Đăng nhập bằng Facebook thành công!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      // Chuyển hướng đến trang chính sau khi đăng nhập thành công
+      navigate('/');
+    } catch (error) {
+      console.error('Lỗi đăng nhập bằng Facebook:', error);
+      setError('Đăng nhập bằng Facebook thất bại. Vui lòng thử lại.');
+    }
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-        const response = await axios.post('http://localhost:4000/login', { Email: email, Password: password });
-        const { token } = response.data;
+      const response = await axios.post('http://localhost:4000/login', { Email: email, Password: password });
+      const { token } = response.data;
 
-        // Lưu token vào localStorage
-        localStorage.setItem('token', token);
+      // Lưu token vào localStorage
+      localStorage.setItem('token', token);
 
-        // Gọi API để lấy thông tin người dùng
-        const userResponse = await axios.get('http://localhost:4000/profile', {
-            headers: { Authorization: `Bearer ${token}` },
-        });
+      // Gọi API để lấy thông tin người dùng
+      const userResponse = await axios.get('http://localhost:4000/profile', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-        // Cập nhật Redux state với thông tin người dùng và token
-        dispatch(login({ user: userResponse.data, token }));
+      // Cập nhật Redux state với thông tin người dùng và token
+      dispatch(login({ user: userResponse.data, token }));
 
-        // Hiển thị thông báo thành công
-        toast.success('Đăng nhập thành công!', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
+      // Hiển thị thông báo thành công
+      toast.success('Đăng nhập thành công!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
 
-        // Chuyển hướng đến trang chính sau khi đăng nhập thành công
-        navigate('/');
+      // Chuyển hướng đến trang chính sau khi đăng nhập thành công
+      navigate('/');
     } catch (error) {
-        console.error('Lỗi đăng nhập:', error);
-        setError('Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
+      console.error('Lỗi đăng nhập:', error);
+      setError('Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
     }
-};
+  };
 
   const loginBackground = {
     background: `url('/images/image 83.png') no-repeat center center/cover`,
@@ -120,15 +163,13 @@ const Login = () => {
           </Button>
         </Form>
 
-        <p className="mt-3">Chưa có tài khoản? <Link to="/sigup">Đăng ký ngay</Link></p>
-        <hr/>
+        <p className="mt-3">Chưa có tài khoản? <Link to="/signup">Đăng ký ngay</Link></p>
+        <hr />
         <ReactFacebookLogin
-        autoLoad={false}
-        fields="name,email,picture"
-        callback={responseFacebook} 
-        callblack={(responseFaceBook)=>{
-          console.log(responseFaceBook);
-        }}
+        appId="1006850874260315"  
+          autoLoad={false}
+          fields="name,email,picture"
+          callback={responseFacebook}
         />
         <ToastContainer />
       </Container>

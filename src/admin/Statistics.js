@@ -1,17 +1,20 @@
-// src/components/Statistics.js
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import axios from 'axios';
+import '../style/statistic.css'
+
+
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Doughnut } from 'react-chartjs-2';
 import '../style/statistics.css'; // Đảm bảo đường dẫn đến file CSS đúng
 
 // Đăng ký các thành phần cần thiết với Chart.js
@@ -19,33 +22,34 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend
 );
 
 const Statistics = () => {
-  const [dailySalesStats, setDailySalesStats] = useState([]);
-  const [monthlySalesStats, setMonthlySalesStats] = useState([]);
-  const [yearlySalesStats, setYearlySalesStats] = useState([]);
   const [orderData, setOrderData] = useState([]);
+  const [yearlySalesStats, setYearlySalesStats] = useState([]);
+  const [revenueStats, setRevenueStats] = useState([]);
+  const [productStats, setProductStats] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchStatistics = async () => {
       try {
-        const dailyResponse = await axios.get('http://localhost:4000/sales/daily');
-        setDailySalesStats(dailyResponse.data);
-
-        const monthlyResponse = await axios.get('http://localhost:4000/sales/monthly');
-        setMonthlySalesStats(monthlyResponse.data);
-
-        const yearlyResponse = await axios.get('http://localhost:4000/sales/yearly');
-        setYearlySalesStats(yearlyResponse.data);
-
         const orderResponse = await axios.get('http://localhost:4000/orders');
         setOrderData(orderResponse.data);
+
+        const yearlySalesResponse = await axios.get('http://localhost:4000/sales/yearly');
+        setYearlySalesStats(yearlySalesResponse.data);
+
+        const revenueResponse = await axios.get('http://localhost:4000/revenue-stats');
+        setRevenueStats(revenueResponse.data);
+
+        const productResponse = await axios.get('http://localhost:4000/product-stats');
+        setProductStats(productResponse.data);
 
         setLoading(false);
       } catch (err) {
@@ -71,7 +75,7 @@ const Statistics = () => {
     labels: Object.keys(orderCounts),
     datasets: [
       {
-        label: 'Số lượng đơn hàng',
+        label: 'Số lượng đơn hàng theo ngày',
         data: Object.values(orderCounts),
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -80,13 +84,39 @@ const Statistics = () => {
     ],
   };
 
-  // Prepare data for the sales charts
-  const dailySalesChartData = {
-    labels: dailySalesStats.map(stat => stat.date),
+  // Prepare data for the revenue stats chart
+  const revenueChartData = {
+    labels: revenueStats.map(stat => stat.Name),
     datasets: [
       {
-        label: 'Doanh số hàng ngày',
-        data: dailySalesStats.map(stat => stat.total),
+        label: 'Doanh thu theo sản phẩm',
+        data: revenueStats.map(stat => parseFloat(stat.TotalRevenue.replace(/,/g, ''))), // Remove commas from TotalRevenue
+        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // Ensure productStats is an object with properties
+  const totalProducts = productStats.totalProducts || 0;
+  const inStock = productStats.inStock || "0";
+  const outOfStock = productStats.outOfStock || 0;
+
+  // Prepare data for the yearly sales chart
+  const yearlySalesChartData = {
+    labels: yearlySalesStats.map(stat => stat.year),
+    datasets: [
+      {
+        label: 'Doanh số hàng năm',
+        data: yearlySalesStats.map(stat => parseFloat(stat.totalSales.replace(/,/g, ''))), // Remove commas from totalSales
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+      },
+      {
+        label: 'Số lượng hàng năm',
+        data: yearlySalesStats.map(stat => parseFloat(stat.totalQuantity.replace(/,/g, ''))), // Remove commas from totalQuantity
         backgroundColor: 'rgba(153, 102, 255, 0.6)',
         borderColor: 'rgba(153, 102, 255, 1)',
         borderWidth: 1,
@@ -94,59 +124,80 @@ const Statistics = () => {
     ],
   };
 
-  const monthlySalesChartData = {
-    labels: monthlySalesStats.map(stat => stat.month),
-    datasets: [
-      {
-        label: 'Doanh số hàng tháng',
-        data: monthlySalesStats.map(stat => stat.total),
-        backgroundColor: 'rgba(255, 159, 64, 0.6)',
-        borderColor: 'rgba(255, 159, 64, 1)',
-        borderWidth: 1,
+  const chartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
       },
-    ],
-  };
-
-  const yearlySalesChartData = {
-    labels: yearlySalesStats.map(stat => stat.year),
-    datasets: [
-      {
-        label: 'Doanh số hàng năm',
-        data: yearlySalesStats.map(stat => stat.total),
-        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem) {
+            return `${tooltipItem.label}: ${tooltipItem.raw.toLocaleString()}`;
+          },
+        },
       },
-    ],
+    },
   };
 
   return (
     <Container>
       <h1 className="chart-title">Thống Kê</h1>
 
-      <div className="chart-row">
-        <h2 className="chart-title">Đơn Hàng và Doanh Số Hàng Ngày</h2>
-        <Row>
-          <Col md={6} className="chart-container">
-            <Bar data={orderChartData} />
-          </Col>
-          <Col md={6} className="chart-container">
-            <Bar data={dailySalesChartData} />
-          </Col>
-        </Row>
-      </div>
+      <Row className="mb-4">
+        <Col md={4}>
+          <Card className="card-custom">
+            <Card.Body>
+              <Card.Title>Số lượng sản phẩm</Card.Title>
+              <Card.Text>{totalProducts}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card className="card-custom">
+            <Card.Body>
+              <Card.Title>Số lượng còn hàng</Card.Title>
+              <Card.Text>{inStock}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card className="card-custom">
+            <Card.Body>
+              <Card.Title>Số lượng hết hàng</Card.Title>
+              <Card.Text>{outOfStock}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
 
-      <div className="chart-row">
-        <h2 className="chart-title">Doanh Số Hàng Tháng và Hàng Năm</h2>
-        <Row>
-          <Col md={6} className="chart-container">
-            <Bar data={monthlySalesChartData} />
-          </Col>
-          <Col md={6} className="chart-container">
-            <Bar data={yearlySalesChartData} />
-          </Col>
-        </Row>
-      </div>
+      <Row className="mb-4">
+        <Col md={4}>
+          <div className="chart-row">
+            <h2 className="chart-title">Doanh thu theo sản phẩm</h2>
+            <div className="chart-container" style={{ height: '300px' }}>
+              <Doughnut data={revenueChartData} options={chartOptions} />
+            </div>
+          </div>
+        </Col>
+        <Col md={4}>
+          <div className="chart-row">
+            <h2 className="chart-title">Số lượng đơn hàng theo ngày</h2>
+            <div className="chart-container" style={{ height: '300px' }}>
+              <Bar data={orderChartData} options={chartOptions} />
+            </div>
+          </div>
+        </Col>
+        <Col md={4}>
+          <div className="chart-row">
+            <h2 className="chart-title">Doanh số và số lượng hàng năm</h2>
+            <div className="chart-container" style={{ height: '300px' }}>
+              <Bar data={yearlySalesChartData} options={chartOptions} />
+            </div>
+          </div>
+        </Col>
+      </Row>
     </Container>
   );
 };
