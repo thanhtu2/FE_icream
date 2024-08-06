@@ -1,4 +1,3 @@
-// src/components/ProductList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
@@ -17,7 +16,14 @@ const ProductList = () => {
       try {
         const query = new URLSearchParams(location.search).get('category');
         const response = await axios.get(`http://localhost:4000/products${query ? `?category=${query}` : ''}`);
-        setProducts(response.data);
+        let fetchedProducts = response.data;
+
+        // Giả sử sản phẩm có trường `rating` để xác định "ngon nhất"
+        const topProducts = fetchedProducts
+          .sort((a, b) => b.rating - a.rating) // Sắp xếp sản phẩm theo `rating` từ cao xuống thấp
+          .slice(0, 5); // Lấy ra 5 sản phẩm đầu tiên
+
+        setProducts(topProducts);
         setLoading(false);
       } catch (error) {
         setError('Không thể lấy sản phẩm.');

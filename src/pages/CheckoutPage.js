@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap';
-import { clearCart } from '../redux/slices/cartSlice';
-import { placeOrder, fetchUserProfile } from '../redux/slices/orderSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-import PaypalSubscriptionButton from './PaypalSubscriptionButton'; // Import component PayPal
+import PaypalSubscriptionButton from './PaypalSubscriptionButton';
+import { clearCart } from '../redux/slices/cartSlice';
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const user = useSelector((state) => state.order.user);
-  const order = useSelector((state) => state.order.order);
-  const [showModal, setShowModal] = useState(false);
   const [formValues, setFormValues] = useState({
     email: '',
     address: '',
     city: '',
     zip: '',
   });
+  const [user, setUser] = useState(null); // Thêm state để lưu trữ thông tin người dùng
+  const [showModal, setShowModal] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      dispatch(fetchUserProfile(token));
-    } else {
+    if (!token) {
       toast.error('Vui lòng đăng nhập để tiếp tục.', {
         position: "top-right",
         autoClose: 3000,
@@ -38,22 +34,85 @@ const CheckoutPage = () => {
         progress: undefined,
       });
       navigate('/login');
+    } else {
+      // Gọi API để lấy thông tin người dùng
+      const fetchUserProfile = async () => {
+        try {
+          const response = await fetch('http://localhost:4000/profile', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) {
+            throw new Error('Không thể lấy thông tin người dùng.');
+          }
+          const data = await response.json();
+          setUser(data); // Lưu thông tin người dùng vào state
+        } catch (error) {
+          toast.error(`Lỗi: ${error.message}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          navigate('/login');
+        }
+      };
+      fetchUserProfile();
     }
-  }, [dispatch]);
+  }, [navigate]);
 
   const calculateTotal = () => {
     const total = cartItems.reduce((total, item) => total + Number(item.Price) * item.quantity, 0);
     return total.toFixed(2);
   };
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setShowModal(true);
   };
 
   const handlePaymentMethodSelect = async (method) => {
-    if (!user) {
-      toast.error('Thông tin người dùng không hợp lệ. Vui lòng đăng nhập lại.', {
+    if (method === 'paypal') {
+      return;
+    }
+
+    setShowModal(false);
+
+    const orderDetails = {
+      CustomerID: user?.CustomerID, // Sử dụng CustomerID từ state user
+      ProductID: cartItems[0].ProductID, 
+      OrderDate: new Date().toISOString().split('T')[0],
+      ShipDate: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0],
+      Status: 'sắp giao',
+      Quantity: cartItems.reduce((total, item) => total + item.quantity, 0),
+      TotalPrice: calculateTotal(),
+      PaymentStatus:'Thanh toán khi nhận hàng',
+      Email: formValues.email,
+      Address: formValues.address,
+      City: formValues.city,
+      Zip: formValues.zip,
+    };
+
+    try {
+      const response = await fetch('http://localhost:4000/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderDetails),
+      });
+
+      if (!response.ok) {
+        throw new Error('Đặt hàng thất bại.');
+      }
+
+      const data = await response.json();
+      setOrderPlaced(true);
+      toast.success('Đặt hàng thành công!', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -62,28 +121,9 @@ const CheckoutPage = () => {
         draggable: true,
         progress: undefined,
       });
-      return;
-    }
 
-    if (method === 'paypal') {
-      return;
-    }
-
-    setShowModal(false);
-
-    const orderDetails = {
-      UserID: user.UserID,
-      OrderDate: new Date().toISOString().split('T')[0],
-      ShipDate: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0],
-      Status: 'Pending',
-      Quantity: cartItems.reduce((total, item) => total + item.quantity, 0),
-      TotalPrice: calculateTotal(),
-    };
-
-    try {
-      const result = await dispatch(placeOrder({ orderDetails, user })).unwrap();
       dispatch(clearCart());
-      setOrderPlaced(true);
+      
     } catch (error) {
       toast.error(`Đặt hàng thất bại: ${error.message}`, {
         position: "top-right",
@@ -97,12 +137,10 @@ const CheckoutPage = () => {
     }
   };
 
-  const handleChange = (e) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-  };
-
-  const handlePayPalSuccess = (data) => {
-    toast.success(`Subscription successful! Subscription ID: ${data.subscriptionID}`, {
+  const handlePayPalSuccess = (details, data) => {
+    console.log("Payment approved by PayPal:", details, data);
+    dispatch(clearCart()); 
+    toast.success('Thanh toán thành công!', {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -111,9 +149,10 @@ const CheckoutPage = () => {
       draggable: true,
       progress: undefined,
     });
-    setOrderPlaced(true);
-    setShowModal(false);
-    dispatch(clearCart());
+  };
+
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
   return (
@@ -123,13 +162,6 @@ const CheckoutPage = () => {
       {orderPlaced ? (
         <div>
           <p>Đặt hàng thành công! Cảm ơn bạn đã mua hàng.</p>
-          {order && (
-            <>
-              <p>Mã đơn hàng: {order.OrderID}</p>
-              <p>Ngày đặt hàng: {order.OrderDate}</p>
-              <p>Tổng giá trị: ${order.TotalPrice}</p>
-            </>
-          )}
         </div>
       ) : (
         cartItems.length === 0 ? (
@@ -220,7 +252,6 @@ const CheckoutPage = () => {
                 </Row>
               </Modal.Body>
             </Modal>
-
           </>
         )
       )}
