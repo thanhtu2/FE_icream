@@ -188,7 +188,7 @@ const DiscountForm = () => {
                 </Form.Group>
                 
                 <Button variant="primary" onClick={handleSave}>
-                    Save
+                    {discountId ? 'Update Discount' : 'Save Discount'}
                 </Button>
             </Form>
             <ToastContainer />

@@ -1,25 +1,24 @@
-// src/redux/slices/userSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import {jwtDecode} from 'jwt-decode';
+
+const initialState = {
+  user: null, // Đảm bảo user được khởi tạo
+  status: 'idle',
+  error: null,
+};
+
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    CustomerID: null,
-    // Các thuộc tính khác
-  },
+  initialState,
   reducers: {
-    setUser(state, action) {
-      const { token } = action.payload;
-      const decodedToken = jwtDecode(token);
-
-      if (decodedToken) {
-        state.CustomerID = decodedToken.CustomerID; // Lưu CustomerID từ token vào state
-        // Cập nhật các thuộc tính khác nếu cần
-      }
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
-    // Các reducers khác
+    clearUser: (state) => {
+      state.user = null;
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
+
 export default userSlice.reducer;

@@ -85,7 +85,7 @@ function App() {
         <Route path="/discount/new" element={<ProtectedRoute element={<DiscountForm />} />} />
         <Route path="/discount/:discountId" element={<ProtectedRoute element={<DiscountForm />} />} />
         <Route path="/checkout" element={<CheckoutPage />} />
-        
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

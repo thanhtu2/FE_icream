@@ -97,7 +97,7 @@ const CustomNavbar = () => {
                   </NavDropdown.Item>
                 )}
                 <NavDropdown.Item>
-                  <Button variant="link" onClick={handleLogout}>Logout</Button>
+                  <Button variant="secondary" onClick={handleLogout}>Logout</Button>
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (

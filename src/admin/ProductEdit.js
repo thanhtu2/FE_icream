@@ -14,7 +14,8 @@ const ProductEdit = () => {
     Price: '',
     CategoryID: '',
     Stock: '',
-    ImagePath: ''
+    ImagePath: '',
+    
   });
   const [categories, setCategories] = useState([]); // Thêm trạng thái để lưu danh mục
 

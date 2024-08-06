@@ -1,32 +1,49 @@
-// src/pages/CheckoutPage.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap';
 import { clearCart } from '../redux/slices/cartSlice';
-import { placeOrder, clearOrder } from '../redux/slices/orderSlice';
+import { placeOrder, fetchUserProfile } from '../redux/slices/orderSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import PaypalSubscriptionButton from './PaypalSubscriptionButton'; // Import component PayPal
 
 const CheckoutPage = () => {
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const user = useSelector((state) => state.user);
-  const orderStatus = useSelector((state) => state.order.status);
-  const orderError = useSelector((state) => state.order.error);
+  const user = useSelector((state) => state.order.user);
   const order = useSelector((state) => state.order.order);
-  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('');
   const [formValues, setFormValues] = useState({
     email: '',
     address: '',
     city: '',
     zip: '',
   });
-  const [orderPlaced, setOrderPlaced] = useState(false); // Định nghĩa trạng thái orderPlaced và setOrderPlaced
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(fetchUserProfile(token));
+    } else {
+      toast.error('Vui lòng đăng nhập để tiếp tục.', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      navigate('/login');
+    }
+  }, [dispatch]);
 
   const calculateTotal = () => {
     const total = cartItems.reduce((total, item) => total + Number(item.Price) * item.quantity, 0);
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total);
+    return total.toFixed(2);
   };
 
   const handlePlaceOrder = (e) => {
@@ -36,19 +53,6 @@ const CheckoutPage = () => {
 
   const handlePaymentMethodSelect = async (method) => {
     if (!user) {
-      toast.error('Đang tải thông tin người dùng. Vui lòng đợi.', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      return;
-    }
-
-    if (!user.CustomerID) {
       toast.error('Thông tin người dùng không hợp lệ. Vui lòng đăng nhập lại.', {
         position: "top-right",
         autoClose: 3000,
@@ -61,34 +65,26 @@ const CheckoutPage = () => {
       return;
     }
 
-    setPaymentMethod(method);
+    if (method === 'paypal') {
+      return;
+    }
+
     setShowModal(false);
 
-    const customerId = user.CustomerID;
-
-    const orderItems = cartItems.map(item => ({
-      ProductID: item.ProductID,
-      Quantity: item.quantity,
-      TotalPrice: (Number(item.Price) * item.quantity).toFixed(2),
-    }));
-
     const orderDetails = {
-      CustomerID: customerId,
+      UserID: user.UserID,
       OrderDate: new Date().toISOString().split('T')[0],
       ShipDate: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0],
       Status: 'Pending',
       Quantity: cartItems.reduce((total, item) => total + item.quantity, 0),
       TotalPrice: calculateTotal(),
-      PaymentMethod: method,
-      Items: orderItems,
     };
 
     try {
-      await dispatch(placeOrder(orderDetails)).unwrap();
+      const result = await dispatch(placeOrder({ orderDetails, user })).unwrap();
       dispatch(clearCart());
-      setOrderPlaced(true); // Cập nhật trạng thái orderPlaced sau khi đặt hàng thành công
+      setOrderPlaced(true);
     } catch (error) {
-      console.error("Đặt hàng thất bại: ", error.message);
       toast.error(`Đặt hàng thất bại: ${error.message}`, {
         position: "top-right",
         autoClose: 3000,
@@ -105,6 +101,21 @@ const CheckoutPage = () => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
+  const handlePayPalSuccess = (data) => {
+    toast.success(`Subscription successful! Subscription ID: ${data.subscriptionID}`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setOrderPlaced(true);
+    setShowModal(false);
+    dispatch(clearCart());
+  };
+
   return (
     <Container>
       <ToastContainer />
@@ -112,24 +123,28 @@ const CheckoutPage = () => {
       {orderPlaced ? (
         <div>
           <p>Đặt hàng thành công! Cảm ơn bạn đã mua hàng.</p>
-          <p>Mã đơn hàng: {order.OrderID}</p>
-          <p>Ngày đặt hàng: {order.OrderDate}</p>
-          <p>Tổng giá trị: {order.TotalPrice}</p>
+          {order && (
+            <>
+              <p>Mã đơn hàng: {order.OrderID}</p>
+              <p>Ngày đặt hàng: {order.OrderDate}</p>
+              <p>Tổng giá trị: ${order.TotalPrice}</p>
+            </>
+          )}
         </div>
       ) : (
         cartItems.length === 0 ? (
-          <p>Your cart is empty</p>
+          <p>Giỏ hàng của bạn đang trống</p>
         ) : (
           <>
             <Row className="mb-3">
               <Col md={8}>
-                <h4>Shipping Address</h4>
+                <h4>Địa chỉ giao hàng</h4>
                 <Form onSubmit={handlePlaceOrder}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
                       type="email"
-                      placeholder="Enter email"
+                      placeholder="Nhập email"
                       name="email"
                       value={formValues.email}
                       onChange={handleChange}
@@ -137,10 +152,10 @@ const CheckoutPage = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicAddress">
-                    <Form.Label>Address</Form.Label>
+                    <Form.Label>Địa chỉ</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter address"
+                      placeholder="Nhập địa chỉ"
                       name="address"
                       value={formValues.address}
                       onChange={handleChange}
@@ -148,10 +163,10 @@ const CheckoutPage = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicCity">
-                    <Form.Label>City</Form.Label>
+                    <Form.Label>Thành phố</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter city"
+                      placeholder="Nhập thành phố"
                       name="city"
                       value={formValues.city}
                       onChange={handleChange}
@@ -159,10 +174,10 @@ const CheckoutPage = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicZip">
-                    <Form.Label>Zip Code</Form.Label>
+                    <Form.Label>Mã ZIP</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter zip code"
+                      placeholder="Nhập mã ZIP"
                       name="zip"
                       value={formValues.zip}
                       onChange={handleChange}
@@ -170,40 +185,45 @@ const CheckoutPage = () => {
                     />
                   </Form.Group>
                   <Button variant="primary" type="submit">
-                    Place Order
+                    Đặt hàng
                   </Button>
                 </Form>
               </Col>
               <Col md={4}>
-                <h4>Order Summary</h4>
+                <h4>Giỏ hàng của bạn</h4>
                 <ul>
-                  {cartItems.map(item => (
+                  {cartItems.map((item) => (
                     <li key={item.ProductID}>
-                      {item.Name} - {item.quantity} x ${Number(item.Price).toFixed(2)}
+                      {item.Name} x {item.quantity} - ${item.Price * item.quantity}
                     </li>
                   ))}
                 </ul>
-                <h4>Total: {calculateTotal()}</h4>
+                <h5>Tổng cộng: ${calculateTotal()}</h5>
               </Col>
             </Row>
-
             <Modal show={showModal} onHide={() => setShowModal(false)}>
               <Modal.Header closeButton>
                 <Modal.Title>Chọn phương thức thanh toán</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <Button variant="primary" className="mb-3" onClick={() => handlePaymentMethodSelect('Credit Card')}>
-                  Thanh toán qua thẻ tín dụng
-                </Button>
-                <Button variant="secondary" onClick={() => handlePaymentMethodSelect('Cash')}>
-                  Thanh toán khi nhận hàng
-                </Button>
+                <Row>
+                  <Col xs={6} md={6} lg={6}>
+                    <Button variant="primary" onClick={() => handlePaymentMethodSelect('creditCard')} style={{ width: '100%' }}>
+                      Thanh toán khi nhận hàng
+                    </Button>
+                  </Col>
+                  <Col xs={6} md={6} lg={6} className="d-flex justify-content-end">
+                    <div style={{ width: '100%' }}>
+                      <PaypalSubscriptionButton onSuccess={handlePayPalSuccess} />
+                    </div>
+                  </Col>
+                </Row>
               </Modal.Body>
             </Modal>
+
           </>
         )
       )}
-      {orderStatus === 'failed' && <p style={{ color: 'red' }}>Đặt hàng thất bại: {orderError}</p>}
     </Container>
   );
 };
