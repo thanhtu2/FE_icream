@@ -73,17 +73,17 @@ function App() {
         <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
         <Route path="/admin" element={<ProtectedRoute element={<Admin />} />} />
         <Route path="/admin/statistics" element={<ProtectedRoute element={<Statistics />} />} />
-        <Route path="/admin/users" element={<ProtectedRoute element={<UserManagement />} />} />
-        <Route path="/admin/users/:id/edit" element={<ProtectedRoute element={<UserEdit />} />} />
+        <Route path="/admin/users" element={<UserManagement />} />
+        <Route path="/admin/users/:id/edit" element={<UserEdit />} />
         <Route path="/admin/orders" element={<ProtectedRoute element={<OrderManagement />} />} />
-        <Route path="/admin/orders/create" element={<ProtectedRoute element={<OrderCreate />} />} />
-        <Route path="/admin/orders/:id/edit" element={<ProtectedRoute element={<OrderEdit />} />} />
+        <Route path="/admin/orders/create" element={<OrderCreate />}  />
+        <Route path="/admin/orders/:id/edit" element={<OrderEdit />} />
         <Route path="/admin/products" element={<ProtectedRoute element={<ProductManagement />} />} />
         <Route path="/admin/products/create" element={<ProtectedRoute element={<ProductCreate />} />} />
         <Route path="/admin/products/:id/edit" element={<ProtectedRoute element={<ProductEdit />} />} />
-        <Route path="/admin/discounts" element={<ProtectedRoute element={<AdminDiscounts />} />} />
-        <Route path="/discount/new" element={<ProtectedRoute element={<DiscountForm />} />} />
-        <Route path="/discount/:discountId" element={<ProtectedRoute element={<DiscountForm />} />} />
+        <Route path="/admin/discounts" element={<AdminDiscounts />} />
+        <Route path="/discounts/new" element={<DiscountForm />} />
+        <Route path="/discounts/:discountId" element={<DiscountForm />} />
         <Route path="/checkout" element={<CheckoutPage />} />
 
         <Route path="*" element={<NotFound />} />

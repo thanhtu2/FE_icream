@@ -140,7 +140,7 @@ const Profile = () => {
                         </p>
                     </div>
 
-                    <Button variant="danger" onClick={handleLogout} style={{ marginBottom: '20px' }}>Logout</Button>
+                    {/* <Button variant="danger" onClick={handleLogout} style={{ marginBottom: '20px' }}>Logout</Button> */}
                     <hr />
                     <h2 style={{ marginBottom: '20px', fontSize: '1.5rem', color: '#333' }}>Change Password</h2>
                     {changePasswordError && <Alert variant="danger">{changePasswordError}</Alert>}

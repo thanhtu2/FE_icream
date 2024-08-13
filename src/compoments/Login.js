@@ -166,7 +166,7 @@ const Login = () => {
         <p className="mt-3">Chưa có tài khoản? <Link to="/signup">Đăng ký ngay</Link></p>
         <hr />
         <ReactFacebookLogin
-        appId="1006850874260315"  
+        appId="1006850874260315"  //
           autoLoad={false}
           fields="name,email,picture"
           callback={responseFacebook}

@@ -12,7 +12,7 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const [formValues, setFormValues] = useState({
-    email: '',
+    // email: '',
     address: '',
     city: '',
     zip: '',
@@ -91,7 +91,7 @@ const CheckoutPage = () => {
       Quantity: cartItems.reduce((total, item) => total + item.quantity, 0),
       TotalPrice: calculateTotal(),
       PaymentStatus:'Thanh toán khi nhận hàng',
-      Email: formValues.email,
+      // Email: formValues.email,
       Address: formValues.address,
       City: formValues.city,
       Zip: formValues.zip,
@@ -172,7 +172,7 @@ const CheckoutPage = () => {
               <Col md={8}>
                 <h4>Địa chỉ giao hàng</h4>
                 <Form onSubmit={handlePlaceOrder}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  {/* <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
                       type="email"
@@ -182,7 +182,7 @@ const CheckoutPage = () => {
                       onChange={handleChange}
                       required
                     />
-                  </Form.Group>
+                  </Form.Group> */}
                   <Form.Group className="mb-3" controlId="formBasicAddress">
                     <Form.Label>Địa chỉ</Form.Label>
                     <Form.Control

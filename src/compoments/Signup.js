@@ -75,12 +75,12 @@ const Signup = () => {
 
   const formStyle = {
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    padding: '8rem',
+    padding: '3rem',
     borderRadius: '8px',
     boxShadow: '0 0 2px rgba(0, 0, 0, 0.2)',
     position: 'relative',
     zIndex: 1,
-    width: '100%',
+    width: '70%',
     maxWidth: '50%',
     margin: '0 auto'
   };
