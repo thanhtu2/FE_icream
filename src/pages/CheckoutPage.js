@@ -216,7 +216,7 @@ const CheckoutPage = () => {
                       required
                     />
                   </Form.Group>
-                  <Button variant="primary" type="submit">
+                  <Button variant="" type="submit" style={{ background:'rgb(115,38,44)', color:'white' }}>
                     Đặt hàng
                   </Button>
                 </Form>
@@ -240,7 +240,7 @@ const CheckoutPage = () => {
               <Modal.Body>
                 <Row>
                   <Col xs={6} md={6} lg={6}>
-                    <Button variant="primary" onClick={() => handlePaymentMethodSelect('creditCard')} style={{ width: '100%' }}>
+                    <Button variant="" onClick={() => handlePaymentMethodSelect('creditCard')} style={{ width: '100%', background:'rgb(115,38,44)', color:'white' }}>
                       Thanh toán khi nhận hàng
                     </Button>
                   </Col>

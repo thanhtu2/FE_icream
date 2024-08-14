@@ -21,7 +21,7 @@ const ProductList = () => {
         // Giả sử sản phẩm có trường `rating` để xác định "ngon nhất"
         const topProducts = fetchedProducts
           .sort((a, b) => b.rating - a.rating) // Sắp xếp sản phẩm theo `rating` từ cao xuống thấp
-          .slice(0, 5); // Lấy ra 5 sản phẩm đầu tiên
+          .slice(0, 3); // Lấy ra 5 sản phẩm đầu tiên
 
         setProducts(topProducts);
         setLoading(false);

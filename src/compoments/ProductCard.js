@@ -569,8 +569,8 @@ const ProductCard = ({ product }) => {
           <Card.Title>{product.Name}</Card.Title>
           <Card.Text>{product.Description}</Card.Text>
           <Card.Text>{product.Price} VND</Card.Text>
-          <Button variant="primary" onClick={handleAddToCart}>Add to Cart</Button>
-          <Button variant="secondary" onClick={handleShow} className="ms-2">Xem Chi Tiết</Button>
+          <Button variant="" onClick={handleAddToCart} style={{ background:'rgb(115,38,44)', color:'white' }}>Add to Cart</Button>
+          <Button variant="border border-danger" onClick={handleShow} className="ms-2">Xem Chi Tiết</Button>
         </Card.Body>
       </Card>
 
@@ -644,7 +644,7 @@ const ProductCard = ({ product }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => { handleAddToCart(); handleClose(); }}>
+          <Button variant="" onClick={() => { handleAddToCart(); handleClose(); }}style={{ background:'rgb(115,38,44)', color:'white' }}>
             Thêm vào giỏ hàng
           </Button>
         </Modal.Footer>

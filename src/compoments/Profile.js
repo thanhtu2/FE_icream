@@ -125,7 +125,7 @@ const Profile = () => {
             <h1 style={{ textAlign: 'center', marginBottom: '20px', fontSize: '2rem', color: '#333' }}>Profile</h1>
             {user ? (
                 <div>
-                    <div style={{ marginBottom: '20px' }}>
+                    {/* <div style={{ marginBottom: '20px' }}>
                         <p style={{ fontSize: '1.2rem', marginBottom: '10px' }}>
                             <strong style={{ fontSize: '1.2rem', color: '#333' }}>CustomerID:</strong> {user.CustomerID}
                         </p>
@@ -138,9 +138,34 @@ const Profile = () => {
                         <p style={{ fontSize: '1.2rem', marginBottom: '10px' }}>
                             <strong style={{ fontSize: '1.2rem', color: '#333' }}>Email:</strong> {user.Email}
                         </p>
-                    </div>
+                    </div> */}
+                              <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>CustomerID:</th>
+                                <th>FirstName:</th>
+                                <th>LastName:</th>
+                                <th>Email:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orders.length > 0 ? orders.map(order => (
+                                <tr key={order.OrderID}>
+                                    <td>{user.CustomerID}</td>
+                                    <td>{user.FirstName}</td>
+                                    <td>{user.LastName}</td>
+                                    <td> {user.Email}</td>
+                                   
+                                </tr>
+                            )) : (
+                                <tr>
+                                    <td colSpan="8" style={{ textAlign: 'center' }}>Không có đơn hàng nào</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </Table>
 
-                    {/* <Button variant="danger" onClick={handleLogout} style={{ marginBottom: '20px' }}>Logout</Button> */}
+                    <Button variant="danger" onClick={handleLogout} style={{ marginBottom: '20px' }}>Logout</Button>
                     <hr />
                     <h2 style={{ marginBottom: '20px', fontSize: '1.5rem', color: '#333' }}>Change Password</h2>
                     {changePasswordError && <Alert variant="danger">{changePasswordError}</Alert>}

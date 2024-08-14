@@ -16,8 +16,8 @@ const Contact = () => {
           <Form.Label>Message</Form.Label>
           <Form.Control as="textarea" rows={3} placeholder="Enter your message" />
         </Form.Group>
-
-        <Button variant="primary" type="submit">
+      <br/>
+        <Button variant="" type="submit" style={{ background:'rgb(115,38,44)', color:'white' }}>
           Submit
         </Button>
       </Form>
