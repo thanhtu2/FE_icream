@@ -39,4 +39,16 @@ footer {
   footer .text-white {
     color: #fff !important; /* Màu chữ trắng */
   }
+  footer {
+    background-color: #2A2A2A;
+    color: #fff;
+  }
+  
+  footer a {
+    color: #fff;
+  }
+  
+  footer a:hover {
+    color: #ddd; /* Màu khi hover */
+  }
   
