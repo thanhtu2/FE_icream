@@ -33,7 +33,7 @@ const CustomNavbar = () => {
   }, []);
 
   return (
-    <Navbar bg="light" expand="lg" className="custom-navbar">
+    <Navbar  expand="lg" className="custom-navbar">
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand className="me-auto" style={{ marginRight: 'auto' }}>ICE CREAM SHOP</Navbar.Brand>
