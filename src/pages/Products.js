@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate để điều hướng
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import các icon cần thiết
 import ProductCard from '../compoments/ProductCard';
 import '../style/Product.css';
 import banner_product from '../compoments/images/image 101.png';
@@ -9,11 +10,11 @@ import banner_product from '../compoments/images/image 101.png';
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState(null); // State để lưu danh mục được chọn
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const productsPerPage = 6;
 
-  const location = useLocation(); // Sử dụng useLocation để lấy URL hiện tại
-  const navigate = useNavigate(); // Sử dụng useNavigate để điều hướng
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:4000/products/')
@@ -30,7 +31,7 @@ const Products = () => {
     const category = params.get('category');
     if (category) {
       setSelectedCategory(parseInt(category));
-      setCurrentPage(1); // Reset về trang đầu tiên khi chọn danh mục mới
+      setCurrentPage(1);
     }
   }, [location]);
 
@@ -60,7 +61,6 @@ const Products = () => {
 
   return (
     <Container fluid className="px-3">
-      {/* Banner Section chỉ hiện trên trang Products */}
       {location.pathname === '/products' && (
         <div className="banner-product mb-4">
           <Image src={banner_product} alt="Banner" fluid />
@@ -101,9 +101,13 @@ const Products = () => {
             ))}
           </Row>
           <div className="pagination-controls d-flex justify-content-center align-items-center mt-4">
-            <Button onClick={handlePreviousPage} disabled={currentPage === 1} className="mx-2">Previous</Button>
+            <Button onClick={handlePreviousPage} disabled={currentPage === 1} className="mx-2" style={{ background:'rgb(115,38,44)', color:'white' }}>
+              <FaArrowLeft /> 
+            </Button>
             <span>Page {currentPage} of {Math.ceil(filteredProducts.length / productsPerPage)}</span>
-            <Button onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredProducts.length / productsPerPage)} className="mx-2">Next</Button>
+            <Button onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredProducts.length / productsPerPage)} className="mx-2" style={{ background:'rgb(115,38,44)', color:'white' }}>
+              <FaArrowRight /> 
+            </Button>
           </div>
         </div>
       </div>
