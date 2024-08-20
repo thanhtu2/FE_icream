@@ -6,6 +6,8 @@ import axios from 'axios';
 import '../style/UserManagement.css'; // Import tệp CSS tùy chỉnh
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
@@ -50,7 +52,7 @@ const UserManagement = () => {
   };
 
   return (
-    <div>
+    <div className='userManagement'>
       <h2>Danh sách người dùng</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success && <Alert variant="success">{success}</Alert>} {/* Hiển thị thông báo thành công */}

@@ -4,6 +4,7 @@ import { Table, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../style/OrderManagement.css' 
 
 const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -81,7 +82,7 @@ const OrderManagement = () => {
     });
 
   return (
-    <div>
+    <div className='orderManagements'>
       <h2>Danh sách đơn hàng</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <Button variant="success" onClick={() => navigate('/admin/orders/create')}>Tạo Đơn Hàng Mới</Button>

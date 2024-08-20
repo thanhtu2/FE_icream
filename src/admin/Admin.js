@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Statistics from './Statistics';
-import '../style/admin.css'; // Import CSS mới
+import '../style/admin.css';
 
 const Admin = () => {
   return (

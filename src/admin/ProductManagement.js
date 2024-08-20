@@ -4,6 +4,7 @@ import { Table, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../style/ProductManagement.css'
 
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
@@ -80,7 +81,7 @@ const ProductManagement = () => {
   };
 
   return (
-    <div>
+    <div className='productManagement'>
       <h2>Danh sách sản phẩm</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <Form.Control

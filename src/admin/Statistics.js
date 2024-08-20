@@ -143,7 +143,7 @@ const Statistics = () => {
 
   return (
     <Container>
-      <h1 className="chart-title">Thống Kê</h1>
+      <h1 className="chart-title" style={{marginLeft:"-23rem"}}>Thống Kê</h1>
 
       <Row className="mb-4">
         <Col md={4}>

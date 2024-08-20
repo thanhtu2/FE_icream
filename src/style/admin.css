@@ -18,6 +18,7 @@
     margin-right: 0;
     position: sticky; /* Để sidebar dính trên cùng khi cuộn trang */
     top: 0; /* Vị trí top của sidebar khi dính */
+    margin-top: 98px !important;
   }
   
   .admin-card {
@@ -31,4 +32,6 @@
   .admin-main-content {
     padding: 0;
   }
-  
+  .card-body {
+    background-color: #f6f6f6;
+  }
