@@ -1,20 +1,29 @@
 import React from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import '../style/contact.css'; // Thêm CSS nếu cần
-
 const Contact = () => {
   return (
     <Container>
-      <h1>Contact Us</h1>
+        <div className='contact_text'>
+        <h1>Liên Hệ Với Chúng Tôi</h1>
+        <img
+            src={`${process.env.PUBLIC_URL}/images/image 37.png`}
+            alt="First slide"
+          />
+        <h4>Chúng tôi luôn luôn lắng nghe những góp ý chân thành của Quý Khách để chất lượng phục vụ ngày 
+          càng tốt hơn. Chúng tôi rất mong nhận được sự phản hồi từ Quý Vị theo thông tin liên lạc như 
+          trên. Hoặc Quý Vị vui lòng gửi biểu mẫu dưới đây, chúng tôi sẽ phản hồi sớm nhất có thể.
+          </h4>
+      </div>
       <Form>
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Label>Địa chỉ email</Form.Label>
+          <Form.Control type="email" placeholder="Nhập email" />
         </Form.Group>
 
         <Form.Group controlId="formBasicMessage">
-          <Form.Label>Message</Form.Label>
-          <Form.Control as="textarea" rows={3} placeholder="Enter your message" />
+          <Form.Label>Tin nhắn</Form.Label>
+          <Form.Control as="textarea" rows={3} placeholder="Nội dung bạn muốn nói" />
         </Form.Group>
       <br/>
         <Button variant="" type="submit" style={{ background:'rgb(115,38,44)', color:'white' }}>

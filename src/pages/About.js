@@ -42,8 +42,8 @@ function About() {
                 </div>
             </div>
             <div className="gioithieu_total-box4">
-            <div className="box3_img">
-                    <img src={`${process.env.PUBLIC_URL}/images/Component 8.png`} alt="Hình 3" />
+            <div className="box4_img">
+                    <img src={`${process.env.PUBLIC_URL}/images/image 82.png`} alt="Hình 3" />
                 </div>
                 <div className="box4_text">
                     <h1>Cao Cấp - Hoàn Hảo</h1>
