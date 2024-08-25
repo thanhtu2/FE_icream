@@ -40,7 +40,7 @@ const Search = () => {
                 onChange={(e) => setQuery(e.target.value)}
               />
             </Form.Group>
-            <Button variant="primary" type="submit" className="mt-2">
+            <Button style={{background:'#73262C'}} variant="primary" type="submit" className="mt-2">
               Search
             </Button>
           </Form>

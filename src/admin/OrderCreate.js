@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import '../style/oderCreate.css'
 
 const OrderCreate = () => {
   const [order, setOrder] = useState({
@@ -99,12 +100,12 @@ const OrderCreate = () => {
   };
 
   return (
-    <Container style={{ marginTop: '20px' }}>
-      <h1>Tạo Đơn Hàng Mới</h1>
+    <Container style={{ marginTop: '20px',padding:"50px" }}>
+      <h1 style={{textAlign:"center",padding:"10px 0"}}>Tạo Đơn Hàng Mới</h1>
       {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formCustomerID">
-          <Form.Label>Khách Hàng</Form.Label>
+          <Form.Label style={{fontWeight:"600"}}>Khách Hàng</Form.Label>
           <Form.Control
             as="select"
             name="CustomerID"
@@ -112,7 +113,7 @@ const OrderCreate = () => {
             onChange={handleChange}
             required
           >
-            <option value="">Chọn Khách Hàng</option>
+            <option value="" >Chọn Khách Hàng</option>
             {customers.map(customer => (
               <option key={customer.CustomerID} value={customer.CustomerID}>
                 {`${customer.FirstName} ${customer.LastName}`}
@@ -121,7 +122,7 @@ const OrderCreate = () => {
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="formProductID">
-          <Form.Label>Sản Phẩm</Form.Label>
+          <Form.Label style={{fontWeight:"600",margin:"10px 0"}}>Sản Phẩm</Form.Label>
           <Form.Control
             as="select"
             name="ProductID"
@@ -138,7 +139,7 @@ const OrderCreate = () => {
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="formQuantity">
-          <Form.Label>Quantity</Form.Label>
+          <Form.Label  style={{fontWeight:"600",margin:"10px 0"}}>Quantity</Form.Label>
           <Form.Control
             type="number"
             name="Quantity"
@@ -148,7 +149,7 @@ const OrderCreate = () => {
           />
         </Form.Group>
         <Form.Group controlId="formTotalPrice">
-          <Form.Label>Total Price</Form.Label>
+          <Form.Label  style={{fontWeight:"600",margin:"10px 0"}}>Total Price</Form.Label>
           <Form.Control
             type="number"
             step="0.01"
@@ -159,7 +160,7 @@ const OrderCreate = () => {
           />
         </Form.Group>
         <Form.Group controlId="formOrderDate">
-          <Form.Label>Order Date</Form.Label>
+          <Form.Label  style={{fontWeight:"600",margin:"10px 0"}}> Order Date</Form.Label>
           <Form.Control
             type="date"
             name="OrderDate"
@@ -169,7 +170,7 @@ const OrderCreate = () => {
           />
         </Form.Group>
         <Form.Group controlId="formShipDate">
-          <Form.Label>Ship Date</Form.Label>
+          <Form.Label  style={{fontWeight:"600",margin:"10px 0"}}>Ship Date</Form.Label>
           <Form.Control
             type="date"
             name="ShipDate"
@@ -179,7 +180,7 @@ const OrderCreate = () => {
           />
         </Form.Group>
         <Form.Group controlId="formStatus">
-          <Form.Label>Status</Form.Label>
+          <Form.Label  style={{fontWeight:"600",margin:"10px 0"}}>Status</Form.Label>
           <Form.Control
             type="text"
             name="Status"
@@ -189,10 +190,10 @@ const OrderCreate = () => {
           />
         </Form.Group>
         
-        <Button variant="primary" type="submit" style={{ marginTop: '20px' }}>
+        <Button variant="primary" className='btn-createproduct' type="submit" style={{ marginTop: '20px' }}>
           Tạo Đơn Hàng
         </Button>
-        <Button variant="secondary" onClick={handleBackToList} style={{ marginTop: '20px', marginLeft: '10px' }}>
+        <Button className='btn-prevlistproduct' variant="secondary" onClick={handleBackToList} style={{ marginLeft: '10px' }}>
           Quay Lại Danh Sách Đơn Hàng
         </Button>
       </Form>

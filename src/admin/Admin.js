@@ -15,7 +15,7 @@ const Admin = () => {
             <Card.Body>
               <Card.Title className="admin-card-title">Quản lý người dùng</Card.Title>
               <Link to="/admin/users">
-                <Button variant="primary">Xem Người Dùng</Button>
+                <Button className="btn_admin">Xem Người Dùng</Button>
               </Link>
             </Card.Body>
           </Card>
@@ -24,7 +24,7 @@ const Admin = () => {
             <Card.Body>
               <Card.Title className="admin-card-title">Quản lý đơn hàng</Card.Title>
               <Link to="/admin/orders">
-                <Button variant="primary">Xem Đơn Hàng</Button>
+                <Button className="btn_admin" variant="primary">Xem Đơn Hàng</Button>
               </Link>
             </Card.Body>
           </Card>
@@ -33,7 +33,7 @@ const Admin = () => {
             <Card.Body>
               <Card.Title className="admin-card-title">Quản lý khuyến mãi</Card.Title>
               <Link to="/admin/discounts">
-                <Button variant="primary">Xem Khuyến Mãi</Button>
+                <Button className="btn_admin" variant="primary">Xem Khuyến Mãi</Button>
               </Link>
             </Card.Body>
           </Card>
@@ -42,7 +42,7 @@ const Admin = () => {
             <Card.Body>
               <Card.Title className="admin-card-title">Quản lý sản phẩm</Card.Title>
               <Link to="/admin/products">
-                <Button variant="primary">Xem Sản Phẩm</Button>
+                <Button className="btn_admin" variant="primary">Xem Sản Phẩm</Button>
               </Link>
             </Card.Body>
           </Card>

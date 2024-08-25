@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import '../style/productEdit.css'
 
 const ProductEdit = () => {
   const { id } = useParams();
@@ -91,11 +92,11 @@ const ProductEdit = () => {
   };
 
   return (
-    <Container style={{ marginTop: '20px' }}>
-      <h1>Cập nhật Sản Phẩm</h1>
+    <Container style={{ marginTop: '20px',padding:"50px" }}>
+      <h1 style={{textAlign:"center",padding:"10px 0"}}>Cập nhật Sản Phẩm</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formName">
-          <Form.Label>Tên Sản Phẩm</Form.Label>
+          <Form.Label style={{fontWeight:"600"}}>Tên Sản Phẩm</Form.Label>
           <Form.Control
             type="text"
             name="Name"
@@ -105,7 +106,7 @@ const ProductEdit = () => {
           />
         </Form.Group>
         <Form.Group controlId="formDescription">
-          <Form.Label>Mô Tả</Form.Label>
+          <Form.Label style={{fontWeight:"600",margin:"10px 0"}}>Mô Tả</Form.Label>
           <Form.Control
             type="text"
             name="Description"
@@ -115,7 +116,7 @@ const ProductEdit = () => {
           />
         </Form.Group>
         <Form.Group controlId="formPrice">
-          <Form.Label>Giá</Form.Label>
+          <Form.Label style={{fontWeight:"600",margin:"10px 0"}}>Giá</Form.Label>
           <Form.Control
             type="number"
             step="0.01"
@@ -126,7 +127,7 @@ const ProductEdit = () => {
           />
         </Form.Group>
         <Form.Group controlId="formCategoryID">
-          <Form.Label>Danh Mục</Form.Label>
+          <Form.Label style={{fontWeight:"600",margin:"10px 0"}}>Danh Mục</Form.Label>
           <Form.Control
             as="select"
             name="CategoryID"
@@ -134,7 +135,7 @@ const ProductEdit = () => {
             onChange={handleChange}
             required
           >
-            <option value="">Chọn danh mục</option>
+            <option value="" style={{fontWeight:"600",margin:"10px 0"}}>Chọn danh mục</option>
             {categories.map(category => (
               <option key={category.CategoryID} value={category.CategoryID}>
                 {category.Name}
@@ -143,7 +144,7 @@ const ProductEdit = () => {
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="formStock">
-          <Form.Label>Kho</Form.Label>
+          <Form.Label style={{fontWeight:"600",margin:"10px 0"}}>Kho</Form.Label>
           <Form.Control
             type="number"
             name="Stock"
@@ -153,7 +154,7 @@ const ProductEdit = () => {
           />
         </Form.Group>
         <Form.Group controlId="formImagePath">
-          <Form.Label>Đường dẫn hình ảnh</Form.Label>
+          <Form.Label style={{fontWeight:"600",margin:"10px 0"}}>Đường dẫn hình ảnh</Form.Label>
           <Form.Control
             type="text"
             name="ImagePath"
@@ -162,7 +163,7 @@ const ProductEdit = () => {
             required
           />
         </Form.Group>
-        <Button variant="primary" type="submit" style={{ marginTop: '20px' }}>
+        <Button variant="primary" className='btn-updateproduct' type="submit" style={{ marginTop: '20px',background:"#73262C" }}>
           Cập Nhật Sản Phẩm
         </Button>
       </Form>

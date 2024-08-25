@@ -1,0 +1,10 @@
+.btn-capnhat {
+   margin: 10px 0;
+   border-radius: 7px;
+   background-color: #73262C;
+   color: #fff;
+}
+.btn-capnhat:hover {
+    background-color: #A6495B;
+    color: #fff;
+}

@@ -100,7 +100,7 @@ const Products = () => {
               </Col>
             ))}
           </Row>
-          <div className="pagination-controls d-flex justify-content-center align-items-center mt-4">
+          <div className="pagination-controls d-flex justify-content-center align-items-center mt-4 p-trang">
             <Button onClick={handlePreviousPage} disabled={currentPage === 1} className="mx-2" style={{ background:'rgb(115,38,44)', color:'white' }}>
               <FaArrowLeft /> 
             </Button>
@@ -116,3 +116,5 @@ const Products = () => {
 };
 
 export default Products;
+
+// ----------------------------------------

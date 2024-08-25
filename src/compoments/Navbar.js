@@ -7,6 +7,7 @@ import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa';
 import { logout } from '../redux/slices/authSlice';
 import '../style/CustomNavbar.css';
 import axios from 'axios'; // Import axios để lấy danh mục
+import '../style/Navbar.css'
 
 const CustomNavbar = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -34,7 +35,7 @@ const CustomNavbar = () => {
 
   return (
     <Navbar  expand="lg" className="custom-navbar">
-      <Container>
+      <Container className='navbar'>
         <LinkContainer to="/">
           <Navbar.Brand className="me-auto" style={{ marginRight: 'auto' }}>ICE CREAM SHOP</Navbar.Brand>
         </LinkContainer>
@@ -55,7 +56,7 @@ const CustomNavbar = () => {
           >
             {categories.length > 0 ? (
               categories.map(category => (
-                <LinkContainer key={category.CategoryID} to={{ pathname: '/products', search: `?category=${category.CategoryID}` }}>
+                <LinkContainer className='category-btnv1' key={category.CategoryID} to={{ pathname: '/products', search: `?category=${category.CategoryID}` }}>
                   <NavDropdown.Item style={{ backgroundColor: 'transparent' }}>{category.Name}</NavDropdown.Item>
                 </LinkContainer>
               ))
@@ -97,7 +98,7 @@ const CustomNavbar = () => {
                   </NavDropdown.Item>
                 )}
                 <NavDropdown.Item>
-                  <Button variant="secondary" onClick={handleLogout}>Logout</Button>
+                  <Button variant="" className='btn-logout' style={{background:"#73262C",color:"#fff"}} onClick={handleLogout}>Logout</Button>
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (

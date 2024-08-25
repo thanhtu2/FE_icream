@@ -1,49 +1,4 @@
-.C-L ul{
-    background-color: aliceblue;
-    border-radius: 10px;
-     text-align: center;
-     margin: auto;
-     padding: 15PX;
- }
- .C-L{
-     width: 100%;
- }
- .C-L ul li p {
-     /* width: 100%; */
-     border-bottom: 1px solid #000;
- }
- .C-L ul li p a{
-     color: #A6495B;
-     text-decoration: none;
- }
- .C-L ul li p:hover {
-     background-color: #F1D7B6;
-     color: #A6495B;
-     border-radius: 5PX;
-     transform: scale(1.2);
- }
- .pagination-controls {
-    /* margin-top: 30px auto; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-    margin-left: -5rem;
- }
-.list-unstyled li a{
-    text-decoration: none;
-    color: #000;
-    font-weight: 600;
-}
-/* .list-unstyled li {
-    border-bottom: 1px solid #555;
-} */
-.list-unstyled li a:hover {
-    background-color: #F1D7B6;
-    color: #A6495B;
-    padding: 10px 20px;
-    border-radius: 5px;
-}
+
 @media (max-width: 800px) {
     .C-L {
       display: none;
@@ -62,30 +17,71 @@
     }
   }
   
-  .C-L {
-    text-align: left;
-  }
-  
-  .C-L ul {
-    padding-left: 0;
-  }
-  
-  .C-L ul li a {
-    text-decoration: none;
-    color: #333;
-  }
-  
-  .C-L ul li a:hover {
-    color: #555;
-  }
-  
-  .pagination-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .pagination-controls span {
-    margin: 0 10px;
-  }
-  
+
+
+
+/*  */
+/* CSS cho danh sách danh mục sản phẩm (bên trái) */
+.C-L {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.C-L ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.C-L ul li {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #a79991;
+  transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển màu */
+  text-align: center;
+  margin: 0;
+}
+
+.C-L ul li:last-child {
+  border-bottom: none;
+}
+
+.C-L ul li a {
+  color: #73262c;
+  text-decoration: none;
+  font-weight: bold;
+  list-style: none;
+}
+
+/* Thêm màu nền khi hover */
+.C-L ul li:hover {
+  background-color: #F1D7B6;
+
+}
+
+
+
+/* CSS cho phần nội dung sản phẩm (bên phải) */
+.C-R {
+  padding-left: 20px;
+}
+
+/* Pagination Control */
+.pagination-controls {
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  background-color: #73262c;
+  color: white;
+  border: none;
+}
+
+.pagination-controls span {
+  margin: 0 10px;
+}
+.p-trang {
+  position: relative;
+  right: 100px;
+  padding: 20px 0;
+}

@@ -155,3 +155,11 @@ button {
 
 }
 
+.button_details:hover {
+  background-color: #A6495B !important;
+  color: #fff;
+}
+.button_promotion:hover{
+  background-color: #A6495B !important;
+  color: #fff;
+}

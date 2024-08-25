@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../style/AdminDiscounts1.css'
 
 const AdminDiscounts = () => {
     const [discounts, setDiscounts] = useState([]);
@@ -42,11 +43,11 @@ const AdminDiscounts = () => {
     };
 
     return (
-        <Container>
-            <h1>Discount List</h1>
-            <Button variant="primary" onClick={() => navigate('/discounts/new')} style={{ marginBottom: '20px' }}>
+        <Container style={{"padding":"50px"}}>
+            <h1 style={{"textAlign":"center"}}>Discount List</h1>
+            <button className='btn-adddiscount' onClick={() => navigate('/discounts/new')} style={{ marginBottom: '20px',"background":"#73262C" }}>
                 Thêm Mã Giảm Giá
-            </Button>
+            </button>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -69,10 +70,10 @@ const AdminDiscounts = () => {
                             <td>{new Date(discount.StartDate).toLocaleDateString()}</td>
                             <td>{new Date(discount.EndDate).toLocaleDateString()}</td>
                             <td>
-                                <Button variant="warning" onClick={() => handleEdit(discount.DiscountID)}>
+                                <Button className='btn-suadiscount' variant="warning" onClick={() => handleEdit(discount.DiscountID)}>
                                     Sửa
                                 </Button>{' '}
-                                <Button variant="danger" onClick={() => handleDelete(discount.DiscountID)}>
+                                <Button className='btn-xoadiscount' variant="danger" onClick={() => handleDelete(discount.DiscountID)}>
                                     Xóa
                                 </Button>
                             </td>

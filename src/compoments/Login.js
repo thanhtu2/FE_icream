@@ -6,8 +6,9 @@ import { useDispatch } from 'react-redux';
 import { login } from '../redux/slices/authSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// import '../style/login.css'
+import '../style/Logins.css'
 import ReactFacebookLogin from 'react-facebook-login';
-
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -130,14 +131,14 @@ const Login = () => {
   };
 
   return (
-    <div style={loginBackground}>
+    <div style={loginBackground} className='conainer-login'>
       <div style={overlayStyle}></div>
       <Container style={formStyle}>
-        <h1>Login</h1>
+        <h1 style={{textAlign:'center'}}>Login</h1>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label style={{fontWeight:'600'}}>Email address</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
@@ -148,7 +149,7 @@ const Login = () => {
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label style={{fontWeight:'600',margin:'10px 0'}}>Password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Password"
@@ -158,14 +159,14 @@ const Login = () => {
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" className='btn-login' style={{background:"#73262C",color:"#fff"}}>
             Login
           </Button>
         </Form>
 
         <p className="mt-3">Chưa có tài khoản? <Link to="/signup">Đăng ký ngay</Link></p>
         <hr />
-        <ReactFacebookLogin
+        <ReactFacebookLogin className = 'DNfacebook'
         appId="1006850874260315"  //
           autoLoad={false}
           fields="name,email,picture"

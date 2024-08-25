@@ -1,30 +1,26 @@
-.productManagement {
-    width: 90%;
-    margin: auto;
-}
-.btn-addproductnew {
-    background-color: #73262C !important;
+.btn-adddiscount {
+    background-color: #73262C;
     color: #fff;
+    border-radius: 7px;
 }
-.btn-addproductnew:hover {
+.btn-adddiscount:hover {
     background-color: #A6495B !important;
     color: #fff;
 }
-.btn-suaproductmana {
+.btn-suadiscount {
     background-color: #73262C !important;
     color: #fff !important;
 }
-.btn-suaproductmana:hover {
+.btn-suadiscount:hover{
     background-color: #A6495B !important;
     color: #fff !important;
 }
-.btn-xoaproductmana {
+.btn-xoadiscount {
     background-color: #fff !important;
-    color: #73262C !important;
+    color: #000 !important;
     border: 2px solid #73262C !important;
-
 }
-.btn-xoaproductmana:hover {
+.btn-xoadiscount:hover {
     background-color: #A6495B !important;
     color: #fff !important;
 }

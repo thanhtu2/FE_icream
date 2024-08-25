@@ -82,10 +82,10 @@ const OrderManagement = () => {
     });
 
   return (
-    <div className='orderManagements'>
-      <h2>Danh sách đơn hàng</h2>
+    <div className='orderManagements' style={{padding:"50px"}}>
+      <h2 style={{textAlign:"center",padding:"10px 0"}}>Danh sách đơn hàng</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <Button variant="success" onClick={() => navigate('/admin/orders/create')}>Tạo Đơn Hàng Mới</Button>
+      <Button className="btn_edit" onClick={() => navigate('/admin/orders/create')}>Tạo Đơn Hàng Mới</Button>
 
       <Table striped bordered hover>
         <thead>
@@ -111,8 +111,8 @@ const OrderManagement = () => {
               <td>{order.Status}</td>
               <td>{order.PaymentStatus}</td>
               <td>
-                <Button variant="warning" onClick={() => handleEditOrder(order.OrderID)}>Sửa</Button>
-                <Button variant="danger" style={{ marginLeft: '10px' }} onClick={() => handleDeleteOrder(order.OrderID)}>Xóa</Button>
+                <Button className="btn_edit" onClick={() => handleEditOrder(order.OrderID)}>Sửa</Button>
+                <Button className="btn_hidden" style={{ marginLeft: '10px' }} onClick={() => handleDeleteOrder(order.OrderID)}>Xóa</Button>
               </td>
             </tr>
           ))}
