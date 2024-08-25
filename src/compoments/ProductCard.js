@@ -1,23 +1,12 @@
+
+// // 
 // import React, { useState, useEffect } from 'react';
-// import { Button, Card, Modal, Form } from 'react-bootstrap';
+// import { Card, Modal, Form, Button } from 'react-bootstrap';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { addToCart } from '../redux/slices/cartSlice';
 // import { toast } from 'react-toastify';
 // import axios from 'axios';
 // import '../style/ProductCard.css';
-
-// // Component để hiển thị đánh giá bằng sao
-// const StarRating = ({ rating }) => {
-//   const stars = Array(5).fill(false).map((_, index) => index < rating);
-
-//   return (
-//     <div>
-//       {stars.map((filled, index) => (
-//         <span key={index} style={{ color: filled ? 'gold' : 'grey' }}>★</span>
-//       ))}
-//     </div>
-//   );
-// };
 
 // const ProductCard = ({ product }) => {
 //   const dispatch = useDispatch();
@@ -25,33 +14,17 @@
 //   const [comments, setComments] = useState([]);
 //   const [users, setUsers] = useState({});
 //   const [error, setError] = useState('');
-//   const [replyText, setReplyText] = useState(''); // Nội dung trả lời
-//   const [replyToCommentId, setReplyToCommentId] = useState(null); // CommentID để trả lời
+//   const [replyText, setReplyText] = useState('');
+//   const [replyToCommentId, setReplyToCommentId] = useState(null);
+//   const [newCommentText, setNewCommentText] = useState('');
 //   const { user, token } = useSelector((state) => state.auth);
 
 //   const handleAddToCart = () => {
-//     if (user && token) {
-//       dispatch(addToCart(product));
-//       toast.success(`${product.Name} đã được thêm vào giỏ hàng`, {
-//         position: "top-right",
-//         autoClose: 3000,
-//         hideProgressBar: false,
-//         closeOnClick: true,
-//         pauseOnHover: true,
-//         draggable: true,
-//         progress: undefined,
-//       });
-//     } else {
-//       toast.warn('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.', {
-//         position: "top-right",
-//         autoClose: 3000,
-//         hideProgressBar: false,
-//         closeOnClick: true,
-//         pauseOnHover: true,
-//         draggable: true,
-//         progress: undefined,
-//       });
-//     }
+//     dispatch(addToCart(product));
+//     toast.success(`${product.Name} đã được thêm vào giỏ hàng`, {
+//       position: 'top-right',
+//       autoClose: 3000,
+//     });
 //   };
 
 //   const handleClose = () => setShow(false);
@@ -61,9 +34,8 @@
 //     const fetchComments = async () => {
 //       try {
 //         const response = await axios.get(`http://localhost:4000/comments/${product.ProductID}`);
-//         setComments(response.data.filter(comment => !comment.IsHidden)); // Chỉ lấy những bình luận không bị ẩn
+//         setComments(response.data.filter(comment => !comment.IsHidden));
 //       } catch (err) {
-//         console.error('Lỗi khi lấy comments:', err);
 //         setError('Không thể lấy comments. Vui lòng thử lại sau.');
 //       }
 //     };
@@ -77,7 +49,6 @@
 //         }, {});
 //         setUsers(usersData);
 //       } catch (err) {
-//         console.error('Lỗi khi lấy người dùng:', err);
 //         setError('Không thể lấy thông tin người dùng. Vui lòng thử lại sau.');
 //       }
 //     };
@@ -90,129 +61,104 @@
 //     try {
 //       if (user && user.isAdmin) {
 //         await axios.post(`http://localhost:4000/comments/hide/${commentId}`, {}, {
-//           headers: {
-//             Authorization: `Bearer ${token}`
-//           }
+//           headers: { Authorization: `Bearer ${token}` },
 //         });
-//         // Cập nhật lại danh sách bình luận
 //         setComments(comments.filter(comment => comment.CommentID !== commentId));
-//         toast.success('Bình luận đã được ẩn thành công', {
-//           position: "top-right",
-//           autoClose: 3000,
-//           hideProgressBar: false,
-//           closeOnClick: true,
-//           pauseOnHover: true,
-//           draggable: true,
-//           progress: undefined,
-//         });
+//         toast.success('Bình luận đã được ẩn thành công');
 //       } else {
-//         toast.error('Bạn không có quyền để ẩn bình luận.', {
-//           position: "top-right",
-//           autoClose: 3000,
-//           hideProgressBar: false,
-//           closeOnClick: true,
-//           pauseOnHover: true,
-//           draggable: true,
-//           progress: undefined,
-//         });
+//         toast.error('Bạn không có quyền để ẩn bình luận.');
 //       }
 //     } catch (err) {
-//       console.error('Lỗi khi ẩn bình luận:', err);
-//       toast.error('Không thể ẩn bình luận. Vui lòng thử lại sau.', {
-//         position: "top-right",
-//         autoClose: 3000,
-//         hideProgressBar: false,
-//         closeOnClick: true,
-//         pauseOnHover: true,
-//         draggable: true,
-//         progress: undefined,
-//       });
+//       toast.error('Không thể ẩn bình luận. Vui lòng thử lại sau.');
 //     }
 //   };
 
-//   const handleReplyChange = (e) => setReplyText(e.target.value); // Sửa thành setReplyText
+//   const handleReplyChange = (e) => setReplyText(e.target.value);
 
 //   const handleReplySubmit = async (e) => {
 //     e.preventDefault();
-//     if (replyToCommentId && replyText) { // Sửa thành replyToCommentId và replyText
+//     if (replyToCommentId && replyText) {
 //       if (!user || !user.CustomerID) {
-//         toast.warn('Bạn cần đăng nhập để gửi bình luận trả lời.', {
-//           position: "top-right",
-//           autoClose: 3000,
-//           hideProgressBar: false,
-//           closeOnClick: true,
-//           pauseOnHover: true,
-//           draggable: true,
-//           progress: undefined,
-//         });
+//         toast.warn('Bạn cần đăng nhập để gửi bình luận trả lời.');
 //         return;
 //       }
-
 //       try {
-//         await axios.post(`http://localhost:4000/comments/reply/${replyToCommentId}`, { // Sửa thành replyToCommentId
+//         await axios.post(`http://localhost:4000/comments/reply/${replyToCommentId}`, {
 //           ProductID: product.ProductID,
 //           CustomerID: user.CustomerID,
 //           Comment: replyText,
-//           Rating: 0 // Có thể thay đổi tùy thuộc vào yêu cầu
-//         }, {
-//           headers: {
-//             Authorization: `Bearer ${token}`
-//           }
-//         });
-//         setComments([...comments, { 
-//           CommentID: Date.now(), 
-//           CustomerID: user.CustomerID, 
-//           Comment: replyText, // Sửa thành replyText
-//           Rating: 0, // Có thể thay đổi tùy thuộc vào yêu cầu
-//           CommentDate: new Date(), // Thêm ngày bình luận
-//           ParentCommentID: replyToCommentId // Sửa thành replyToCommentId
+//           Rating: 0,
+//         }, { headers: { Authorization: `Bearer ${token}` } });
+//         setComments([...comments, {
+//           CommentID: Date.now(),
+//           CustomerID: user.CustomerID,
+//           Comment: replyText,
+//           Rating: 0,
+//           CommentDate: new Date(),
+//           ParentCommentID: replyToCommentId,
 //         }]);
-//         setReplyText(''); // Xóa nội dung trả lời
-//         setReplyToCommentId(null); // Xóa CommentID để trả lời
-//         toast.success('Trả lời bình luận thành công', {
-//           position: "top-right",
-//           autoClose: 3000,
-//           hideProgressBar: false,
-//           closeOnClick: true,
-//           pauseOnHover: true,
-//           draggable: true,
-//           progress: undefined,
-//         });
+//         setReplyText('');
+//         setReplyToCommentId(null);
+//         toast.success('Trả lời bình luận thành công');
 //       } catch (err) {
-//         console.error('Lỗi khi gửi bình luận trả lời:', err);
-//         toast.error('Không thể gửi bình luận trả lời. Vui lòng thử lại sau.', {
-//           position: "top-right",
-//           autoClose: 3000,
-//           hideProgressBar: false,
-//           closeOnClick: true,
-//           pauseOnHover: true,
-//           draggable: true,
-//           progress: undefined,
-//         });
+//         toast.error('Không thể gửi bình luận trả lời. Vui lòng thử lại sau.');
 //       }
 //     } else {
-//       toast.warn('Vui lòng nhập nội dung bình luận và chọn bình luận để trả lời.', {
-//         position: "top-right",
-//         autoClose: 3000,
-//         hideProgressBar: false,
-//         closeOnClick: true,
-//         pauseOnHover: true,
-//         draggable: true,
-//         progress: undefined,
-//       });
+//       toast.warn('Vui lòng nhập nội dung bình luận và chọn bình luận để trả lời.');
+//     }
+//   };
+
+//   const handleNewCommentChange = (e) => setNewCommentText(e.target.value);
+
+//   const handleNewCommentSubmit = async (e) => {
+//     e.preventDefault();
+//     if (newCommentText) {
+//       if (!user || !user.CustomerID) {
+//         toast.warn('Bạn cần đăng nhập để gửi bình luận.');
+//         return;
+//       }
+//       try {
+//         await axios.post('http://localhost:4000/comments', {
+//           ProductID: product.ProductID,
+//           CustomerID: user.CustomerID,
+//           Comment: newCommentText,
+//           Rating: 0,
+//           CommentDate: new Date(),
+//           IsHidden: false,
+//         }, { headers: { Authorization: `Bearer ${token}` } });
+//         setComments([...comments, {
+//           CommentID: Date.now(),
+//           CustomerID: user.CustomerID,
+//           Comment: newCommentText,
+//           Rating: 0,
+//           CommentDate: new Date(),
+//           ParentCommentID: null,
+//         }]);
+//         setNewCommentText('');
+//         toast.success('Bình luận đã được thêm thành công');
+//       } catch (err) {
+//         toast.error('Không thể gửi bình luận. Vui lòng thử lại sau.');
+//       }
+//     } else {
+//       toast.warn('Vui lòng nhập nội dung bình luận.');
 //     }
 //   };
 
 //   return (
 //     <>
 //       <Card className="product-card">
-//         <Card.Img variant="top" src={product.ImagePath} />
+//         <div className="img-container">
+//           <Card.Img variant="top" src={product.ImagePath} />
+//           <div className="overlay" style={{"backgroundColor": "rgba(0, 0, 0,0.3)"}}>
+//             <button style={{"background":"#F1D7B6"}} className="btn-xemchitiet" onClick={handleShow}>Xem Chi Tiết</button>
+//           </div>
+//         </div>
 //         <Card.Body>
 //           <Card.Title>{product.Name}</Card.Title>
-//           <Card.Text>{product.Description}</Card.Text>
-//           <Card.Text>{product.Price} VND</Card.Text>
-//           <Button variant="primary" onClick={handleAddToCart}>Add to Cart</Button>
-//           <Button variant="secondary" onClick={handleShow} className="ms-2">Xem Chi Tiết</Button>
+//           <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+//             <Card.Text>{product.Price} VND</Card.Text>
+//             <button className="btn-product-cart-body" onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
+//           </div>
 //         </Card.Body>
 //       </Card>
 
@@ -221,59 +167,68 @@
 //           <Modal.Title>{product.Name}</Modal.Title>
 //         </Modal.Header>
 //         <Modal.Body>
-//           <img src={product.ImagePath} alt={product.Name} className="modal-img" />
+//           <img src={product.ImagePath} alt={product.Name} className="modal-img" style={{ width: "100%", height: "50vh", objectFit: "contain" }} />
 //           <p><strong>Description:</strong> {product.Description}</p>
 //           <p><strong>Price:</strong> {product.Price} VND</p>
 //           <p><strong>Stock:</strong> {product.Stock} units</p>
-//           <p><strong>ProductID:</strong> {product.ProductID}</p>
-//           <hr />
-//           <h5>Comments:</h5>
-//           {error && <p className="text-danger">{error}</p>}
-//           {comments.length > 0 ? (
-//             <ul>
-//               {comments.map((comment) => (
-//                 <li key={comment.CommentID}>
-//                   <p><strong>{users[comment.CustomerID]?.FirstName} {users[comment.CustomerID]?.LastName}:</strong> {comment.Comment}</p>
-//                   <StarRating rating={comment.Rating} />
-//                   {user && user.isAdmin && (
-//                     <Button variant="danger" onClick={() => handleHideComment(comment.CommentID)}>
-//                       Hide Comment
-//                     </Button>
-//                   )}
-//                   {user && (
-//                     <Button variant="link" onClick={() => setReplyToCommentId(comment.CommentID)}>
-//                       Reply
-//                     </Button>
-//                   )}
-//                   {replyToCommentId === comment.CommentID && (
-//                     <Form onSubmit={handleReplySubmit}>
-//                       <Form.Group controlId="replyText">
-//                         <Form.Control
-//                           type="text"
-//                           placeholder="Type your reply here..."
-//                           value={replyText}
-//                           onChange={handleReplyChange}
-//                         />
-//                       </Form.Group>
-//                       <Button variant="primary" type="submit">
-//                         Submit Reply
-//                       </Button>
-//                     </Form>
-//                   )}
-//                 </li>
-//               ))}
-//             </ul>
-//           ) : (
-//             <p>No comments yet.</p>
-//           )}
+//           <div className="comments-section">
+//             <h5>Comments:</h5>
+//             {error ? <p style={{ color: 'red' }}>{error}</p> : <p>No comments yet.</p>}
+//             {comments.length > 0 && comments.map(comment => (
+//               <div key={comment.CommentID} className="comment">
+//                 <p>
+//                   <strong>{users[comment.CustomerID]?.FirstName} {users[comment.CustomerID]?.LastName}</strong> 
+//                   <span> ({new Date(comment.CommentDate).toLocaleDateString()})</span>
+//                   : {comment.Comment}
+//                 </p>
+//                 {user?.isAdmin && (
+//                   <Button variant="danger" onClick={() => handleHideComment(comment.CommentID)}>Ẩn bình luận</Button>
+//                 )}
+//                 <Button variant="link" onClick={() => setReplyToCommentId(comment.CommentID)}>Trả lời</Button>
+//                 {/* Render replies */}
+//                 {comments.filter(reply => reply.ParentCommentID === comment.CommentID).map(reply => (
+//                   <div key={reply.CommentID} className="reply">
+//                     <p>
+//                       <strong>{users[reply.CustomerID]?.FirstName} {users[reply.CustomerID]?.LastName}</strong>
+//                       <span> ({new Date(reply.CommentDate).toLocaleDateString()})</span>
+//                       : {reply.Comment}
+//                     </p>
+//                   </div>
+//                 ))}
+//               </div>
+//             ))}
+//             <Form onSubmit={handleNewCommentSubmit}>
+//               <Form.Group controlId="newComment">
+//                 <Form.Control
+//                   as="textarea"
+//                   rows={2}
+//                   value={newCommentText}
+//                   onChange={handleNewCommentChange}
+//                   placeholder="Type your comment here..."
+//                 />
+//               </Form.Group>
+//               <button className='btn-submit_Comment' type="submit" >Submit Comment</button>
+//             </Form>
+//             {replyToCommentId && (
+//               <Form onSubmit={handleReplySubmit}>
+//                 <Form.Group controlId="reply">
+//                   <Form.Control
+//                     as="textarea"
+//                     rows={2}
+//                     value={replyText}
+//                     onChange={handleReplyChange}
+//                     placeholder="Type your reply here..."
+//                   />
+//                 </Form.Group>
+//                 <Button type="submit" variant="primary">Submit Reply</Button>
+//                 <Button variant="secondary" onClick={() => setReplyToCommentId(null)}>Cancel</Button>
+//               </Form>
+//             )}
+//           </div>
 //         </Modal.Body>
 //         <Modal.Footer>
-//           <Button variant="secondary" onClick={handleClose}>
-//             Close
-//           </Button>
-//           <Button variant="primary" onClick={() => { handleAddToCart(); handleClose(); }}>
-//             Thêm vào giỏ hàng
-//           </Button>
+//           {/* <Button variant="secondary" onClick={handleClose} className='btn-close'>Close</Button> */}
+//           <Button  onClick={handleAddToCart} className='btn-addtoCartv2' style={{"height":"45px"}}>Add to Cart</Button>
 //         </Modal.Footer>
 //       </Modal>
 //     </>
@@ -281,26 +236,14 @@
 // };
 
 // export default ProductCard;
+// --------------------------------------------------------------------
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Modal, Form } from 'react-bootstrap';
+import { Card, Modal, Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/slices/cartSlice';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import '../style/ProductCard.css';
-
-// Component để hiển thị đánh giá bằng sao
-const StarRating = ({ rating }) => {
-  const stars = Array(5).fill(false).map((_, index) => index < rating);
-
-  return (
-    <div>
-      {stars.map((filled, index) => (
-        <span key={index} style={{ color: filled ? 'gold' : 'grey' }}>★</span>
-      ))}
-    </div>
-  );
-};
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -308,34 +251,17 @@ const ProductCard = ({ product }) => {
   const [comments, setComments] = useState([]);
   const [users, setUsers] = useState({});
   const [error, setError] = useState('');
-  const [replyText, setReplyText] = useState(''); // Nội dung trả lời
-  const [replyToCommentId, setReplyToCommentId] = useState(null); // CommentID để trả lời
-  const [newCommentText, setNewCommentText] = useState(''); // Nội dung bình luận mới
+  const [replyText, setReplyText] = useState('');
+  const [replyToCommentId, setReplyToCommentId] = useState(null);
+  const [newCommentText, setNewCommentText] = useState('');
   const { user, token } = useSelector((state) => state.auth);
 
   const handleAddToCart = () => {
-    if (user && token) {
-      dispatch(addToCart(product));
-      toast.success(`${product.Name} đã được thêm vào giỏ hàng`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    } else {
-      toast.warn('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }
+    dispatch(addToCart(product));
+    toast.success(`${product.Name} đã được thêm vào giỏ hàng`, {
+      position: 'top-right',
+      autoClose: 3000,
+    });
   };
 
   const handleClose = () => setShow(false);
@@ -345,9 +271,8 @@ const ProductCard = ({ product }) => {
     const fetchComments = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/comments/${product.ProductID}`);
-        setComments(response.data.filter(comment => !comment.IsHidden)); // Chỉ lấy những bình luận không bị ẩn
+        setComments(response.data.filter(comment => !comment.IsHidden));
       } catch (err) {
-        console.error('Lỗi khi lấy comments:', err);
         setError('Không thể lấy comments. Vui lòng thử lại sau.');
       }
     };
@@ -361,7 +286,6 @@ const ProductCard = ({ product }) => {
         }, {});
         setUsers(usersData);
       } catch (err) {
-        console.error('Lỗi khi lấy người dùng:', err);
         setError('Không thể lấy thông tin người dùng. Vui lòng thử lại sau.');
       }
     };
@@ -374,116 +298,50 @@ const ProductCard = ({ product }) => {
     try {
       if (user && user.isAdmin) {
         await axios.post(`http://localhost:4000/comments/hide/${commentId}`, {}, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` },
         });
-        // Cập nhật lại danh sách bình luận
         setComments(comments.filter(comment => comment.CommentID !== commentId));
-        toast.success('Bình luận đã được ẩn thành công', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.success('Bình luận đã được ẩn thành công');
       } else {
-        toast.error('Bạn không có quyền để ẩn bình luận.', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error('Bạn không có quyền để ẩn bình luận.');
       }
     } catch (err) {
-      console.error('Lỗi khi ẩn bình luận:', err);
-      toast.error('Không thể ẩn bình luận. Vui lòng thử lại sau.', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error('Không thể ẩn bình luận. Vui lòng thử lại sau.');
     }
   };
 
-  const handleReplyChange = (e) => setReplyText(e.target.value); // Sửa thành setReplyText
+  const handleReplyChange = (e) => setReplyText(e.target.value);
 
   const handleReplySubmit = async (e) => {
     e.preventDefault();
-    if (replyToCommentId && replyText) { // Sửa thành replyToCommentId và replyText
+    if (replyToCommentId && replyText) {
       if (!user || !user.CustomerID) {
-        toast.warn('Bạn cần đăng nhập để gửi bình luận trả lời.', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.warn('Bạn cần đăng nhập để gửi bình luận trả lời.');
         return;
       }
-
       try {
-        await axios.post(`http://localhost:4000/comments/reply/${replyToCommentId}`, { // Sửa thành replyToCommentId
+        await axios.post(`http://localhost:4000/comments/reply/${replyToCommentId}`, {
           ProductID: product.ProductID,
           CustomerID: user.CustomerID,
           Comment: replyText,
-          Rating: 0 // Có thể thay đổi tùy thuộc vào yêu cầu
-        }, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setComments([...comments, { 
-          CommentID: Date.now(), 
-          CustomerID: user.CustomerID, 
-          Comment: replyText, // Sửa thành replyText
-          Rating: 0, // Có thể thay đổi tùy thuộc vào yêu cầu
-          CommentDate: new Date(), // Thêm ngày bình luận
-          ParentCommentID: replyToCommentId // Sửa thành replyToCommentId
+          Rating: 0,
+        }, { headers: { Authorization: `Bearer ${token}` } });
+        setComments([...comments, {
+          CommentID: Date.now(),
+          CustomerID: user.CustomerID,
+          Comment: replyText,
+          Rating: 0,
+          CommentDate: new Date(),
+          ParentCommentID: replyToCommentId,
         }]);
-        setReplyText(''); // Xóa nội dung trả lời
-        setReplyToCommentId(null); // Xóa CommentID để trả lời
-        toast.success('Trả lời bình luận thành công', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        setReplyText('');
+        setReplyToCommentId(null);
+        toast.success('Trả lời bình luận thành công');
       } catch (err) {
-        console.error('Lỗi khi gửi bình luận trả lời:', err);
-        toast.error('Không thể gửi bình luận trả lời. Vui lòng thử lại sau.', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error('Không thể gửi bình luận trả lời. Vui lòng thử lại sau.');
       }
     } else {
-      toast.warn('Vui lòng nhập nội dung bình luận và chọn bình luận để trả lời.', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.warn('Vui lòng nhập nội dung bình luận và chọn bình luận để trả lời.');
     }
   };
 
@@ -493,161 +351,127 @@ const ProductCard = ({ product }) => {
     e.preventDefault();
     if (newCommentText) {
       if (!user || !user.CustomerID) {
-        toast.warn('Bạn cần đăng nhập để gửi bình luận.', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.warn('Bạn cần đăng nhập để gửi bình luận.');
         return;
       }
-
       try {
         await axios.post('http://localhost:4000/comments', {
           ProductID: product.ProductID,
           CustomerID: user.CustomerID,
           Comment: newCommentText,
-          Rating: 0, // Có thể thay đổi tùy thuộc vào yêu cầu
-          CommentDate: new Date(), // Thêm ngày bình luận
-          IsHidden: false // Bình luận không bị ẩn
-        }, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setComments([...comments, { 
-          CommentID: Date.now(), 
-          CustomerID: user.CustomerID, 
-          Comment: newCommentText,
-          Rating: 0, // Có thể thay đổi tùy thuộc vào yêu cầu
+          Rating: 0,
           CommentDate: new Date(),
-          ParentCommentID: null // Bình luận không có comment cha
+          IsHidden: false,
+        }, { headers: { Authorization: `Bearer ${token}` } });
+        setComments([...comments, {
+          CommentID: Date.now(),
+          CustomerID: user.CustomerID,
+          Comment: newCommentText,
+          Rating: 0,
+          CommentDate: new Date(),
+          ParentCommentID: null,
         }]);
         setNewCommentText('');
-        toast.success('Bình luận đã được thêm thành công', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.success('Bình luận đã được thêm thành công');
       } catch (err) {
-        console.error('Lỗi khi gửi bình luận:', err);
-        toast.error('Không thể gửi bình luận. Vui lòng thử lại sau.', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error('Không thể gửi bình luận. Vui lòng thử lại sau.');
       }
     } else {
-      toast.warn('Vui lòng nhập nội dung bình luận.', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.warn('Vui lòng nhập nội dung bình luận.');
     }
   };
 
   return (
     <>
       <Card className="product-card">
-        <Card.Img variant="top" src={product.ImagePath} />
+        <div className="img-container">
+          <Card.Img variant="top" src={product.ImagePath} />
+          <div className="overlay" style={{"backgroundColor": "rgba(0, 0, 0,0.2)"}}>
+            <button style={{"background":"#F1D7B6"}} className="btn-xemchitiet" onClick={handleShow}>Xem Chi Tiết</button>
+          </div>
+        </div>
         <Card.Body>
-          <Card.Title>{product.Name}</Card.Title>
-          <Card.Text>{product.Description}</Card.Text>
-          <Card.Text>{product.Price} VND</Card.Text>
-          <Button variant="" onClick={handleAddToCart} style={{ background:'rgb(115,38,44)', color:'white' }}>Add to Cart</Button>
-          <Button variant="border border-danger" onClick={handleShow} className="ms-2">Xem Chi Tiết</Button>
+          <Card.Title style={{padding:'15px 0'}}>{product.Name}</Card.Title>
+            {/* <Card.Text>{product.Description}</Card.Text> */}
+          <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+            <Card.Text style={{fontWeight:'600',fontSize:'15px'}}>{product.Price} VND</Card.Text>
+
+            <button className="btn-product-cart-body" onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
+          </div>
         </Card.Body>
       </Card>
 
       <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
+        {/* <Modal.Header closeButton>
           <Modal.Title>{product.Name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <img src={product.ImagePath} alt={product.Name} className="modal-img" />
-          <p><strong>Description:</strong> {product.Description}</p>
-          <p><strong>Price:</strong> {product.Price} VND</p>
-          <p><strong>Stock:</strong> {product.Stock} units</p>
-          {/* <p><strong>ProductID:</strong> {product.ProductID}</p> */}
-          <hr />
-          <h5>Comments:</h5>
-          {error && <p className="text-danger">{error}</p>}
-          {comments.length > 0 ? (
-            <ul>
-              {comments.map((comment) => (
-                <li key={comment.CommentID}>
-                  <p><strong>{users[comment.CustomerID]?.FirstName} {users[comment.CustomerID]?.LastName}:</strong> {comment.Comment}</p>
-                  <StarRating rating={comment.Rating} />
-                  {user && user.isAdmin && (
-                    <Button variant="danger" onClick={() => handleHideComment(comment.CommentID)}>
-                      Hide Comment
-                    </Button>
-                  )}
-                  {user && (
-                    <Button variant="link" onClick={() => setReplyToCommentId(comment.CommentID)}>
-                      Reply
-                    </Button>
-                  )}
-                  {replyToCommentId === comment.CommentID && (
-                    <Form onSubmit={handleReplySubmit}>
-                      <Form.Group controlId="replyText">
-                        <Form.Control
-                          type="text"
-                          placeholder="Type your reply here..."
-                          value={replyText}
-                          onChange={handleReplyChange}
-                        />
-                      </Form.Group>
-                      <Button variant="primary" type="submit">
-                        Submit Reply
-                      </Button>
-                    </Form>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No comments yet.</p>
-          )}
-          {user && (
-            <Form onSubmit={handleNewCommentSubmit} className="mt-3">
-              <Form.Group controlId="newCommentText">
+        </Modal.Header> */}
+        <Modal.Header>
+    <button type="button" className="btn-close" aria-label="Close" onClick={handleClose}>
+    <span style={{fontSize:"40px",position:'relative',top:'-20px'}}>&#215;</span>
+    </button>
+    <Modal.Title style={{position:'absolute'}}>{product.Name}</Modal.Title>
+          </Modal.Header>
+      
+        <Modal.Body style={{ padding: '20px', position: 'relative' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between',marginTop:"92px",background:"#FFF9E5",borderRadius:"10px" }}>
+            <div style={{ flex: '1', paddingRight: '10px' }}>
+              <img 
+                src={product.ImagePath} 
+                alt={product.Name} 
+                style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '8px',textAlign:"center"}} 
+              />
+            </div>
+            <div style={{ flex: '1', paddingLeft: '10px',marginTop:"115px" }}>
+              <h2 style={{textAlign:"center",fontSize:"26px"}}>{product.Name}</h2>
+              <h2 style={{textAlign:"center",fontSize:"18px"}}>{product.Description}</h2>
+
+              <p style={{ fontSize: '1.5rem', fontWeight: 'bold', textAlign:"center",marginTop:"10px",padding:"10px" }}>{product.Price} VND</p>
+            
+              <Button onClick={handleAddToCart} style={{ backgroundColor: '#73262C', color: '#fff', width: '100%', marginTop: '1rem' }}>
+                Thêm vào giỏ hàng
+              </Button>
+            </div>
+          </div>
+          <div style={{ marginTop: '2rem' }}>
+            <h5>Comments:</h5>
+            {error ? <p style={{ color: 'red' }}>{error}</p> : <p>No comments yet.</p>}
+            {comments.length > 0 && comments.map(comment => (
+              <div key={comment.CommentID} className="comment">
+                <p>
+                  <strong>{users[comment.CustomerID]?.FirstName} {users[comment.CustomerID]?.LastName}</strong> 
+                  <span> ({new Date(comment.CommentDate).toLocaleDateString()})</span>
+                </p>
+                <p>{comment.Comment}</p>
+                {user && user.isAdmin && (
+                  <button onClick={() => handleHideComment(comment.CommentID)}>Hide</button>
+                )}
+                <Form onSubmit={handleReplySubmit}>
+                  <Form.Control
+                    type="text"
+                    placeholder="Trả lời..."
+                    value={replyText}
+                    onChange={handleReplyChange}
+                    onClick={() => setReplyToCommentId(comment.CommentID)}
+                  />
+                  <Button type="submit">Reply</Button>
+                </Form>
+              </div>
+            ))}
+            <Form onSubmit={handleNewCommentSubmit} style={{ marginTop: '1rem' }}>
+              <Form.Group controlId="newComment">
+                <Form.Label>Viết bình luận của bạn:</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Type your comment here..."
+                  as="textarea"
+                  rows={3}
+                  placeholder="Nhập bình luận của bạn..."
                   value={newCommentText}
                   onChange={handleNewCommentChange}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" className="mt-2">
-                Submit Comment
-              </Button>
+              <Button type="submit" style={{ marginTop: '0.5rem',background:"#73262C" }}>Gửi bình luận</Button>
             </Form>
-          )}
+          </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="" onClick={() => { handleAddToCart(); handleClose(); }}style={{ background:'rgb(115,38,44)', color:'white' }}>
-            Thêm vào giỏ hàng
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

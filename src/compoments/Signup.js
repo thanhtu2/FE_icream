@@ -89,11 +89,11 @@ const Signup = () => {
     <div style={signupBackground}>
       <div style={overlayStyle}></div>
       <Container style={formStyle}>
-        <h1>Sign Up</h1>
+        <h1 style={{textAlign:'center'}}>Sign Up</h1>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicFirstName">
-            <Form.Label>First Name</Form.Label>
+            <Form.Label style={{fontWeight:'600'}}>First Name</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter first name"
@@ -104,7 +104,7 @@ const Signup = () => {
           </Form.Group>
 
           <Form.Group controlId="formBasicLastName">
-            <Form.Label>Last Name</Form.Label>
+            <Form.Label style={{fontWeight:'600',margin:'10px 0'}}>Last Name</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter last name"
@@ -115,7 +115,7 @@ const Signup = () => {
           </Form.Group>
 
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label style={{fontWeight:'600',margin:'10px 0'}}>Email address</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
@@ -126,7 +126,7 @@ const Signup = () => {
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label style={{fontWeight:'600',margin:'10px 0'}}>Password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Password"
@@ -137,7 +137,7 @@ const Signup = () => {
           </Form.Group>
 
           <Form.Group controlId="formConfirmPassword">
-            <Form.Label>Confirm Password</Form.Label>
+            <Form.Label style={{fontWeight:'600',margin:'10px 0'}}>Confirm Password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Confirm Password"
@@ -148,7 +148,7 @@ const Signup = () => {
           </Form.Group>
 
           <Form.Group controlId="formBasicAddress">
-            <Form.Label>Address</Form.Label>
+            <Form.Label style={{fontWeight:'600',margin:'10px 0'}}>Address</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter address"
@@ -158,17 +158,17 @@ const Signup = () => {
           </Form.Group>
 
           <Form.Group controlId="formBasicRole">
-            <Form.Label>Role</Form.Label>
+            <Form.Label style={{fontWeight:'600',margin:'10px 0'}}>Role</Form.Label>
             <Form.Control
               as="select"
               value={role}
               onChange={(e) => setRole(e.target.value)}
             >
-              <option value="user">User</option>
+              <option value="user" style={{fontWeight:'600',margin:'10px 0'}}>User</option>
             </Form.Control>
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" style={{background:'#73262C'}}>
             Sign Up
           </Button>
         </Form>

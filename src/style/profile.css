@@ -1,0 +1,7 @@
+.btn-dong:hover {
+    background-color: #A6495B !important;
+    color: #fff;
+}
+.btn-dong{
+    transition: 0.5s;
+}

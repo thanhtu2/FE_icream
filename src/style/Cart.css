@@ -38,12 +38,15 @@
     padding: 20px;
     margin-right: 20px;
     border: 1px solid #ddd;
+
   }
   
   .cart-item {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    border-bottom: 1px solid;
+    padding: 10px;
   }
   
   .cart-item img {
@@ -153,8 +156,19 @@
     font-weight: bold;
     color: #000;
   }
+  .checkout-button:hover {
+    background-color: #A6495B !important;
+    color: white;
+  }
    
-
+.btn-magiamgia:hover{
+  background-color: #A6495B !important;
+  color: white;
+}
+.btn-delete-cartItem:hover {
+  background-color: #A6495B !important;
+  color: white;
+}
   /* Media Queries for Responsiveness */
   @media (max-width:1280px){
     .cart-summary input {

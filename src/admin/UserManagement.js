@@ -52,8 +52,8 @@ const UserManagement = () => {
   };
 
   return (
-    <div className='userManagement'>
-      <h2>Danh sách người dùng</h2>
+    <div className='userManagement' style={{padding:"50px"}}>
+      <h2 style={{textAlign:"center",padding:"10px 0"}}>Danh sách người dùng</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success && <Alert variant="success">{success}</Alert>} {/* Hiển thị thông báo thành công */}
       <Table striped bordered hover>
@@ -78,8 +78,8 @@ const UserManagement = () => {
               <td>{user.Role}</td>
               <td>{user.IsActive ? 'Đang hoạt động' : 'Đã ẩn'}</td>
               <td>
-                <Button variant="warning" onClick={() => handleEditUser(user.CustomerID)}>Sửa</Button>
-                <Button variant="danger" style={{ marginLeft: '10px' }} onClick={() => handleHideUser(user.CustomerID)}>Ẩn</Button>
+                <Button className="btn_edit"  onClick={() => handleEditUser(user.CustomerID)}>Sửa</Button>
+                <Button className="btn_hidden"  style={{ marginLeft: '10px' }} onClick={() => handleHideUser(user.CustomerID)}>Ẩn</Button>
               </td>
             </tr>
           ))}

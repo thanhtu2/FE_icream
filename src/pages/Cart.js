@@ -69,7 +69,7 @@ const Cart = () => {
                         value={item.quantity}
                         onChange={e => handleQuantityChange(item.ProductID, parseInt(e.target.value))}
                       />
-                      <button onClick={() => handleRemoveFromCart(item.ProductID)}>Xóa</button>
+                      <button className='btn-delete-cartItem' onClick={() => handleRemoveFromCart(item.ProductID)}>Xóa</button>
                     </div>
                   </div>
                   <div className="cart-item-price">
@@ -87,7 +87,7 @@ const Cart = () => {
                 value={discount}
                 onChange={e => setDiscount(e.target.value)}
               />
-              <button onClick={handleAddDiscount}>Áp dụng mã giảm giá</button>
+              <button onClick={handleAddDiscount} className='btn-magiamgia'>Áp dụng mã giảm giá</button>
               <button onClick={() => navigate('/checkout')} className="checkout-button">Thanh Toán</button>
             </div>
           </>

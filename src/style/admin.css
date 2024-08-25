@@ -35,3 +35,7 @@
   .card-body {
     background-color: #f6f6f6;
   }
+  .btn_admin{
+    background-color: #73262C !important;
+    color:white !important;
+  }

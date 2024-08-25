@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../style/DiscountForm1.css'
+import '../style/DiscountForm.css'
 
 const DiscountForm = () => {
     const [title, setTitle] = useState('');
@@ -105,12 +107,12 @@ const DiscountForm = () => {
     };
 
     return (
-        <Container>
-            <h1>{discountId ? 'Edit Discount' : 'Add Discount'}</h1>
+        <Container style={{"padding":"50px"}}>
+            <h1 style={{"textAlign":"center","padding":"20px "}}>{discountId ? 'Edit Discount' : 'Add Discount'}</h1>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form>
                 <Form.Group controlId="formTitle">
-                    <Form.Label>Title</Form.Label>
+                    <Form.Label className='title' style={{fontWeight:"600"}}>Title</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter title"
@@ -120,7 +122,7 @@ const DiscountForm = () => {
                     />
                 </Form.Group>
                 <Form.Group controlId="formDescription">
-                    <Form.Label>Description</Form.Label>
+                    <Form.Label style={{marginTop:"15px",fontWeight:"600"}}>Description</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter description"
@@ -130,7 +132,7 @@ const DiscountForm = () => {
                     />
                 </Form.Group>
                 <Form.Group controlId="formDiscountPercent">
-                    <Form.Label>Discount Percent</Form.Label>
+                    <Form.Label  style={{marginTop:"15px",fontWeight:"600"}}>Discount Percent</Form.Label>
                     <Form.Control
                         type="number"
                         placeholder="Enter discount percent"
@@ -140,7 +142,7 @@ const DiscountForm = () => {
                     />
                 </Form.Group>
                 <Form.Group controlId="formStartDate">
-                    <Form.Label>Start Date</Form.Label>
+                    <Form.Label  style={{marginTop:"15px",fontWeight:"600"}}> Start Date</Form.Label>
                     <Form.Control
                         type="date"
                         value={startDate}
@@ -149,7 +151,7 @@ const DiscountForm = () => {
                     />
                 </Form.Group>
                 <Form.Group controlId="formEndDate">
-                    <Form.Label>End Date</Form.Label>
+                    <Form.Label  style={{marginTop:"15px",fontWeight:"600"}}>End Date</Form.Label>
                     <Form.Control
                         type="date"
                         value={endDate}
@@ -158,26 +160,26 @@ const DiscountForm = () => {
                     />
                 </Form.Group>
                 <Form.Group controlId="formProduct">
-                    <Form.Label>Product</Form.Label>
+                    <Form.Label  style={{marginTop:"15px",fontWeight:"600"}}>Product</Form.Label>
                     <Form.Control
                         as="select"
                         value={productId}
                         onChange={handleProductChange}
                         required
                     >
-                        <option value="">Select a product</option>
+                        <option value=""  style={{marginTop:"15px",fontWeight:"600"}}>Select a product</option>
                         {products.map(product => (
-                            <option key={product.ProductID} value={product.ProductID}>
-                                {product.Name} - ${product.Price}
+                            <option key={product.ProductID} value={product.ProductID} className='option_product_discount'>
+                                {product.Name} - ${product.Price} 
                             </option>
                         ))}
                     </Form.Control>
                 </Form.Group>
-                <Button variant="primary" onClick={handleSave}>
+                <Button variant="primary" onClick={handleSave} className='btn-savediscount' style={{background:"#73262C"}}>
                     {discountId ? 'Update Discount' : 'Save Discount'}
                 </Button>
                 {discountId && (
-                    <Button variant="danger" onClick={handleDelete} style={{ marginLeft: '10px' }}>
+                    <Button className='btn-delediscount' variant="danger" onClick={handleDelete} style={{ marginLeft: '20px',margin:"20px",color:"#fff",background:"##A6495B !important" }}>
                         Delete Discount
                     </Button>
                 )}

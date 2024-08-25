@@ -34,7 +34,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './compoments/ProtectedRoute'
 import PromotionPage from './pages/PromotionPage';
 import CheckoutPage from './pages/CheckoutPage';
-
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
@@ -85,7 +84,6 @@ function App() {
         <Route path="/discounts/new" element={<DiscountForm />} />
         <Route path="/discounts/:discountId" element={<DiscountForm />} />
         <Route path="/checkout" element={<CheckoutPage />} />
-
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

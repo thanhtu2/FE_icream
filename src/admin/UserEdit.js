@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 import axios from 'axios';
+import '../style/userEdit.css'
 
 const UserEdit = () => {
   const { id } = useParams();
@@ -45,13 +46,13 @@ const UserEdit = () => {
   };
 
   return (
-    <Container style={{ marginTop: '20px' }}>
-      <h1>Sửa Thông Tin Người Dùng</h1>
+    <Container style={{ marginTop: '20px',padding:"50px" }}>
+      <h1 style={{textAlign:"center",padding:"10px 0"}}>Sửa Thông Tin Người Dùng</h1>
       {error && <Alert variant="danger">{error}</Alert>}
       {success && <Alert variant="success">{success}</Alert>}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formFirstName">
-          <Form.Label>First Name</Form.Label>
+          <Form.Label style={{fontWeight:"600"}}>First Name</Form.Label>
           <Form.Control
             type="text"
             name="FirstName"
@@ -61,7 +62,7 @@ const UserEdit = () => {
           />
         </Form.Group>
         <Form.Group controlId="formLastName">
-          <Form.Label>Last Name</Form.Label>
+          <Form.Label style={{fontWeight:"600",margin:"10px 0"}}>Last Name</Form.Label>
           <Form.Control
             type="text"
             name="LastName"
@@ -71,7 +72,7 @@ const UserEdit = () => {
           />
         </Form.Group>
         <Form.Group controlId="formEmail">
-          <Form.Label>Email</Form.Label>
+          <Form.Label style={{fontWeight:"600",margin:"10px 0"}}>Email</Form.Label>
           <Form.Control
             type="email"
             name="Email"
@@ -81,7 +82,7 @@ const UserEdit = () => {
           />
         </Form.Group>
         <Form.Group controlId="formAddress">
-          <Form.Label>Address</Form.Label>
+          <Form.Label style={{fontWeight:"600",margin:"10px 0"}}>Address</Form.Label>
           <Form.Control
             type="text"
             name="Address"
@@ -91,9 +92,9 @@ const UserEdit = () => {
           />
         </Form.Group>
         
-        <Button variant="primary" type="submit">
+        <button className='btn-capnhat' variant="primary" type="submit">
           Cập Nhật
-        </Button>
+        </button>
       </Form>
     </Container>
   );

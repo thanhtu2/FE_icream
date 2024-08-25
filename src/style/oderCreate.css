@@ -1,0 +1,16 @@
+.btn-createproduct {
+    background-color: #73262C !important;
+    color: #fff;
+}
+.btn-createproduct:hover {
+    background-color: #A6495B;
+    color: #fff;
+}
+.btn-prevlistproduct {
+    background-color: #73262C !important;
+    color: #fff;
+}
+.btn-prevlistproduct:hover {
+    background-color: #A6495B !important;
+    color: #fff;
+}

@@ -145,55 +145,6 @@ button {
   background-color: #73262C !important; 
   border-radius: 5px;
   margin-top:40px;
-}
-.button:hover{
-  background-color: #A6495B !important;
-}
-
-@media only screen and (max-width: 992px) {
-  .banner_home_1_box2_child h4{
-    display: none;
-  }
-}
-@media only screen and (max-width: 768px) {
-  .banner_home_1_box2_child > *{
-    padding-top:unset;
-
-  }
-  .banner_home_1_box2_child .button_details{
-    padding-top:unset;
-  }
-  .banner_home_1_box2_child{
-    padding-top:unset;
-  }
-  .button_details{
-    margin-top:unset !important;
-  }
-  .banner_home_1_box2_child{
-    padding-top:20px;
-  }
-  .banner_home_1_box2_child h1{
-    font-size:26px;
-    font-weight: 700;
-  }
-}
-@media only screen and (max-width: 450px) {
-  .banner_home_1_box2_child h1{
-    font-size:20px;
-    font-weight: 700;
-  }
-}
-@media only screen and (min-width: 740px)  and (max-width:1201px){
-  .banner_home_1_box2_child > * {
-    padding-top: unset;
-}
 
 }
 
-@media only screen and (min-width: 1024px) {
-
-}
-
-.button_promotion:hover, .button_details:hover{
-  background-color:#A6495B !important;
-}

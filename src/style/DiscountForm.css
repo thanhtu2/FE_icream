@@ -1,0 +1,20 @@
+.btn-savediscount {
+    margin: 20px 0 !important;
+}
+.btn-primary {
+    background-color: #73262C ;
+    margin: 20px 0;
+}
+.btn-primary:hover{
+    background-color: #A6495B !important;
+    color: #fff !important;
+}
+.btn-delediscount {
+    background-color: #73262C !important;
+    margin-left: 5px;
+
+}
+.btn-delediscount:hover {
+    background-color: #A6495B !important;
+    color: #fff;
+}

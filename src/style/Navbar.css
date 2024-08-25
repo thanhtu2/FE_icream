@@ -1,0 +1,9 @@
+
+ .navbar a:hover {
+   color: #A6495B !important;
+ }
+.btn-logout:hover {
+  background-color: #A6495B !important;
+  color: #fff !important;
+  width: 100%;
+}

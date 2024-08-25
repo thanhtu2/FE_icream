@@ -69,3 +69,7 @@
     width: 60px;
     height: 60px;
 }
+.w-100:hover {
+  background-color: #A6495B !important;
+  color: #fff;
+}

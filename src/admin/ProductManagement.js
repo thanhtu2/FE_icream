@@ -81,8 +81,8 @@ const ProductManagement = () => {
   };
 
   return (
-    <div className='productManagement'>
-      <h2>Danh sách sản phẩm</h2>
+    <div className='productManagement' style={{padding:"50px"}}>
+      <h2 style={{textAlign:"center",padding: "20px 0"}}>Danh sách sản phẩm</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <Form.Control
         type="text"
@@ -91,7 +91,7 @@ const ProductManagement = () => {
         onChange={handleSearch}
         style={{ marginBottom: '20px' }}
       />
-      <Button variant="success" onClick={() => navigate('/admin/products/create')} style={{ marginBottom: '20px' }}>
+      <Button variant="success" className='btn-addproductnew' onClick={() => navigate('/admin/products/create')} style={{ marginBottom: '20px' }}>
         Thêm Sản Phẩm Mới
       </Button>
 
@@ -115,8 +115,8 @@ const ProductManagement = () => {
               <td>{getCategoryName(product.CategoryID)}</td>
               <td>{product.Stock}</td>
               <td>
-                <Button variant="warning" onClick={() => handleEditProduct(product.ProductID)}>Sửa</Button>
-                <Button variant="danger" style={{ marginLeft: '10px' }} onClick={() => handleDeleteProduct(product.ProductID)}>Xóa</Button>
+                <Button className='btn-suaproductmana' variant="warning" onClick={() => handleEditProduct(product.ProductID)}>Sửa</Button>
+                <Button className='btn-xoaproductmana' variant="danger" style={{ marginLeft: '10px',color:'#fff !important' }} onClick={() => handleDeleteProduct(product.ProductID)}>Xóa</Button>
               </td>
             </tr>
           ))}

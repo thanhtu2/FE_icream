@@ -8,3 +8,13 @@
     width: 90%;
     margin: auto;
   }
+
+  .btn_edit{
+    background-color: #73262C !important;
+    color:white !important;
+  }
+  .btn_hidden{
+    border:2px solid #73262C !important;
+    color:#73262C !important;
+    background-color: white !important;
+  }
