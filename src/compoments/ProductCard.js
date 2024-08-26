@@ -409,10 +409,10 @@ const ProductCard = ({ product }) => {
     <button type="button" className="btn-close" aria-label="Close" onClick={handleClose}>
     <span style={{fontSize:"40px",position:'relative',top:'-20px'}}>&#215;</span>
     </button>
-    <Modal.Title style={{position:'absolute'}}>{product.Name}</Modal.Title>
+    <Modal.Title style={{position:'absolute',marginTop:'20px'}}>{product.Name}</Modal.Title>
           </Modal.Header>
       
-        <Modal.Body style={{ padding: '20px', position: 'relative' }}>
+        <Modal.Body style={{ padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between',marginTop:"92px",background:"#FFF9E5",borderRadius:"10px" }}>
             <div style={{ flex: '1', paddingRight: '10px' }}>
               <img 
@@ -421,9 +421,10 @@ const ProductCard = ({ product }) => {
                 style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '8px',textAlign:"center"}} 
               />
             </div>
-            <div style={{ flex: '1', paddingLeft: '10px',marginTop:"115px" }}>
+            <div style={{ flex: '1', paddingLeft: '10px',marginTop:"57px" }}>
               <h2 style={{textAlign:"center",fontSize:"26px"}}>{product.Name}</h2>
-              <h2 style={{textAlign:"center",fontSize:"18px"}}>{product.Description}</h2>
+              <br/>
+              <h2 style={{fontSize:"18px",textAlign:"left", lineHeight:'1.7'}}>{product.Description}</h2>
 
               <p style={{ fontSize: '1.5rem', fontWeight: 'bold', textAlign:"center",marginTop:"10px",padding:"10px" }}>{product.Price} VND</p>
             
