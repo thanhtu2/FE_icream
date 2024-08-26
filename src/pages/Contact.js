@@ -1,19 +1,18 @@
 import React from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import '../style/contact.css'; // Thêm CSS nếu cần
-
 const Contact = () => {
   return (
-    <Container style={{padding:"50px"}}>
-      <h1 style={{textAlign:"center",padding:"10px 0"}}>Contact Us</h1>
+    <Container>
+      <h1>Contact Us</h1>
       <Form>
         <Form.Group controlId="formBasicEmail">
-          <Form.Label style={{padding:"10px 0"}}>Email address</Form.Label> 
+          <Form.Label>Email address</Form.Label>
           <Form.Control type="email" placeholder="Enter email" />
         </Form.Group>
 
         <Form.Group controlId="formBasicMessage">
-          <Form.Label style={{marginTop:"25px"}}>Message</Form.Label>
+          <Form.Label>Message</Form.Label>
           <Form.Control as="textarea" rows={3} placeholder="Enter your message" />
         </Form.Group>
       <br/>

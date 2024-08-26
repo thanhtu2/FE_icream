@@ -37,7 +37,14 @@ const CustomNavbar = () => {
     <Navbar  expand="lg" className="custom-navbar">
       <Container className='navbar'>
         <LinkContainer to="/">
-          <Navbar.Brand className="me-auto" style={{ marginRight: 'auto' }}>ICE CREAM SHOP</Navbar.Brand>
+          <Navbar.Brand className="me-auto" style={{ marginRight: 'auto' }}>   
+            <img
+            className="d-block w-100 logo"
+            src={`${process.env.PUBLIC_URL}/images/image 11.png`}
+            alt="Second slide"
+          />
+          </Navbar.Brand>
+        
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -66,8 +73,7 @@ const CustomNavbar = () => {
           </NavDropdown>
             <LinkContainer to="/about">
               <Nav.Link>About</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/contact">
+            </LinkContainer><LinkContainer to="/contact">
               <Nav.Link>Contact</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/Promotion">
