@@ -24,7 +24,7 @@
 }
 
 .box2_text_button, button {
-    background-color: #f0a500;
+    background-color: #73262C;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -37,5 +37,5 @@
 }
 
 .box2_text_button:hover, button:hover {
-    background-color: #e09b00;
+    background-color: #A6495B;
 }

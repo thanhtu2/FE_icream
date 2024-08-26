@@ -7,7 +7,7 @@ function PromotionPage() {
         <div className="promotion_total">
             {/* <img className="banner_promotion" src={`${process.env.PUBLIC_URL}/images/imae 67.png`} alt="Banner khuyến mãi" /> */}
             <div className="promotion_total-box1">
-                <div className="box1_img">
+                <div className="box1_img" style={{marginLeft:'20px'}}>
                     <img src={`${process.env.PUBLIC_URL}/images/image 70.png`} alt="Khuyến mãi 1" />
                 </div>
                 <div className="box1_text">
@@ -48,7 +48,7 @@ function PromotionPage() {
                 <div className="box4_text">
                     <h1>Ưu Đãi Đặc Biệt Cho Khách Hàng Thân Thiết</h1>
                     <h3>Đặc quyền đặc biệt dành cho khách hàng thân thiết của chúng tôi. Đăng ký ngay để nhận những ưu đãi và chương trình khuyến mãi độc quyền.</h3>
-                    <button>Đăng Ký Ngay</button>
+                    <button className='btn-dkngay'>Đăng Ký Ngay</button>
                 </div>
             </div>
         </div>
