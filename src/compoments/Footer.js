@@ -50,7 +50,7 @@ const Footer = () => {
       <Container className="p-4">
         <Row>
           <Col lg={6} md={12} className="mb-4 mb-md-0">
-            <h5 className="text-uppercase">Ice Cream Shop</h5>
+            <h5 className="text-uppercase">Häagen-Dazs</h5>
             <p style={{color:'#fff'}}>
               Enjoy the best ice cream in town! Made with the freshest ingredients and love.
             </p>

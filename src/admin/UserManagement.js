@@ -79,7 +79,7 @@ const UserManagement = () => {
               <td>{user.IsActive ? 'Đang hoạt động' : 'Đã ẩn'}</td>
               <td>
                 <Button className="btn_edit"  onClick={() => handleEditUser(user.CustomerID)}>Sửa</Button>
-                <Button className="btn_hidden"  style={{ marginLeft: '10px' }} onClick={() => handleHideUser(user.CustomerID)}>Ẩn</Button>
+                <Button className="btn_hiddens"  style={{ marginLeft: '10px' }} onClick={() => handleHideUser(user.CustomerID)}>Ẩn</Button>
               </td>
             </tr>
           ))}
