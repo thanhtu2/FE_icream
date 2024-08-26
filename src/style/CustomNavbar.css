@@ -172,8 +172,7 @@ background-color: #EFDCCD !important;
 /* .me-auto.active.navbar-brand{
   padding-right:50px;
 } */
-.mt-2.btn.btn-primary, .btn.btn-primary, .kep-login-facebook{background-color: #73262C !important;
-}
+
 .mt-2.btn.btn-primary:active, .btn.btn-primary:active , .kep-login-facebook:active{
   background-color: #A6495B !important;
 }
