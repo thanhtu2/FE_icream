@@ -13,3 +13,15 @@
     width: 90%;
     margin: auto;
   }
+  .btn_edit{
+    background-color: #73262C !important;
+    color:white !important;
+  }
+  .btn_hiddens{
+    background-color: #fff !important;
+    color: #73262C !important;
+    border: 2px solid #73262C !important;
+  }
+  /* .btn-primary{
+    display:hidden;
+  } */

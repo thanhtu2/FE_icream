@@ -112,7 +112,7 @@ const OrderManagement = () => {
               <td>{order.PaymentStatus}</td>
               <td>
                 <Button className="btn_edit" onClick={() => handleEditOrder(order.OrderID)}>Sửa</Button>
-                <Button className="btn_hidden" style={{ marginLeft: '10px' }} onClick={() => handleDeleteOrder(order.OrderID)}>Xóa</Button>
+                <Button className="btn_hiddens" style={{ marginLeft: '10px' }} onClick={() => handleDeleteOrder(order.OrderID)}>Xóa</Button>
               </td>
             </tr>
           ))}

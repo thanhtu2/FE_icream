@@ -15,6 +15,6 @@
   }
   .btn_hiddens{
     background-color: #fff !important;
-    color: #000;
-    border: 2px solid #73262C;
+    color: #73262C !important;
+    border: 2px solid #73262C !important;
   }
