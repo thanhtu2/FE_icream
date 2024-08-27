@@ -27,7 +27,7 @@ const Cart = () => {
     try {
       const response = await axios.get(`http://localhost:4000/discounts/${discount}`);
       const isExistProduct = cartItems.find(item => item.ProductID === response.data.ProductID);
-      if(isExistProduct){  
+      if (isExistProduct) {
         dispatch(updateDiscount(response.data));
         toast.success('Mã giảm giá áp dụng thành công.', { position: 'top-right', autoClose: 3000 });
       } else {
@@ -46,7 +46,7 @@ const Cart = () => {
   return (
     <div className="cart-container">
       <div className="banner_shoppingCart">
-        <img src={banner_shoppingCart} alt="Shopping Cart Banner"/>
+        <img src={banner_shoppingCart} alt="Shopping Cart Banner" />
       </div>
       <div className="cart-header">
         <h2>Giỏ Hàng</h2>
@@ -73,7 +73,12 @@ const Cart = () => {
                     </div>
                   </div>
                   <div className="cart-item-price">
-                    <p>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Number(item.Price) * item.quantity)}</p>
+                    <p>
+                      {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
+                        parseFloat(item.Price + '000') * item.quantity
+                      )}
+                    </p>
+
                   </div>
                 </div>
               ))}
