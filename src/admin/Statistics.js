@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import axios from 'axios';
-import '../style/statistic.css'
-
+import '../style/statistic.css';
 
 import {
   Chart as ChartJS,
@@ -25,7 +24,7 @@ ChartJS.register(
   ArcElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 const Statistics = () => {
@@ -42,13 +41,19 @@ const Statistics = () => {
         const orderResponse = await axios.get('http://localhost:4000/orders');
         setOrderData(orderResponse.data);
 
-        const yearlySalesResponse = await axios.get('http://localhost:4000/sales/yearly');
+        const yearlySalesResponse = await axios.get(
+          'http://localhost:4000/sales/yearly',
+        );
         setYearlySalesStats(yearlySalesResponse.data);
 
-        const revenueResponse = await axios.get('http://localhost:4000/revenue-stats');
+        const revenueResponse = await axios.get(
+          'http://localhost:4000/revenue-stats',
+        );
         setRevenueStats(revenueResponse.data);
 
-        const productResponse = await axios.get('http://localhost:4000/product-stats');
+        const productResponse = await axios.get(
+          'http://localhost:4000/product-stats',
+        );
         setProductStats(productResponse.data);
 
         setLoading(false);
@@ -65,7 +70,9 @@ const Statistics = () => {
   if (error) return <p>Error: {error}</p>;
 
   // Prepare data for the orders chart
-  const orderDates = orderData.map(order => new Date(order.OrderDate).toLocaleDateString());
+  const orderDates = orderData.map(order =>
+    new Date(order.OrderDate).toLocaleDateString(),
+  );
   const orderCounts = orderDates.reduce((acc, date) => {
     acc[date] = (acc[date] || 0) + 1;
     return acc;
@@ -90,7 +97,9 @@ const Statistics = () => {
     datasets: [
       {
         label: 'Doanh thu theo sản phẩm',
-        data: revenueStats.map(stat => parseFloat(stat.TotalRevenue.replace(/,/g, ''))), // Remove commas from TotalRevenue
+        data: revenueStats.map(stat =>
+          parseFloat(stat.TotalRevenue.replace(/,/g, '')),
+        ), // Remove commas from TotalRevenue
         backgroundColor: 'rgba(255, 99, 132, 0.6)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
@@ -100,7 +109,7 @@ const Statistics = () => {
 
   // Ensure productStats is an object with properties
   const totalProducts = productStats.totalProducts || 0;
-  const inStock = productStats.inStock || "0";
+  const inStock = productStats.inStock || '0';
   const outOfStock = productStats.outOfStock || 0;
 
   // Prepare data for the yearly sales chart
@@ -109,14 +118,18 @@ const Statistics = () => {
     datasets: [
       {
         label: 'Doanh số hàng năm',
-        data: yearlySalesStats.map(stat => parseFloat(stat.totalSales.replace(/,/g, ''))), // Remove commas from totalSales
+        data: yearlySalesStats.map(stat =>
+          parseFloat(stat.totalSales.replace(/,/g, '')),
+        ), // Remove commas from totalSales
         backgroundColor: 'rgba(54, 162, 235, 0.6)',
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
       },
       {
         label: 'Số lượng hàng năm',
-        data: yearlySalesStats.map(stat => parseFloat(stat.totalQuantity.replace(/,/g, ''))), // Remove commas from totalQuantity
+        data: yearlySalesStats.map(stat =>
+          parseFloat(stat.totalQuantity.replace(/,/g, '')),
+        ), // Remove commas from totalQuantity
         backgroundColor: 'rgba(153, 102, 255, 0.6)',
         borderColor: 'rgba(153, 102, 255, 1)',
         borderWidth: 1,
@@ -133,7 +146,7 @@ const Statistics = () => {
       },
       tooltip: {
         callbacks: {
-          label: function(tooltipItem) {
+          label: function (tooltipItem) {
             return `${tooltipItem.label}: ${tooltipItem.raw.toLocaleString()}`;
           },
         },
@@ -143,7 +156,9 @@ const Statistics = () => {
 
   return (
     <Container>
-      <h1 className="chart-title" style={{marginLeft:"-23rem"}}>Thống Kê</h1>
+      <h1 className="chart-title" style={{ marginLeft: '-23rem' }}>
+        Thống Kê
+      </h1>
 
       <Row className="mb-4">
         <Col md={4}>

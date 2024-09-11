@@ -15,7 +15,9 @@ const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const query = new URLSearchParams(location.search).get('category');
-        const response = await axios.get(`http://localhost:4000/products${query ? `?category=${query}` : ''}`);
+        const response = await axios.get(
+          `http://localhost:4000/products${query ? `?category=${query}` : ''}`,
+        );
         let fetchedProducts = response.data;
 
         // Giả sử sản phẩm có trường `rating` để xác định "ngon nhất"
@@ -47,7 +49,14 @@ const ProductList = () => {
     <Row>
       {products.length > 0 ? (
         products.map(product => (
-          <Col key={product.ProductID} sm={12} md={6} lg={4} xl={3} className="col-product">
+          <Col
+            key={product.ProductID}
+            sm={12}
+            md={6}
+            lg={4}
+            xl={3}
+            className="col-product"
+          >
             <ProductCard product={product} className="product-card" />
           </Col>
         ))

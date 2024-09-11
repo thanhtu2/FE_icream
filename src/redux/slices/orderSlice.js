@@ -7,13 +7,15 @@ export const fetchUserProfile = createAsyncThunk(
   async (token, thunkAPI) => {
     try {
       const response = await axios.get('http://localhost:4000/profile', {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       return response.data; // Trả về dữ liệu từ phản hồi của API nếu thành công
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data || 'Đã xảy ra lỗi không xác định');
+      return thunkAPI.rejectWithValue(
+        error.response?.data || 'Đã xảy ra lỗi không xác định',
+      );
     }
-  }
+  },
 );
 
 // Thực hiện gọi API để đặt hàng
@@ -26,9 +28,11 @@ export const placeOrder = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error('API Error:', error.response?.data || error.message); // Log lỗi từ API
-      return thunkAPI.rejectWithValue(error.response?.data || 'Đã xảy ra lỗi không xác định');
+      return thunkAPI.rejectWithValue(
+        error.response?.data || 'Đã xảy ra lỗi không xác định',
+      );
     }
-  }
+  },
 );
 
 const initialState = {
@@ -44,15 +48,15 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     // Xóa đơn hàng và đặt lại trạng thái ban đầu
-    clearOrder: (state) => {
+    clearOrder: state => {
       state.order = null;
       state.status = 'idle';
       state.error = null;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchUserProfile.pending, (state) => {
+      .addCase(fetchUserProfile.pending, state => {
         state.userStatus = 'loading'; // Đặt trạng thái thành 'loading' khi API đang được gọi
       })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
@@ -63,7 +67,7 @@ const orderSlice = createSlice({
         state.userStatus = 'failed'; // Đặt trạng thái thành 'failed' khi API trả về lỗi
         state.error = action.payload; // Lưu thông tin lỗi vào state.error
       })
-      .addCase(placeOrder.pending, (state) => {
+      .addCase(placeOrder.pending, state => {
         state.status = 'loading'; // Đặt trạng thái thành 'loading' khi API đang được gọi
       })
       .addCase(placeOrder.fulfilled, (state, action) => {

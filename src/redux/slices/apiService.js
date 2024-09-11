@@ -1,10 +1,12 @@
 // src/services/api.js
 import axios from 'axios';
 
-
-export const placeOrder = async (orderDetails) => {
+export const placeOrder = async orderDetails => {
   try {
-    const response = await axios.post(`http://localhost:4000/orders`, orderDetails);
+    const response = await axios.post(
+      `http://localhost:4000/orders`,
+      orderDetails,
+    );
     return response.data;
   } catch (error) {
     const errorMessage = error.response?.data?.message || error.message;

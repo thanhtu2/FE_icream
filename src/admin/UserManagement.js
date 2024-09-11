@@ -7,7 +7,6 @@ import '../style/UserManagement.css'; // Import tệp CSS tùy chỉnh
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
@@ -27,35 +26,41 @@ const UserManagement = () => {
     fetchUsers();
   }, []);
 
-  const handleHideUser = async (userId) => {
+  const handleHideUser = async userId => {
     try {
       await axios.patch(`http://localhost:4000/users/${userId}/hide`);
-      setUsers(users.map(user => user.CustomerID === userId ? { ...user, IsActive: false } : user));
+      setUsers(
+        users.map(user =>
+          user.CustomerID === userId ? { ...user, IsActive: false } : user,
+        ),
+      );
       setSuccess('Người dùng đã được ẩn thành công.'); // Cập nhật thông báo thành công
     } catch (err) {
       setError('Lỗi khi ẩn người dùng.');
     }
     toast.success('Ẩn thành công!', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
-  const handleEditUser = (userId) => {
+  const handleEditUser = userId => {
     navigate(`/admin/users/${userId}/edit`);
   };
 
   return (
-    <div className='userManagement' style={{padding:"50px"}}>
-      <h2 style={{textAlign:"center",padding:"10px 0"}}>Danh sách người dùng</h2>
+    <div className="userManagement" style={{ padding: '50px' }}>
+      <h2 style={{ textAlign: 'center', padding: '10px 0' }}>
+        Danh sách người dùng
+      </h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <Alert variant="success">{success}</Alert>} {/* Hiển thị thông báo thành công */}
+      {success && <Alert variant="success">{success}</Alert>}{' '}
+      {/* Hiển thị thông báo thành công */}
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -70,7 +75,10 @@ const UserManagement = () => {
         </thead>
         <tbody>
           {users.map(user => (
-            <tr key={user.CustomerID} className={user.IsActive ? '' : 'hidden-user'}>
+            <tr
+              key={user.CustomerID}
+              className={user.IsActive ? '' : 'hidden-user'}
+            >
               <td>{user.CustomerID}</td>
               <td>{`${user.FirstName} ${user.LastName}`}</td>
               <td>{user.Email}</td>
@@ -78,8 +86,19 @@ const UserManagement = () => {
               <td>{user.Role}</td>
               <td>{user.IsActive ? 'Đang hoạt động' : 'Đã ẩn'}</td>
               <td>
-                <Button className="btn_edit"  onClick={() => handleEditUser(user.CustomerID)}>Sửa</Button>
-                <Button className="btn_hiddens"  style={{ marginLeft: '10px' }} onClick={() => handleHideUser(user.CustomerID)}>Ẩn</Button>
+                <Button
+                  className="btn_edit"
+                  onClick={() => handleEditUser(user.CustomerID)}
+                >
+                  Sửa
+                </Button>
+                <Button
+                  className="btn_hiddens"
+                  style={{ marginLeft: '10px' }}
+                  onClick={() => handleHideUser(user.CustomerID)}
+                >
+                  Ẩn
+                </Button>
               </td>
             </tr>
           ))}

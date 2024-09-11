@@ -4,7 +4,7 @@ import { Table, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../style/OrderManagement.css' 
+import '../style/OrderManagement.css';
 
 const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -16,11 +16,12 @@ const OrderManagement = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [ordersResponse, usersResponse, productsResponse] = await Promise.all([
-          axios.get('http://localhost:4000/orders'),
-          axios.get('http://localhost:4000/users'),
-          axios.get('http://localhost:4000/products')
-        ]);
+        const [ordersResponse, usersResponse, productsResponse] =
+          await Promise.all([
+            axios.get('http://localhost:4000/orders'),
+            axios.get('http://localhost:4000/users'),
+            axios.get('http://localhost:4000/products'),
+          ]);
         setOrders(ordersResponse.data);
         setUsers(usersResponse.data);
         setProducts(productsResponse.data);
@@ -32,60 +33,67 @@ const OrderManagement = () => {
     fetchData();
   }, []);
 
-  const handleEditOrder = (orderId) => {
+  const handleEditOrder = orderId => {
     navigate(`/admin/orders/${orderId}/edit`);
   };
 
-  const handleDeleteOrder = async (orderId) => {
+  const handleDeleteOrder = async orderId => {
     try {
       await axios.delete(`http://localhost:4000/orders/${orderId}`);
-      setOrders(prevOrders => prevOrders.filter(order => order.OrderID !== orderId));
+      setOrders(prevOrders =>
+        prevOrders.filter(order => order.OrderID !== orderId),
+      );
       toast.success('Xóa đơn hàng thành công.');
     } catch (err) {
       toast.error('Lỗi khi xóa đơn hàng.');
     }
   };
 
-  const getCustomerName = (customerId) => {
+  const getCustomerName = customerId => {
     const user = users.find(user => user.CustomerID === customerId);
     return user ? `${user.FirstName} ${user.LastName}` : 'Không tìm thấy';
   };
 
-  const getProductName = (productId) => {
+  const getProductName = productId => {
     const product = products.find(product => product.ProductID === productId);
     return product ? product.Name : 'Không tìm thấy';
   };
 
-  const getRowClass = (status) => {
+  const getRowClass = status => {
     const statusClasses = {
-     'đang bom  ': { backgroundColor: '#red' },
+      'đang bom  ': { backgroundColor: '#red' },
       'đang giao': { backgroundColor: '#d1ecf1' },
       'sắp giao': { backgroundColor: 'red' },
     };
     return statusClasses[status] || '';
   };
 
-  const sortedOrders = orders
-    .slice()
-    .sort((a, b) => {
-      const statusOrder = {
-        'đang giao': 1,
-        'sắp giao': 2,
-        'đang bom': 3,
-      };
+  const sortedOrders = orders.slice().sort((a, b) => {
+    const statusOrder = {
+      'đang giao': 1,
+      'sắp giao': 2,
+      'đang bom': 3,
+    };
 
-      if (statusOrder[a.Status] !== statusOrder[b.Status]) {
-        return statusOrder[a.Status] - statusOrder[b.Status];
-      }
+    if (statusOrder[a.Status] !== statusOrder[b.Status]) {
+      return statusOrder[a.Status] - statusOrder[b.Status];
+    }
 
-      return new Date(b.OrderDate) - new Date(a.OrderDate);
-    });
+    return new Date(b.OrderDate) - new Date(a.OrderDate);
+  });
 
   return (
-    <div className='orderManagements' style={{padding:"50px"}}>
-      <h2 style={{textAlign:"center",padding:"10px 0"}}>Danh sách đơn hàng</h2>
+    <div className="orderManagements" style={{ padding: '50px' }}>
+      <h2 style={{ textAlign: 'center', padding: '10px 0' }}>
+        Danh sách đơn hàng
+      </h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <Button className="btn_edit" onClick={() => navigate('/admin/orders/create')}>Tạo Đơn Hàng Mới</Button>
+      <Button
+        className="btn_edit"
+        onClick={() => navigate('/admin/orders/create')}
+      >
+        Tạo Đơn Hàng Mới
+      </Button>
 
       <Table striped bordered hover>
         <thead>
@@ -111,8 +119,19 @@ const OrderManagement = () => {
               <td>{order.Status}</td>
               <td>{order.PaymentStatus}</td>
               <td>
-                <Button className="btn_edit" onClick={() => handleEditOrder(order.OrderID)}>Sửa</Button>
-                <Button className="btn_hiddens" style={{ marginLeft: '10px' }} onClick={() => handleDeleteOrder(order.OrderID)}>Xóa</Button>
+                <Button
+                  className="btn_edit"
+                  onClick={() => handleEditOrder(order.OrderID)}
+                >
+                  Sửa
+                </Button>
+                <Button
+                  className="btn_hiddens"
+                  style={{ marginLeft: '10px' }}
+                  onClick={() => handleDeleteOrder(order.OrderID)}
+                >
+                  Xóa
+                </Button>
               </td>
             </tr>
           ))}
