@@ -1,9 +1,12 @@
-
 // ----------------------------------------------------------------------------------------------
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '../style/Cart.css';
-import { removeFromCart, updateQuantity, updateDiscount } from '../redux/slices/cartSlice';
+import {
+  removeFromCart,
+  updateQuantity,
+  updateDiscount,
+} from '../redux/slices/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -25,22 +28,41 @@ const Cart = () => {
 
   const handleAddDiscount = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/discounts/${discount}`);
-      const isExistProduct = cartItems.find(item => item.ProductID === response.data.ProductID);
+      const response = await axios.get(
+        `http://localhost:4000/discounts/${discount}`,
+      );
+      const isExistProduct = cartItems.find(
+        item => item.ProductID === response.data.ProductID,
+      );
       if (isExistProduct) {
         dispatch(updateDiscount(response.data));
-        toast.success('Mã giảm giá áp dụng thành công.', { position: 'top-right', autoClose: 3000 });
+        toast.success('Mã giảm giá áp dụng thành công.', {
+          position: 'top-right',
+          autoClose: 3000,
+        });
       } else {
-        toast.error('Mã giảm giá không thể áp dụng cho các sản phẩm này.', { position: 'top-right', autoClose: 3000 });
+        toast.error('Mã giảm giá không thể áp dụng cho các sản phẩm này.', {
+          position: 'top-right',
+          autoClose: 3000,
+        });
       }
     } catch (err) {
-      toast.error('Mã giảm giá không tồn tại.', { position: 'top-right', autoClose: 3000 });
+      toast.error('Mã giảm giá không tồn tại.', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
     }
   };
 
   const calculateTotal = () => {
-    const total = cartItems.reduce((total, item) => total + Number(item.Price) * item.quantity, 0);
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total);
+    const total = cartItems.reduce(
+      (total, item) => total + Number(item.Price) * item.quantity,
+      0,
+    );
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(total);
   };
 
   return (
@@ -67,18 +89,28 @@ const Cart = () => {
                       <input
                         type="number"
                         value={item.quantity}
-                        onChange={e => handleQuantityChange(item.ProductID, parseInt(e.target.value))}
+                        onChange={e =>
+                          handleQuantityChange(
+                            item.ProductID,
+                            parseInt(e.target.value),
+                          )
+                        }
                       />
-                      <button className='btn-delete-cartItem' onClick={() => handleRemoveFromCart(item.ProductID)}>Xóa</button>
+                      <button
+                        className="btn-delete-cartItem"
+                        onClick={() => handleRemoveFromCart(item.ProductID)}
+                      >
+                        Xóa
+                      </button>
                     </div>
                   </div>
                   <div className="cart-item-price">
                     <p>
-                      {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-                        parseFloat(item.Price + '000') * item.quantity
-                      )}
+                      {new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(parseFloat(item.Price + '000') * item.quantity)}
                     </p>
-
                   </div>
                 </div>
               ))}
@@ -92,8 +124,15 @@ const Cart = () => {
                 value={discount}
                 onChange={e => setDiscount(e.target.value)}
               />
-              <button onClick={handleAddDiscount} className='btn-magiamgia'>Áp dụng mã giảm giá</button>
-              <button onClick={() => navigate('/checkout')} className="checkout-button">Thanh Toán</button>
+              <button onClick={handleAddDiscount} className="btn-magiamgia">
+                Áp dụng mã giảm giá
+              </button>
+              <button
+                onClick={() => navigate('/checkout')}
+                className="checkout-button"
+              >
+                Thanh Toán
+              </button>
             </div>
           </>
         )}
@@ -104,4 +143,3 @@ const Cart = () => {
 
 export default Cart;
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-

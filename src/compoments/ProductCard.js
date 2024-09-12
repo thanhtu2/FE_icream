@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
   const [replyText, setReplyText] = useState('');
   const [replyToCommentId, setReplyToCommentId] = useState(null);
   const [newCommentText, setNewCommentText] = useState('');
-  const { user, token } = useSelector((state) => state.auth);
+  const { user, token } = useSelector(state => state.auth);
 
   const handleAddToCart = () => {
     dispatch(addToCart(product));
@@ -31,7 +31,9 @@ const ProductCard = ({ product }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/comments/${product.ProductID}`);
+        const response = await axios.get(
+          `http://localhost:4000/comments/${product.ProductID}`,
+        );
         setComments(response.data.filter(comment => !comment.IsHidden));
       } catch (err) {
         setError('Không thể lấy comments. Vui lòng thử lại sau.');
@@ -42,7 +44,10 @@ const ProductCard = ({ product }) => {
       try {
         const response = await axios.get('http://localhost:4000/users');
         const usersData = response.data.reduce((acc, user) => {
-          acc[user.CustomerID] = { FirstName: user.FirstName, LastName: user.LastName };
+          acc[user.CustomerID] = {
+            FirstName: user.FirstName,
+            LastName: user.LastName,
+          };
           return acc;
         }, {});
         setUsers(usersData);
@@ -55,13 +60,19 @@ const ProductCard = ({ product }) => {
     fetchUsers();
   }, [product.ProductID]);
 
-  const handleHideComment = async (commentId) => {
+  const handleHideComment = async commentId => {
     try {
       if (user && user.admin) {
-        await axios.post(`http://localhost:4000/comments/hide/${commentId}`, {}, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setComments(comments.filter(comment => comment.CommentID !== commentId));
+        await axios.post(
+          `http://localhost:4000/comments/hide/${commentId}`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+        setComments(
+          comments.filter(comment => comment.CommentID !== commentId),
+        );
         toast.success('Bình luận đã được ẩn thành công');
       } else {
         toast.error('Bạn không có quyền để ẩn bình luận.');
@@ -71,164 +82,278 @@ const ProductCard = ({ product }) => {
     }
   };
 
-  const handleReplyChange = (e) => setReplyText(e.target.value);
+  const handleReplyChange = e => setReplyText(e.target.value);
 
-  const handleReplySubmit = async (e) => {
+  const handleReplySubmit = async e => {
     e.preventDefault();
     if (replyToCommentId && replyText) {
       if (!user || !user.CustomerID) {
         toast.warn('Bạn cần đăng nhập để gửi bình luận trả lời.');
         return;
       }
-      try {await axios.post(`http://localhost:4000/comments/reply/${replyToCommentId}`, {
-        ProductID: product.ProductID,
-        CustomerID: user.CustomerID,
-        Comment: replyText,
-        Rating: 0,
-      }, { headers: { Authorization: `Bearer ${token}` } });
-      setComments([...comments, {
-        CommentID: Date.now(),
-        CustomerID: user.CustomerID,
-        Comment: replyText,
-        Rating: 0,
-        CommentDate: new Date(),
-        ParentCommentID: replyToCommentId,
-      }]);
-      setReplyText('');
-      setReplyToCommentId(null);
-      toast.success('Trả lời bình luận thành công');
-    } catch (err) {
-      toast.error('Không thể gửi bình luận trả lời. Vui lòng thử lại sau.');
+      try {
+        await axios.post(
+          `http://localhost:4000/comments/reply/${replyToCommentId}`,
+          {
+            ProductID: product.ProductID,
+            CustomerID: user.CustomerID,
+            Comment: replyText,
+            Rating: 0,
+          },
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+        setComments([
+          ...comments,
+          {
+            CommentID: Date.now(),
+            CustomerID: user.CustomerID,
+            Comment: replyText,
+            Rating: 0,
+            CommentDate: new Date(),
+            ParentCommentID: replyToCommentId,
+          },
+        ]);
+        setReplyText('');
+        setReplyToCommentId(null);
+        toast.success('Trả lời bình luận thành công');
+      } catch (err) {
+        toast.error('Không thể gửi bình luận trả lời. Vui lòng thử lại sau.');
+      }
+    } else {
+      toast.warn(
+        'Vui lòng nhập nội dung bình luận và chọn bình luận để trả lời.',
+      );
     }
-  } else {
-    toast.warn('Vui lòng nhập nội dung bình luận và chọn bình luận để trả lời.');
-  }
-};
+  };
 
-const handleNewCommentChange = (e) => setNewCommentText(e.target.value);
+  const handleNewCommentChange = e => setNewCommentText(e.target.value);
 
-const handleNewCommentSubmit = async (e) => {
-  e.preventDefault();
-  if (newCommentText) {
-    if (!user || !user.CustomerID) {
-      toast.warn('Bạn cần đăng nhập để gửi bình luận.');
-      return;
+  const handleNewCommentSubmit = async e => {
+    e.preventDefault();
+    if (newCommentText) {
+      if (!user || !user.CustomerID) {
+        toast.warn('Bạn cần đăng nhập để gửi bình luận.');
+        return;
+      }
+      try {
+        await axios.post(
+          'http://localhost:4000/comments',
+          {
+            ProductID: product.ProductID,
+            CustomerID: user.CustomerID,
+            Comment: newCommentText,
+            Rating: 0,
+            CommentDate: new Date(),
+            IsHidden: false,
+          },
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+        setComments([
+          ...comments,
+          {
+            CommentID: Date.now(),
+            CustomerID: user.CustomerID,
+            Comment: newCommentText,
+            Rating: 0,
+            CommentDate: new Date(),
+            ParentCommentID: null,
+          },
+        ]);
+        setNewCommentText('');
+        toast.success('Bình luận đã được thêm thành công');
+      } catch (err) {
+        toast.error('Không thể gửi bình luận. Vui lòng thử lại sau.');
+      }
+    } else {
+      toast.warn('Vui lòng nhập nội dung bình luận.');
     }
-    try {
-      await axios.post('http://localhost:4000/comments', {
-        ProductID: product.ProductID,
-        CustomerID: user.CustomerID,
-        Comment: newCommentText,
-        Rating: 0,
-        CommentDate: new Date(),
-        IsHidden: false,
-      }, { headers: { Authorization: `Bearer ${token}` } });
-      setComments([...comments, {
-        CommentID: Date.now(),
-        CustomerID: user.CustomerID,
-        Comment: newCommentText,
-        Rating: 0,
-        CommentDate: new Date(),
-        ParentCommentID: null,
-      }]);
-      setNewCommentText('');
-      toast.success('Bình luận đã được thêm thành công');
-    } catch (err) {
-      toast.error('Không thể gửi bình luận. Vui lòng thử lại sau.');
-    }
-  } else {
-    toast.warn('Vui lòng nhập nội dung bình luận.');
-  }
-};
+  };
 
-
-return (
-  <>
-    <Card className={`product-card ${product.Stock === 0 ? 'out-of-stock' : ''}`}>
-      <div className="img-container">
-        <Card.Img variant="top" src={product.ImagePath} />
-        {product.Stock === 0 && (
-          <div className="out-of-stock-overlay">Hết hàng</div>
-        )}
-        <div className="overlay" style={{"backgroundColor": "rgba(0, 0, 0,0.2)"}}>
-          <button style={{"background":"#F1D7B6"}} className="btn-xemchitiet" onClick={handleShow}>Xem Chi Tiết</button>
+  return (
+    <>
+      <Card
+        className={`product-card ${product.Stock === 0 ? 'out-of-stock' : ''}`}
+      >
+        <div className="img-container">
+          <Card.Img variant="top" src={product.ImagePath} />
+          {product.Stock === 0 && (
+            <div className="out-of-stock-overlay">Hết hàng</div>
+          )}
+          <div
+            className="overlay"
+            style={{ backgroundColor: 'rgba(0, 0, 0,0.2)' }}
+          >
+            <button
+              style={{ background: '#F1D7B6' }}
+              className="btn-xemchitiet"
+              onClick={handleShow}
+            >
+              Xem Chi Tiết
+            </button>
+          </div>
         </div>
-      </div>
-      <Card.Body>
-        <Card.Title style={{padding:'15px 0'}}>{product.Name}</Card.Title>
-        <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
-          <Card.Text style={{fontWeight:'600',fontSize:'15px'}}>{product.Price} VND</Card.Text><button className="btn-product-cart-body" onClick={handleAddToCart} disabled={product.Stock === 0}>Thêm vào giỏ hàng</button>
+        <Card.Body>
+          <Card.Title style={{ padding: '15px 0' }}>{product.Name}</Card.Title>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}
+          >
+            <Card.Text style={{ fontWeight: '600', fontSize: '15px' }}>
+              {product.Price} VND
+            </Card.Text>
+            <button
+              className="btn-product-cart-body"
+              onClick={handleAddToCart}
+              disabled={product.Stock === 0}
+            >
+              Thêm vào giỏ hàng
+            </button>
           </div>
         </Card.Body>
       </Card>
 
       <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header>
-          <button type="button" className="btn-close" aria-label="Close" onClick={handleClose}>
-            <span style={{fontSize:"40px",position:'relative',top:'-20px'}}>&#215;</span>
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={handleClose}
+          >
+            <span
+              style={{ fontSize: '40px', position: 'relative', top: '-20px' }}
+            >
+              &#215;
+            </span>
           </button>
-          <Modal.Title style={{position:'absolute'}}>{product.Name}</Modal.Title>
+          <Modal.Title style={{ position: 'absolute' }}>
+            {product.Name}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ padding: '20px', position: 'relative' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop:"92px", background:"#FFF9E5", borderRadius:"10px" }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: '92px',
+              background: '#FFF9E5',
+              borderRadius: '10px',
+            }}
+          >
             <div style={{ flex: '1', paddingRight: '10px' }}>
-              <img 
-                src={product.ImagePath} 
-                alt={product.Name} 
-                style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '8px', textAlign:"center"}} 
+              <img
+                src={product.ImagePath}
+                alt={product.Name}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  objectFit: 'cover',
+                  borderRadius: '8px',
+                  textAlign: 'center',
+                }}
               />
             </div>
-            <div style={{ flex: '1', paddingLeft: '10px', marginTop:"115px" }}>
-              <h2 style={{textAlign:"center",fontSize:"26px"}}>{product.Name}</h2>
-              <h2 style={{textAlign:"center",fontSize:"18px"}}>{product.Description}</h2>
-              <p style={{ fontSize: '1.5rem', fontWeight: 'bold', textAlign:"center", marginTop:"10px", padding:"10px" }}>{product.Price} VND</p>
-              <Button onClick={handleAddToCart} style={{ backgroundColor: '#73262C', color: '#fff', width: '100%', marginTop: '1rem' }} disabled={product.Stock === 0}>
+            <div style={{ flex: '1', paddingLeft: '10px', marginTop: '115px' }}>
+              <h2 style={{ textAlign: 'center', fontSize: '26px' }}>
+                {product.Name}
+              </h2>
+              <h2 style={{ textAlign: 'center', fontSize: '18px' }}>
+                {product.Description}
+              </h2>
+              <p
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  marginTop: '10px',
+                  padding: '10px',
+                }}
+              >
+                {product.Price} VND
+              </p>
+              <Button
+                onClick={handleAddToCart}
+                style={{
+                  backgroundColor: '#73262C',
+                  color: '#fff',
+                  width: '100%',
+                  marginTop: '1rem',
+                }}
+                disabled={product.Stock === 0}
+              >
                 Thêm vào giỏ hàng
               </Button>
             </div>
           </div>
           <div style={{ marginTop: '2rem' }}>
             <h5>Comments:</h5>
-            {error ? <p style={{ color: 'red' }}>{error}</p> : <p>No comments yet.</p>}
-            {comments.length > 0 && comments.map(comment => (
-              <div key={comment.CommentID} className="comment">
-                <p>
-                  <strong>{users[comment.CustomerID]?.FirstName} {users[comment.CustomerID]?.LastName}</strong> 
-                  <span> ({new Date(comment.CommentDate).toLocaleDateString()})</span>
-                </p>
-                <p>{comment.Comment}</p>
-                {user && user.isAdmin && (
-                  <button onClick={() => handleHideComment(comment.CommentID)}>Hide</button>
-                )}
-                <Form onSubmit={handleReplySubmit}>
-                  <Form.Control
-                    type="text"
-                    placeholder="Trả lời..."
-                    value={replyText}
-                    onChange={handleReplyChange}
-                    onClick={() => setReplyToCommentId(comment.CommentID)}
-                  />
-                  <Button type="submit">Reply</Button>
-                </Form>
-              </div>
-            ))}<Form onSubmit={handleNewCommentSubmit} style={{ marginTop: '1rem' }}>
-            <Form.Group controlId="newComment">
-              <Form.Label>Viết bình luận của bạn:</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Nhập bình luận của bạn..."
-                value={newCommentText}
-                onChange={handleNewCommentChange}
-              />
-            </Form.Group>
-            <Button type="submit" style={{ marginTop: '0.5rem',background:"#73262C" }}>Gửi bình luận</Button>
-          </Form>
-        </div>
-      </Modal.Body>
-    </Modal>
-  </>
-);
+            {error ? (
+              <p style={{ color: 'red' }}>{error}</p>
+            ) : (
+              <p>No comments yet.</p>
+            )}
+            {comments.length > 0 &&
+              comments.map(comment => (
+                <div key={comment.CommentID} className="comment">
+                  <p>
+                    <strong>
+                      {users[comment.CustomerID]?.FirstName}{' '}
+                      {users[comment.CustomerID]?.LastName}
+                    </strong>
+                    <span>
+                      {' '}
+                      ({new Date(comment.CommentDate).toLocaleDateString()})
+                    </span>
+                  </p>
+                  <p>{comment.Comment}</p>
+                  {user && user.isAdmin && (
+                    <button
+                      onClick={() => handleHideComment(comment.CommentID)}
+                    >
+                      Hide
+                    </button>
+                  )}
+                  <Form onSubmit={handleReplySubmit}>
+                    <Form.Control
+                      type="text"
+                      placeholder="Trả lời..."
+                      value={replyText}
+                      onChange={handleReplyChange}
+                      onClick={() => setReplyToCommentId(comment.CommentID)}
+                    />
+                    <Button type="submit">Reply</Button>
+                  </Form>
+                </div>
+              ))}
+            <Form
+              onSubmit={handleNewCommentSubmit}
+              style={{ marginTop: '1rem' }}
+            >
+              <Form.Group controlId="newComment">
+                <Form.Label>Viết bình luận của bạn:</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Nhập bình luận của bạn..."
+                  value={newCommentText}
+                  onChange={handleNewCommentChange}
+                />
+              </Form.Group>
+              <Button
+                type="submit"
+                style={{ marginTop: '0.5rem', background: '#73262C' }}
+              >
+                Gửi bình luận
+              </Button>
+            </Form>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
 };
 
 export default ProductCard;

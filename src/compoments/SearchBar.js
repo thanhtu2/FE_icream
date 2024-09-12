@@ -9,7 +9,7 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSearch = async (event) => {
+  const handleSearch = async event => {
     event.preventDefault();
     setLoading(true);
     setError('');
@@ -17,7 +17,7 @@ const Search = () => {
     try {
       // Gọi API với tham số tìm kiếm
       const response = await axios.get(`http://localhost:4000/search`, {
-        params: { search: query }
+        params: { search: query },
       });
       setResults(response.data);
     } catch (error) {
@@ -37,10 +37,15 @@ const Search = () => {
                 type="text"
                 placeholder="Search for products"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={e => setQuery(e.target.value)}
               />
             </Form.Group>
-            <Button style={{background:'#73262C'}} variant="primary" type="submit" className="mt-2">
+            <Button
+              style={{ background: '#73262C' }}
+              variant="primary"
+              type="submit"
+              className="mt-2"
+            >
               Search
             </Button>
           </Form>

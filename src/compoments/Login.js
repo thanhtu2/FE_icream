@@ -7,7 +7,7 @@ import { login } from '../redux/slices/authSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import '../style/login.css'
-import '../style/Logins.css'
+import '../style/Logins.css';
 import ReactFacebookLogin from 'react-facebook-login';
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   // Xử lý phản hồi từ Facebook
-  const responseFacebook = async (response) => {
+  const responseFacebook = async response => {
     const { accessToken, userID, email, name, picture } = response;
 
     try {
@@ -27,7 +27,7 @@ const Login = () => {
         userID,
         email,
         name,
-        picture
+        picture,
       });
 
       const { token } = result.data;
@@ -45,7 +45,7 @@ const Login = () => {
 
       // Hiển thị thông báo thành công
       toast.success('Đăng nhập bằng Facebook thành công!', {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -62,11 +62,14 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:4000/login', { Email: email, Password: password });
+      const response = await axios.post('http://localhost:4000/login', {
+        Email: email,
+        Password: password,
+      });
       const { token } = response.data;
 
       // Lưu token vào localStorage
@@ -82,7 +85,7 @@ const Login = () => {
 
       // Hiển thị thông báo thành công
       toast.success('Đăng nhập thành công!', {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -105,7 +108,7 @@ const Login = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
   };
 
   const overlayStyle = {
@@ -115,7 +118,7 @@ const Login = () => {
     width: '100%',
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    zIndex: 0
+    zIndex: 0,
   };
 
   const formStyle = {
@@ -127,47 +130,57 @@ const Login = () => {
     zIndex: 1,
     width: '100%',
     maxWidth: '50%', // Tăng kích thước tối đa của form
-    margin: '0 auto'
+    margin: '0 auto',
   };
 
   return (
-    <div style={loginBackground} className='conainer-login'>
+    <div style={loginBackground} className="conainer-login">
       <div style={overlayStyle}></div>
       <Container style={formStyle}>
-        <h1 style={{textAlign:'center'}}>Login</h1>
+        <h1 style={{ textAlign: 'center' }}>Login</h1>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label style={{fontWeight:'600'}}>Email address</Form.Label>
+            <Form.Label style={{ fontWeight: '600' }}>Email address</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
             />
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
-            <Form.Label style={{fontWeight:'600',margin:'10px 0'}}>Password</Form.Label>
+            <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>
+              Password
+            </Form.Label>
             <Form.Control
               type="password"
               placeholder="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               required
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit" className='btn-login' style={{background:"#73262C",color:"#fff"}}>
+          <Button
+            variant="primary"
+            type="submit"
+            className="btn-login"
+            style={{ background: '#73262C', color: '#fff' }}
+          >
             Login
           </Button>
         </Form>
 
-        <p className="mt-3">Chưa có tài khoản? <Link to="/signup">Đăng ký ngay</Link></p>
+        <p className="mt-3">
+          Chưa có tài khoản? <Link to="/signup">Đăng ký ngay</Link>
+        </p>
         <hr />
-        <ReactFacebookLogin className = 'DNfacebook'
-        appId="1006850874260315"  //
+        <ReactFacebookLogin
+          className="DNfacebook"
+          appId="1006850874260315" //
           autoLoad={false}
           fields="name,email,picture"
           callback={responseFacebook}

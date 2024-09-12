@@ -31,9 +31,12 @@ import AdminDiscounts from './admin/AdminDiscounts';
 import DiscountForm from './admin/DiscountForm';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ProtectedRoute from './compoments/ProtectedRoute'
+import ProtectedRoute from './compoments/ProtectedRoute';
 import PromotionPage from './pages/PromotionPage';
 import CheckoutPage from './pages/CheckoutPage';
+import StoreManagement from './admin/StoreManagement';
+import StoreCreate from './admin/StoreCreate';
+import VoucherManagement from './admin/VoucherManagement';
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
@@ -41,9 +44,10 @@ function App() {
 
   useEffect(() => {
     if (token && !isAuthenticated) {
-      axios.get('http://localhost:4000/profile', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      axios
+        .get('http://localhost:4000/profile', {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         .then(response => {
           dispatch(login({ user: response.data, token }));
         })
@@ -67,23 +71,55 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/about" element={<About />} />
         <Route path="/Promotion" element={<PromotionPage />} />
-        <Route path="/login" element={!isAuthenticated ? <Login /> : <Home />} />
-        <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Home />} />
-        <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
-        <Route path="/admin" element={<ProtectedRoute element={<Admin />} />} />
-        <Route path="/admin/statistics" element={<ProtectedRoute element={<Statistics />} />} />
-        <Route path="/admin/users" element={<UserManagement />} />
-        <Route path="/admin/users/:id/edit" element={<UserEdit />} />
-        <Route path="/admin/orders" element={<ProtectedRoute element={<OrderManagement />} />} />
-        <Route path="/admin/orders/create" element={<OrderCreate />}  />
-        <Route path="/admin/orders/:id/edit" element={<OrderEdit />} />
-        <Route path="/admin/products" element={<ProtectedRoute element={<ProductManagement />} />} />
-        <Route path="/admin/products/create" element={<ProtectedRoute element={<ProductCreate />} />} />
-        <Route path="/admin/products/:id/edit" element={<ProtectedRoute element={<ProductEdit />} />} />
-        <Route path="/admin/discounts" element={<AdminDiscounts />} />
         <Route path="/discounts/new" element={<DiscountForm />} />
         <Route path="/discounts/:discountId" element={<DiscountForm />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        {/***************  Auth ***************/}
+        <Route
+          path="/login"
+          element={!isAuthenticated ? <Login /> : <Home />}
+        />
+        <Route
+          path="/signup"
+          element={!isAuthenticated ? <Signup /> : <Home />}
+        />
+        {/***************  Auth ***************/}
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={<Profile />} />}
+        />
+        {/*************** Admin ***************/}
+        <Route path="/admin" element={<ProtectedRoute element={<Admin />} />} />
+        <Route
+          path="/admin/statistics"
+          element={<ProtectedRoute element={<Statistics />} />}
+        />
+        <Route path="/admin/users" element={<UserManagement />} />
+        <Route path="/admin/users/:id/edit" element={<UserEdit />} />
+        <Route
+          path="/admin/orders"
+          element={<ProtectedRoute element={<OrderManagement />} />}
+        />
+        <Route path="/admin/orders/create" element={<OrderCreate />} />
+        <Route path="/admin/orders/:id/edit" element={<OrderEdit />} />
+        <Route
+          path="/admin/products"
+          element={<ProtectedRoute element={<ProductManagement />} />}
+        />
+        <Route
+          path="/admin/products/create"
+          element={<ProtectedRoute element={<ProductCreate />} />}
+        />
+        <Route
+          path="/admin/products/:id/edit"
+          element={<ProtectedRoute element={<ProductEdit />} />}
+        />
+        <Route path="/admin/discounts" element={<AdminDiscounts />} />
+        <Route path="/admin/stores" element={<StoreManagement />} />
+        <Route path="/admin/stores/create" element={<StoreCreate />} />
+        <Route path="/admin/vouchers" element={<VoucherManagement />} />
+        <Route path="/admin/vouchers/create" element={<StoreCreate />} />
+        {/*************** Admin ***************/}
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
