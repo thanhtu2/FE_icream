@@ -37,6 +37,7 @@ import CheckoutPage from './pages/CheckoutPage';
 import StoreManagement from './admin/StoreManagement';
 import StoreCreate from './admin/StoreCreate';
 import VoucherManagement from './admin/VoucherManagement';
+import VoucherCreate from './admin/VoucherCreate';
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
@@ -118,7 +119,7 @@ function App() {
         <Route path="/admin/stores" element={<StoreManagement />} />
         <Route path="/admin/stores/create" element={<StoreCreate />} />
         <Route path="/admin/vouchers" element={<VoucherManagement />} />
-        <Route path="/admin/vouchers/create" element={<StoreCreate />} />
+        <Route path="/admin/vouchers/create" element={<VoucherCreate />} />
         {/*************** Admin ***************/}
         <Route path="*" element={<NotFound />} />
       </Routes>

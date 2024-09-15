@@ -24,9 +24,9 @@ const StoreCreate = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/stores', store);
+      await axios.post('http://localhost:4000/stores/create', store);
       successToast('Tạo cửa hàng mới thành công.');
-      navigate('/admin/stores');
+      navigate('/admin/stores/create');
     } catch (err) {
       errorToast('Lỗi khi tạo cửa hàng mới.');
     }
@@ -43,7 +43,7 @@ const StoreCreate = () => {
           <Form.Control
             type="text"
             name="Name"
-            value={store.Name}
+            value={store.StoreName}
             onChange={handleChange}
             required
           />
@@ -92,6 +92,18 @@ const StoreCreate = () => {
             type="text"
             name="Phone"
             value={store.Phone}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="formEmail">
+          <Form.Label style={{ fontWeight: '600', marginTop: '15px' }}>
+            Email
+          </Form.Label>
+          <Form.Control
+            type="text"
+            name="email"
+            value={store.Email}
             onChange={handleChange}
             required
           />

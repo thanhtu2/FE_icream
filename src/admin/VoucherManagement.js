@@ -31,7 +31,7 @@ const VoucherManagement = () => {
   };
 
   const filteredVouchers = vouchers.filter(voucher =>
-    voucher.voucherName.toLowerCase().includes(searchTerm.toLowerCase()),
+    voucher.voucherName && voucher.voucherName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleDeleteVoucher = async voucherId => {

@@ -77,10 +77,12 @@ const StoreManagement = () => {
         <tbody>
           {filteredStores.map(store => (
             <tr key={store.storeID}>
-              <td>{store.storeID}</td>
-              <td>{store.Name}</td>
-              <td>{store.Price}</td>
-              <td>{store.Stock}</td>
+              <td>{store.StoreID}</td>
+              <td>{store.StoreName}</td>
+              <td>{store.Address}</td>
+              <td>{store.City}</td>
+              <td>{store.ZipCode}</td>
+              <td>{store.Phone}</td>
               <td>
                 <Button
                   className="text-white bg-primaryDanger hover:bg-secondDanger "
