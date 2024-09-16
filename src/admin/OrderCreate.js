@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import '../style/oderCreate.css';
 
 const OrderCreate = () => {
+  // Khởi tạo state cho đơn hàng và các dữ liệu liên quan
   const [order, setOrder] = useState({
     CustomerID: '',
     ProductID: '',
@@ -17,12 +18,13 @@ const OrderCreate = () => {
     Status: '',
     StoreID: '',
   });
-  const [customers, setCustomers] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [stores, setStores] = useState([]);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [customers, setCustomers] = useState([]); // Danh sách khách hàng
+  const [products, setProducts] = useState([]); // Danh sách sản phẩm
+  const [stores, setStores] = useState([]); // Danh sách cửa hàng
+  const [error, setError] = useState(''); // Thông báo lỗi
+  const navigate = useNavigate(); // Điều hướng trang
 
+  // Lấy danh sách khách hàng, sản phẩm và cửa hàng khi component được mount
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
@@ -44,29 +46,32 @@ const OrderCreate = () => {
 
     const fetchStores = async () => {
       try {
-        const storeResponse = await axios.get(
-          `${process.env.REACT_APP_API}/stores`,
-        );
+        const storeResponse = await axios.get('http://localhost:4000/stores'); // Lấy danh sách cửa hàng
         setStores(storeResponse.data);
       } catch (err) {
         setError('Lỗi khi lấy thông tin cửa hàng.');
       }
     };
 
+    // Gọi API để lấy dữ liệu
     fetchStores();
     fetchCustomers();
     fetchProducts();
   }, []);
 
-  const handleChange = e => {
+  // Xử lý khi người dùng thay đổi thông tin đơn hàng
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setOrder({ ...order, [name]: value });
   };
 
-  const handleSubmit = async e => {
+  // Xử lý khi submit đơn hàng
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/orders', order);
+      console.log(order); // Log dữ liệu đơn hàng để xem có gì sai
+
+      await axios.post('http://localhost:4000/orders', order); // Gửi đơn hàng lên API
       toast.success('Tạo đơn hàng mới thành công.', {
         position: 'top-right',
         autoClose: 3000,
@@ -76,17 +81,17 @@ const OrderCreate = () => {
         draggable: true,
         progress: undefined,
       });
+      // Reset lại form sau khi tạo thành công
       setOrder({
         CustomerID: '',
         ProductID: '',
         Quantity: '',
         TotalPrice: '',
-        OrderDate: '',
-        ShipDate: '',
+       
         Status: '',
         StoreID: '',
       });
-      navigate('/admin/orders'); // Chuyển hướng đến trang quản lý đơn hàng sau khi tạo thành công
+      navigate('/admin/orders'); // Chuyển hướng về trang danh sách đơn hàng
     } catch (err) {
       toast.error('Lỗi khi tạo đơn hàng mới.', {
         position: 'top-right',
@@ -100,19 +105,20 @@ const OrderCreate = () => {
     }
   };
 
+  // Xử lý khi nhấn nút quay lại danh sách đơn hàng
   const handleBackToList = () => {
-    navigate('/admin/orders'); // Chuyển hướng đến trang quản lý đơn hàng
+    navigate('/admin/orders'); // Chuyển hướng về trang danh sách đơn hàng
   };
 
-  const getCustomerName = customerId => {
-    const customer = customers.find(cust => cust.CustomerID === customerId);
-    return customer
-      ? `${customer.FirstName} ${customer.LastName}`
-      : 'Chưa xác định';
+  // Lấy tên khách hàng từ ID
+  const getCustomerName = (customerId) => {
+    const customer = customers.find((cust) => cust.CustomerID === customerId);
+    return customer ? `${customer.FirstName} ${customer.LastName}` : 'Chưa xác định';
   };
 
-  const getProductName = productId => {
-    const product = products.find(prod => prod.ProductID === productId);
+  // Lấy tên sản phẩm từ ID
+  const getProductName = (productId) => {
+    const product = products.find((prod) => prod.ProductID === productId);
     return product ? product.Name : 'Chưa xác định';
   };
 
@@ -121,8 +127,9 @@ const OrderCreate = () => {
       <h1 style={{ textAlign: 'center', padding: '10px 0' }}>
         Tạo Đơn Hàng Mới
       </h1>
-      {error && <Alert variant="danger">{error}</Alert>}
+      {error && <Alert variant="danger">{error}</Alert>} {/* Hiển thị lỗi nếu có */}
       <Form onSubmit={handleSubmit}>
+        {/* Chọn Khách Hàng */}
         <Form.Group controlId="formCustomerID">
           <Form.Label style={{ fontWeight: '600' }}>Khách Hàng</Form.Label>
           <Form.Control
@@ -133,13 +140,15 @@ const OrderCreate = () => {
             required
           >
             <option value="">Chọn Khách Hàng</option>
-            {customers.map(customer => (
+            {customers.map((customer) => (
               <option key={customer.CustomerID} value={customer.CustomerID}>
                 {`${customer.FirstName} ${customer.LastName}`}
               </option>
             ))}
           </Form.Control>
         </Form.Group>
+
+        {/* Chọn Cửa Hàng */}
         <Form.Group controlId="formStoreID">
           <Form.Label style={{ fontWeight: '600' }}>Cửa Hàng</Form.Label>
           <Form.Control
@@ -150,17 +159,17 @@ const OrderCreate = () => {
             required
           >
             <option value="">Chọn Cửa Hàng</option>
-            {stores.map(store => (
+            {stores.map((store) => (
               <option key={store.StoreID} value={store.StoreID}>
-                {store.Name}
+                {store.StoreName}
               </option>
             ))}
           </Form.Control>
         </Form.Group>
+
+        {/* Chọn Sản Phẩm */}
         <Form.Group controlId="formProductID">
-          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>
-            Sản Phẩm
-          </Form.Label>
+          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>Sản Phẩm</Form.Label>
           <Form.Control
             as="select"
             name="ProductID"
@@ -169,17 +178,17 @@ const OrderCreate = () => {
             required
           >
             <option value="">Chọn Sản Phẩm</option>
-            {products.map(product => (
+            {products.map((product) => (
               <option key={product.ProductID} value={product.ProductID}>
                 {product.Name}
               </option>
             ))}
           </Form.Control>
         </Form.Group>
+
+        {/* Số Lượng */}
         <Form.Group controlId="formQuantity">
-          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>
-            Quantity
-          </Form.Label>
+          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>Số Lượng</Form.Label>
           <Form.Control
             type="number"
             name="Quantity"
@@ -188,10 +197,10 @@ const OrderCreate = () => {
             required
           />
         </Form.Group>
+
+        {/* Tổng Giá */}
         <Form.Group controlId="formTotalPrice">
-          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>
-            Total Price
-          </Form.Label>
+          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>Tổng Giá</Form.Label>
           <Form.Control
             type="number"
             step="0.01"
@@ -201,11 +210,10 @@ const OrderCreate = () => {
             required
           />
         </Form.Group>
+
+        {/* Ngày Đặt Hàng */}
         <Form.Group controlId="formOrderDate">
-          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>
-            {' '}
-            Order Date
-          </Form.Label>
+          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>Ngày Đặt Hàng</Form.Label>
           <Form.Control
             type="date"
             name="OrderDate"
@@ -214,10 +222,10 @@ const OrderCreate = () => {
             required
           />
         </Form.Group>
+
+        {/* Ngày Giao Hàng */}
         <Form.Group controlId="formShipDate">
-          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>
-            Ship Date
-          </Form.Label>
+          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>Ngày Giao Hàng</Form.Label>
           <Form.Control
             type="date"
             name="ShipDate"
@@ -226,10 +234,10 @@ const OrderCreate = () => {
             required
           />
         </Form.Group>
+
+        {/* Trạng Thái */}
         <Form.Group controlId="formStatus">
-          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>
-            Status
-          </Form.Label>
+          <Form.Label style={{ fontWeight: '600', margin: '10px 0' }}>Trạng Thái</Form.Label>
           <Form.Control
             type="text"
             name="Status"
@@ -239,6 +247,7 @@ const OrderCreate = () => {
           />
         </Form.Group>
 
+        {/* Nút Tạo Đơn Hàng */}
         <Button
           variant="primary"
           className="btn-createproduct"
@@ -247,6 +256,8 @@ const OrderCreate = () => {
         >
           Tạo Đơn Hàng
         </Button>
+
+        {/* Nút Quay Lại */}
         <Button
           className="btn-prevlistproduct"
           variant="secondary"

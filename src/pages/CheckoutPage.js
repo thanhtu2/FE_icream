@@ -1,4 +1,3 @@
-// export default CheckoutPage;
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -10,7 +9,6 @@ import {
   Modal,
   Card,
 } from 'react-bootstrap';
-import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import PaypalSubscriptionButton from './PaypalSubscriptionButton';
 import { clearCart } from '../redux/slices/cartSlice';
@@ -33,34 +31,26 @@ const CheckoutPage = () => {
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false); // New state for success modal
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [stores, setStores] = useState([]);
   const { errorToast, successToast } = useToast();
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchStores = async () => {
       try {
-        const storeResponse = await axios.get('http://localhost:4000/stores'); // Correct API URL
+        const storeResponse = await axios.get('http://localhost:4000/stores');
         setStores(storeResponse.data);
       } catch (err) {
         errorToast('Lỗi khi lấy thông tin cửa hàng.');
       }
     };
-  
     fetchStores();
   }, [errorToast]);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      errorToast('Vui lòng đăng nhập để tiếp tục.', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      errorToast('Vui lòng đăng nhập để tiếp tục.');
       navigate('/login');
     } else {
       const fetchUserProfile = async () => {
@@ -76,15 +66,7 @@ const CheckoutPage = () => {
           const data = await response.json();
           setUser(data);
         } catch (error) {
-          errorToast(`Lỗi: ${error.message}`, {
-            position: 'top-right',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          errorToast(`Lỗi: ${error.message}`);
           navigate('/login');
         }
       };
@@ -106,10 +88,6 @@ const CheckoutPage = () => {
   };
 
   const handlePaymentMethodSelect = async method => {
-    if (method === 'paypal') {
-      return;
-    }
-
     setShowModal(false);
 
     const orderDetails = {
@@ -122,47 +100,34 @@ const CheckoutPage = () => {
       Status: 'Chờ Thanh Toán',
       Quantity: cartItems.reduce((total, item) => total + item.quantity, 0),
       TotalPrice: calculateTotal(),
-      PaymentStatus: 'Thanh toán khi nhận hàng',
+      PaymentMethod: method === 'paypal' ? 'PayPal' : 'Thanh toán khi nhận hàng',
       Address: formValues.Address,
       City: formValues.City,
       Zip: formValues.Zip,
       StoreID: formValues.StoreID,
     };
 
-    try {
-      const response = await fetch('http://localhost:4000/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderDetails),
-      });
+    console.log(orderDetails); // Debugging: log the order details
 
-      if (!response.ok) {
+    try {
+      const response = await axios.post('http://localhost:4000/orders', orderDetails);
+
+      if (response.status !== 201) {
         throw new Error('Đặt hàng thất bại.');
       }
 
-      const data = await response.json();
       setOrderPlaced(true);
-      setShowSuccessModal(true); // Show success modal on order success
+      setShowSuccessModal(true);
       dispatch(clearCart());
     } catch (error) {
-      errorToast(`Đặt hàng thất bại: ${error.message}`, {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      errorToast(`Đặt hàng thất bại: ${error.message}`);
     }
   };
 
   const handlePayPalSuccess = (details, data) => {
     console.log('Payment approved by PayPal:', details, data);
     dispatch(clearCart());
-    setShowSuccessModal(true); // Show success modal on PayPal success
+    setShowSuccessModal(true);
   };
 
   const handleChange = e => {
@@ -172,11 +137,7 @@ const CheckoutPage = () => {
   return (
     <Container className="checkout-container" style={{ background: '#fff' }}>
       <div className="banner_Checkout">
-        <img
-          src={banner_checkout}
-          alt="Checkout Banner"
-          className="img-fluid"
-        />
+        <img src={banner_checkout} alt="Checkout Banner" className="img-fluid" />
       </div>
 
       <h1 className="checkout-title">Thanh Toán</h1>
@@ -197,9 +158,7 @@ const CheckoutPage = () => {
               <h4 style={{ padding: '20px 0' }}>Địa chỉ giao hàng</h4>
               <Form onSubmit={handlePlaceOrder}>
                 <Form.Group controlId="formStoreID">
-                  <Form.Label style={{ fontWeight: '600' }}>
-                    Cửa Hàng
-                  </Form.Label>
+                  <Form.Label style={{ fontWeight: '600' }}>Cửa Hàng</Form.Label>
                   <Form.Control
                     as="select"
                     name="StoreID"
