@@ -133,7 +133,9 @@ const CheckoutPage = () => {
   const handleChange = e => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
-
+  const formatNumber = (num) => {
+    return num.toLocaleString('vi-VN', { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+  };
   return (
     <Container className="checkout-container" style={{ background: '#fff' }}>
       <div className="banner_Checkout">
@@ -236,7 +238,7 @@ const CheckoutPage = () => {
                       </Card.Text>
                       <hr />
                       <Card.Text>
-                        <strong>Giá:</strong> ${item.Price * item.quantity}
+                        <strong>Giá:</strong> {formatNumber(item.Price * item.quantity)} VND
                       </Card.Text>
                     </Card.Body>
                   </Card>
