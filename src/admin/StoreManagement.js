@@ -34,8 +34,8 @@ const StoreManagement = () => {
 
   const handleHideStore = async storeId => {
     try {
-      await axios.patch(`http://localhost:4000/stores/${storeId}`);
-      setStores(stores.filter(store => store.storeID !== storeId));
+      await axios.patch(`http://localhost:4000/stores/${storeId}/hide`);
+      setStores(stores.filter(store => store.StoreID !== storeId));
       successToast('Ẩn cửa hàng thành công.');
     } catch (err) {
       errorToast('Lỗi khi ẩn cửa hàng.');
@@ -72,6 +72,7 @@ const StoreManagement = () => {
             <th>City</th>
             <th>ZipCode</th>
             <th>Số điện thoại</th>
+            <th>Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -87,7 +88,7 @@ const StoreManagement = () => {
                 <Button
                   className="text-white bg-primaryDanger hover:bg-secondDanger "
                   variant="danger"
-                  onClick={() => handleHideStore(store.storeID)}
+                  onClick={() => handleHideStore(store.StoreID)}
                 >
                   Ẩn
                 </Button>

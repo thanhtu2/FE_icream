@@ -25,9 +25,9 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cart.cartItems);
   const [formValues, setFormValues] = useState({
-    address: '',
-    city: '',
-    zip: '',
+    Address: '',
+    City: '',
+    Zip: '',
     StoreID: '',
   });
   const [user, setUser] = useState(null);
@@ -37,21 +37,18 @@ const CheckoutPage = () => {
   const [stores, setStores] = useState([]);
   const { errorToast, successToast } = useToast();
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchStores = async () => {
       try {
-        const storeResponse = await axios.get(
-          `${process.env.REACT_APP_API}/stores`,
-        );
+        const storeResponse = await axios.get('http://localhost:4000/stores'); // Correct API URL
         setStores(storeResponse.data);
       } catch (err) {
         errorToast('Lỗi khi lấy thông tin cửa hàng.');
       }
     };
-
+  
     fetchStores();
   }, [errorToast]);
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -122,13 +119,13 @@ const CheckoutPage = () => {
       ShipDate: new Date(new Date().setDate(new Date().getDate() + 7))
         .toISOString()
         .split('T')[0],
-      Status: 'sắp giao',
+      Status: 'Chờ Thanh Toán',
       Quantity: cartItems.reduce((total, item) => total + item.quantity, 0),
       TotalPrice: calculateTotal(),
       PaymentStatus: 'Thanh toán khi nhận hàng',
-      Address: formValues.address,
-      City: formValues.city,
-      Zip: formValues.zip,
+      Address: formValues.Address,
+      City: formValues.City,
+      Zip: formValues.Zip,
       StoreID: formValues.StoreID,
     };
 
@@ -213,7 +210,7 @@ const CheckoutPage = () => {
                     <option value="">Chọn Cửa Hàng</option>
                     {stores.map(store => (
                       <option key={store.StoreID} value={store.StoreID}>
-                        {store.Name}
+                        {store.StoreName}
                       </option>
                     ))}
                   </Form.Control>
@@ -225,8 +222,8 @@ const CheckoutPage = () => {
                   <Form.Control
                     type="text"
                     placeholder="Nhập địa chỉ"
-                    name="address"
-                    value={formValues.address}
+                    name="Address"
+                    value={formValues.Address}
                     onChange={handleChange}
                     required
                   />
@@ -238,8 +235,8 @@ const CheckoutPage = () => {
                   <Form.Control
                     type="text"
                     placeholder="Nhập thành phố"
-                    name="city"
-                    value={formValues.city}
+                    name="City"
+                    value={formValues.City}
                     onChange={handleChange}
                     required
                   />
@@ -251,8 +248,8 @@ const CheckoutPage = () => {
                   <Form.Control
                     type="text"
                     placeholder="Nhập mã ZIP"
-                    name="zip"
-                    value={formValues.zip}
+                    name="Zip"
+                    value={formValues.Zip}
                     onChange={handleChange}
                     required
                   />

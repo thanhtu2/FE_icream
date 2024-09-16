@@ -6,7 +6,7 @@ import { useToast } from '../hooks/useToast';
 
 const StoreCreate = () => {
   const [store, setStore] = useState({
-    Name: '',
+    StoreName: '',
     Address: '',
     City: '',
     ZipCode: '',
@@ -42,7 +42,7 @@ const StoreCreate = () => {
           <Form.Label style={{ fontWeight: '600' }}>Tên Cửa Hàng</Form.Label>
           <Form.Control
             type="text"
-            name="Name"
+            name="StoreName"
             value={store.StoreName}
             onChange={handleChange}
             required
@@ -102,7 +102,7 @@ const StoreCreate = () => {
           </Form.Label>
           <Form.Control
             type="text"
-            name="email"
+            name="Email"
             value={store.Email}
             onChange={handleChange}
             required

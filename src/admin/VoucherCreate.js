@@ -10,9 +10,9 @@ const VoucherCreate = () => {
     PointsEarned: 0,
     DiscountType: '',
     DiscountValue: 0,
-    Redeemed: true,
-    RedeemedDate: '',
-    CreatedAt: '',
+    // Redeemed: true,
+    // RedeemedDate: '',
+    CreatedAt: new Date().toISOString().split('T')[0], // Default to current date
   });
   const [customers, setCustomers] = useState([]);
 
@@ -36,13 +36,19 @@ const VoucherCreate = () => {
     const { name, value } = e.target;
     setVoucher({ ...voucher, [name]: value });
   };
-
-  const handleSubmit = async e => {
+    const handleSubmit = async e => {
     e.preventDefault();
+  
+    // Simple validation
+    if (voucher.PointsEarned < 0 || voucher.DiscountValue < 0) {
+      errorToast('Điểm và giá trị chiết khấu phải lớn hơn hoặc bằng 0.');
+      return;
+    }
+  
     try {
-      await axios.post('http://localhost:4000/vouchers', voucher);
+      await axios.post('http://localhost:4000/voucher/create', voucher);
       successToast('Tạo voucher mới thành công.');
-      navigate('/admin/vouchers');
+      navigate('/admin/vouchers/create');
     } catch (err) {
       errorToast('Lỗi khi tạo voucher mới.');
     }
@@ -79,6 +85,7 @@ const VoucherCreate = () => {
             type="number"
             name="PointsEarned"
             value={voucher.PointsEarned}
+            min={0}
             onChange={handleChange}
             required
           />
@@ -113,7 +120,7 @@ const VoucherCreate = () => {
             required
           />
         </Form.Group>
-        <Form.Group controlId="formRedeemed">
+        {/* <Form.Group controlId="formRedeemed">
           <Form.Check
             type="checkbox"
             label="Đã sử dụng"
@@ -123,8 +130,8 @@ const VoucherCreate = () => {
               setVoucher({ ...voucher, Redeemed: e.target.checked })
             }
           />
-        </Form.Group>
-        <Form.Group controlId="formRedeemedDate">
+        </Form.Group> */}
+        {/* <Form.Group controlId="formRedeemedDate">
           <Form.Label style={{ fontWeight: '600' }}>Ngày sử dụng</Form.Label>
           <Form.Control
             type="date"
@@ -132,7 +139,7 @@ const VoucherCreate = () => {
             value={voucher.RedeemedDate}
             onChange={handleChange}
           />
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group controlId="formCreatedAt">
           <Form.Label style={{ fontWeight: '600' }}>Ngày tạo</Form.Label>
           <Form.Control
