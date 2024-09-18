@@ -13,6 +13,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [validated, setValidated] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -63,8 +65,15 @@ const Login = () => {
   };
 
   const handleSubmit = async event => {
+    const form = event.currentTarget;
     event.preventDefault();
 
+    if (form.checkValidity() === false) {
+      
+
+      return;
+    }
+    setValidated(true);
     try {
       const response = await axios.post('http://localhost:4000/login', {
         Email: email,
@@ -139,7 +148,7 @@ const Login = () => {
       <Container style={formStyle}>
         <h1 style={{ textAlign: 'center' }}>Login</h1>
         {error && <Alert variant="danger">{error}</Alert>}
-        <Form onSubmit={handleSubmit}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
             <Form.Label style={{ fontWeight: '600' }}>Email address</Form.Label>
             <Form.Control
@@ -148,7 +157,11 @@ const Login = () => {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
+              isInvalid={validated && !/^\S+@\S+\.\S+$/.test(email)}
             />
+            <Form.Control.Feedback type="invalid">
+              Phải nhập đúng định dạng email.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
@@ -162,6 +175,9 @@ const Login = () => {
               onChange={e => setPassword(e.target.value)}
               required
             />
+            <Form.Control.Feedback type="invalid">
+              Chưa nhập mật khẩu.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Button
@@ -170,7 +186,7 @@ const Login = () => {
             className="btn-login"
             style={{ background: '#73262C', color: '#fff' }}
           >
-            Login
+Login
           </Button>
         </Form>
 

@@ -136,6 +136,9 @@ button {
 .banner_home_1_box2_child h1{
   font-weight: bold;
 }
+.custom-navbar .navbar .w-100:hover{
+  background-color:none !important;
+}
 .button_details{
   margin-top:40px !important;
   background-color: #73262C !important;

@@ -12,7 +12,13 @@
 .img-container {
   position: relative;
 }
-
+button{
+  padding: 0.5rem 0.2rem !important;
+  margin-left: 5px;
+}
+.card-body p{
+  margin-bottom:0;
+}
 .overlay {
   position: absolute;
   top: 0;
