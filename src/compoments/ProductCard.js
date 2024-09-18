@@ -202,14 +202,14 @@ const ProductCard = ({ product }) => {
             }}
           >
             <Card.Text style={{ fontWeight: '600', fontSize: '15px' }}>
-              {product.Price} VND
+              {product.Price} $
             </Card.Text>
             <button
               className="btn-product-cart-body"
               onClick={handleAddToCart}
               disabled={product.Stock === 0}
             >
-              Thêm vào giỏ hàng
+              Add to card
             </button>
           </div>
         </Card.Body>

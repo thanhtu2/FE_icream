@@ -10,18 +10,22 @@ function About() {
                     <img src={`${process.env.PUBLIC_URL}/images/image 77.png`} alt="Di sản" />
                 </div>
                 <div className="box1_text">
-                    <h4>Di Sản Để Lại</h4>
-                    <h2>Hơn 70 năm lịch sử hình thành</h2>
-                    <h4>Nếu bạn định thưởng thức kem thì đó phải là một trải nghiệm thực tế và thỏa mãn hơn là 'thứ lạnh lùng và ngọt ngào' vào thời đó. Chúng tôi tự hào tiếp nối di sản đó, chia sẻ niềm vui thực sự với thế giới bằng trải nghiệm kem không giống ai</h4>
-                    <h1>Reuben Mattus</h1>
+                    <h4>
+Legacy Left Behind
+</h4>
+                    <h2>More than 70 years of history</h2>
+                    <h4>If you were going to enjoy ice cream it had to be a more realistic and satisfying experience than the 'cold and sweet stuff' of its time. We're proud to continue that legacy, sharing true joy with the world with an ice cream experience like no other</h4>
+                     <h1>Reuben Mattus</h1>
                 </div>
             </div>
             <div className="gioithieu_total-box2">
                 <div className='box2_text'>
-                    <h2>Đừng Ngại Hãy Tận Hưởng</h2>
+                    <h2>
+Don't Be Afraid, Enjoy
+</h2>
                     <h5>Don't Hold Back</h5>
-                    <h4>Häagen-Dazs không chỉ đơn thuần là để đáp ứng nhu cầu thèm ngon; đó là việc tận hưởng những niềm vui trong cuộc sống một cách không khắc khoải. Đó là lý do tại sao khẩu hiệu của họ, "Đừng Ngại Hãy Tận Hưởng," hoàn hảo thể hiện bản chất của thương hiệu này.</h4>
-                    <button className='box2_text_button'>Khám phá</button>
+                    <h4>Häagen-Dazs not simply to satisfy the need for delicious food; it is about enjoying the joys in life without restlessness. That's why their slogan, "Don't Be Afraid, Enjoy," perfectly captures the essence of this brand.</h4>
+                    <button className='box2_text_button'>Discover</button>
                 </div>
                 <div className="box2_img1">
                     <img src={`${process.env.PUBLIC_URL}/images/image 76.png`} alt="Hình 1" />
@@ -35,9 +39,9 @@ function About() {
                     <img src={`${process.env.PUBLIC_URL}/images/image 85.png`} alt="Hình 3" />
                 </div>
                 <div className="box3_text">
-                    <h2>15 tháng 11 năm 1976</h2>
-                    <p>Tại New York</p>
-                    <h1>Bán lẻ chỉ có 3 hương vị: vanilla, chocolate và cà phê và thời điểm hiện tại đã có hơn 50 hương vị khác nhau tại hơn 90 quốc gia trên toàn thế giới, hay trải nghiệm ngay.</h1>
+                    <h2>November 15, 1976</h2>
+                    <p>In New York</p>
+                    <h1>Retail has only 3 flavors: vanilla, chocolate and coffee and currently there are more than 50 different flavors in more than 90 countries around the world, try it now.</h1>
                     <img src={`${process.env.PUBLIC_URL}/images/image 88.png`} alt="Xem thêm" />
                 </div>
             </div>
@@ -46,9 +50,9 @@ function About() {
                     <img src={`${process.env.PUBLIC_URL}/images/image 82.png`} alt="Hình 3" />
                 </div>
                 <div className="box4_text">
-                    <h1>Cao Cấp - Hoàn Hảo</h1>
-                    <h3>Haagen-Dazs, một thương hiệu đáng mơ ước trong thế giới ẩm thực. Với mỗi muỗng kem của Haagen-Dazs, bạn được trải nghiệm một cảm giác cao cấp không thể nào quên. Những hương vị tinh tế, chất lượng tuyệt vời và sự tinh tế trong từng chi tiết, tất cả đều tạo nên một trải nghiệm thưởng thức thực sự đặc biệt.</h3>
-                    <button>Xem thêm</button>
+                    <h1>High Class - Perfect</h1>
+                    <h3>Haagen-Dazs, a desirable brand in the culinary world. With every scoop of Haagen-Dazs ice cream, you experience an unforgettable premium feeling. Exquisite flavours, superb quality and exquisite attention to detail all create a truly special tasting experience.</h3>
+                    <button>See more</button>
                 </div>
                 
             </div>
